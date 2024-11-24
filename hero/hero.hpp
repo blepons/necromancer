@@ -15,10 +15,6 @@ public:
 
     SkillSet* skills();
 
-    int max_health() const override;
-
-    int speed() const override;
-
     int mana() const;
 
     int max_mana() const;
@@ -45,7 +41,6 @@ public:
     //     constexpr int experience_needed_to_gain_lvl(int level);
 
 private:
-    int max_health_;
     int mana_;
     int max_mana_;
     int experience_;

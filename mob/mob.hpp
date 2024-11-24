@@ -37,10 +37,6 @@ public:
 
     virtual int experience() const;
 
-    int max_health() const override;
-
-    int speed() const override;
-
     std::unique_ptr<Action> action(Game* game) override;
 
     void wake_up();
@@ -53,11 +49,8 @@ protected:
 protected:
     std::vector<Attack*> attacks_;
     std::vector<Move*> moves_;
-    int max_hp_;
     int vision_;  /// max amount of tiles away the mob can see enemy
     int tracking_;
-    int speed_;
-    Passability passability_;
     std::unordered_map<Move*, int> cooldowns_;  // 0 -> move can be done
     MobState* state_;
 };

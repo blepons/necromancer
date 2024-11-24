@@ -14,14 +14,6 @@ SkillSet* Hero::skills() {
     return skills_;
 }
 
-int Hero::max_health() const {
-    return max_health_;
-}
-
-int Hero::speed() const {
-    return Energy::normal_speed;
-}
-
 int Hero::mana() const {
     return mana_;
 }
