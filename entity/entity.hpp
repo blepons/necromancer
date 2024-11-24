@@ -3,6 +3,7 @@
 #include "energy.hpp"
 #include "passability.hpp"
 #include "point.hpp"
+#include <memory>
 
 namespace rln {
 
@@ -41,7 +42,7 @@ public:
 
     virtual bool needs_input() const;
 
-    virtual Action* action(Game* game) = 0;
+    virtual std::unique_ptr<Action> action(Game* game) = 0;
 
     virtual bool attack(Entity* target) = 0;
 

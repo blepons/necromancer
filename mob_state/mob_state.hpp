@@ -1,6 +1,7 @@
 #pragma once
 
 #include "point.hpp"
+#include <memory>
 
 namespace rln {
 
@@ -18,7 +19,7 @@ public:
 
     Point position();
 
-    virtual Action* action(Game* game) = 0;
+    virtual std::unique_ptr<Action> action(Game* game) = 0;
 
 protected:
     Mob* mob_;

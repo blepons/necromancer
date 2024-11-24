@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include "passability.hpp"
 #include "point.hpp"
@@ -30,7 +31,7 @@ public:
 
     virtual bool can_operate() const;
 
-    virtual Action* on_operate(Point pos);
+    virtual std::unique_ptr<Action> on_operate(Point pos) const;
 
     std::string identifier() const;
 

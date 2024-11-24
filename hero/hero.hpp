@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <memory>
 #include "entity.hpp"
 #include "skill_set.hpp"
 
@@ -26,7 +27,7 @@ public:
 
     void gain_mana(int amount);
 
-    Action* action(Game* game) override;
+    std::unique_ptr<Action> action(Game* game) override;
 
     void on_take_damage(Action* action, int damage, Entity* source) override;
 

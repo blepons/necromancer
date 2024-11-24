@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <unordered_map>
 #include <vector>
 #include "entity.hpp"
@@ -40,7 +41,7 @@ public:
 
     int speed() const override;
 
-    Action* action(Game* game) override;
+    std::unique_ptr<Action> action(Game* game) override;
 
     void wake_up();
 
