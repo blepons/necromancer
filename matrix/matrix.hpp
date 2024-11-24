@@ -12,6 +12,27 @@
 
 namespace bpns {
 
+template <class Allocator>
+static void swap_allocator(Allocator& a, Allocator& b) noexcept(
+    std::allocator_traits<Allocator>::propagate_on_container_swap::value ||
+    std::allocator_traits<Allocator>::is_always_equal::value) {
+    swap_allocator(
+        a, b,
+        std::integral_constant<
+            bool, std::allocator_traits<Allocator>::
+                      propagate_on_container_copy_assignment::value>());
+}
+
+template <class Allocator>
+static void swap_allocator(Allocator& a, Allocator& b, std::true_type) noexcept(
+    std::allocator_traits<Allocator>::propagate_on_container_swap::value ||
+    std::allocator_traits<Allocator>::is_always_equal::value) {
+    std::swap(a, b);
+}
+
+template <class Allocator>
+static void swap_allocator(Allocator&, Allocator&, std::false_type) noexcept {}
+
 template <class T, class Allocator>
 class matrix_base {
 public:
@@ -389,8 +410,7 @@ public:
         std::swap(this->data_end_, other.data_end_);
         std::swap(rows_, other.rows_);
         std::swap(columns_, other.columns_);
-        static_assert(false, "TODO");
-        swap_allocator(this->allocator_, other.allocator_);  // TODO
+        swap_allocator(this->allocator_, other.allocator_);
     }
 
 private:
