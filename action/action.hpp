@@ -13,6 +13,8 @@ class Action {
 public:
     Action(Game* game, Point pos);
 
+    virtual ~Action() = default;
+
     Game* game() const;
 
     Point pos() const;

@@ -12,6 +12,8 @@ class TileType {
 public:
     // TODO: ctor
 
+    virtual ~TileType() = default;
+
     Passability passability() const;
 
     virtual bool transparent() const;

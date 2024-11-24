@@ -12,6 +12,8 @@ class MobState {
 public:
     MobState(Mob* mob);
 
+    virtual ~MobState() = default;
+
     Mob* mob();
 
     Point position();

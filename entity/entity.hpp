@@ -13,6 +13,8 @@ class Entity {
 public:
     Entity(Passability passability, int max_hp, int speed, Point position);
 
+    virtual ~Entity() = default;
+
     Passability passability() const;
 
     int max_health() const;
