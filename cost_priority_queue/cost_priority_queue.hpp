@@ -2,6 +2,7 @@
 
 #include <cstddef>
 #include <queue>
+#include <utility>
 
 namespace rln {
 
@@ -10,7 +11,7 @@ struct cost_wrapper {
     T value;
     std::size_t cost;
 
-    auto operator*() const { return value; }
+    T operator*() const { return std::move(value); }
 };
 
 template <class T>
