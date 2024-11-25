@@ -8,6 +8,8 @@ add_subdirectory(line_action)
 
 add_subdirectory(mana_action)
 
+add_subdirectory(null_action)
+
 add_subdirectory(open_door_action)
 
 # TODO
