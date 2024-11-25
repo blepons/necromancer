@@ -25,7 +25,7 @@ public:
     void spend();
 
 private:
-    int amount_;
+    int amount_ = 0;
 };
 
 }  // namespace rln
