@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <cmath>
 #include <cstddef>
 #include <cstdlib>
 namespace geom {}
@@ -11,12 +12,30 @@ struct Point {
     int x;
     int y;
 
-    static int chebyshev(Point start, Point end) {
+    static unsigned chebyshev(Point start, Point end) {
         return std::max(std::abs(end.x - start.x), std::abs(end.y - start.y));
     }
 
-    static int manhattan(Point start, Point end) {
+    static unsigned chebyshev(int x, int y) {
+        return std::max(std::abs(x), std::abs(y));
+    }
+
+    static unsigned manhattan(Point start, Point end) {
         return std::abs(end.x - start.x) + std::abs(end.y - start.y);
+    }
+
+    static unsigned manhattan(int x, int y) {
+        return std::abs(x) + std::abs(y);
+    }
+
+    static unsigned euclidean_ceil(Point start, Point end) {
+        const int x_offset = end.x - start.x;
+        const int y_offset = end.y - start.y;
+        return static_cast<unsigned>(std::ceil(std::sqrt(x_offset * x_offset + y_offset * y_offset)));
+    }
+
+    static unsigned euclidean_ceil(int x, int y) {
+        return static_cast<unsigned>(std::ceil(std::sqrt(x * x + y * y)));
     }
 };
 
