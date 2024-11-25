@@ -594,6 +594,13 @@ private:
     size_type row_;
 };
 
+template <class T, class Allocator>
+inline bool operator==(const matrix<T, Allocator>& lhs,
+                       const matrix<T, Allocator>& rhs) {
+    return lhs.columns() == rhs.columns() && lhs.rows() == rhs.rows() &&
+           std::equal(lhs.begin(), lhs.end(), rhs.begin());
+}
+
 }  // namespace bpns
 
 #endif  // !MATRIX_MATRIX_HPP_
