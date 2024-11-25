@@ -11,25 +11,10 @@ class MobState;
 class Move;
 class Attack;
 
-// class Mob : public Entity {
-// public:
-//     // ctor: breed, generation, pos????
-
-//     bool can_use_move(Move* move) const;
-
-//     void use_move(Move* move);
-
-// private:
-//     MobBreed* breed_;
-//     int generation_;                            // = parent.generation + 1
-//     std::unordered_map<Move*, int> recharges_;  // 0 -> move can be done
-//     MobState* state_;
-// };
-
-// V4
+// TODO
 class Mob : public Entity {
 public:
-    // ctor: generation, pos????
+    // TODO: ctor
 
     void use_move(Move* move);
 
@@ -49,9 +34,9 @@ protected:
 protected:
     std::vector<Attack*> attacks_;
     std::vector<Move*> moves_;
-    int vision_;  /// max amount of tiles away the mob can see enemy
+    int vision_;
     int tracking_;
-    std::unordered_map<Move*, int> cooldowns_;  // 0 -> move can be done
+    std::unordered_map<Move*, int> cooldowns_;
     MobState* state_;
 };
 

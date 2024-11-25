@@ -7,7 +7,7 @@ namespace rln {
 
 class Tile {
 public:
-    // ctor
+    // TODO: ctor
 
     TileType*& type();
 

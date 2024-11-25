@@ -102,13 +102,6 @@ bool Stage::visible_to_hero(Entity* entity) const {
 void Stage::explore(Point position, bool force) {
     auto tile = tile_at(position);
     tile.try_explore(force);
-    //     if (tile.visible()) {
-    //         auto entity = entity_at(position);
-    //         if (entity != nullptr) {
-    //             game->hero()->see_entity(entity);
-    //         }
-    //     }
-    // }
 }
 
 void Stage::update_fov() {

@@ -33,8 +33,6 @@ public:
 
     void on_end_turn(Action* action) override;
 
-    // void see_entity(Entity* entity);  // see_mob
-
     void refresh_skills();
 
     // protected:
