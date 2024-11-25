@@ -112,7 +112,7 @@ void Stage::explore(Point position, bool force) {
 }
 
 void Stage::update_fov() {
-    fov->update(game->hero()->position());
+    fov->update(game->hero()->position(), Point(tiles.rows(), tiles.columns()));
 }
 
 }  // namespace rln

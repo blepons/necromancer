@@ -11,4 +11,6 @@ target_include_directories(
 target_link_libraries(
     fov
     PRIVATE point
+    PRIVATE stage
+    PRIVATE tile
 )
