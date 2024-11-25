@@ -601,6 +601,12 @@ inline bool operator==(const matrix<T, Allocator>& lhs,
            std::equal(lhs.begin(), lhs.end(), rhs.begin());
 }
 
+template <class T, class Allocator>
+void swap(matrix<T, Allocator>& lhs,
+          matrix<T, Allocator>& rhs) noexcept(noexcept(lhs.swap(rhs))) {
+    lhs.swap(rhs);
+}
+
 }  // namespace bpns
 
 #endif  // !MATRIX_MATRIX_HPP_
