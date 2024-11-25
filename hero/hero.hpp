@@ -13,7 +13,7 @@ public:
 
     int level() const;
 
-    SkillSet* skills();
+    SkillSet* skill_set();
 
     int mana() const;
 
