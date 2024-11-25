@@ -3,8 +3,7 @@
 #include <vector>
 #include "point.hpp"
 
-class Direction : public Point {
-public:
+struct Direction : public Point {
     using Point::Point;
 
     static Direction none() { return Direction(0, 0); }
