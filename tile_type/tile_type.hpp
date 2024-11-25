@@ -11,7 +11,7 @@ class Action;
 
 class TileType {
 public:
-    // TODO: ctor
+    TileType(std::string identifier, Passability passability);
 
     virtual ~TileType() = default;
 
@@ -19,15 +19,11 @@ public:
 
     virtual bool transparent() const;
 
-    bool can_enter(Passability passability) const {
-        return passability.overlaps(passability_);
-    }
+    bool can_enter(Passability passability) const;
 
-    bool walkable() const { return passability_.overlaps(Passability::walk()); }
+    bool walkable() const;
 
-    bool traversable() const {
-        return passability_.overlaps(Passability::door_or_walk());
-    }
+    bool traversable() const;
 
     virtual bool can_operate() const;
 

@@ -12,4 +12,5 @@ target_link_libraries(
     tile_type
     PRIVATE passability
     PRIVATE point
+    PRIVATE null_action
 )
