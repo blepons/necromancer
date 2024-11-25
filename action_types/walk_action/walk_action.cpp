@@ -1,4 +1,5 @@
 #include "walk_action.hpp"
+#include <memory>
 #include "action.hpp"
 #include "attack_action.hpp"
 #include "direction.hpp"
@@ -19,16 +20,15 @@ WalkAction::WalkAction(Game* game,
 
 ActionResult WalkAction::perform() {
     if (direction_ == Direction::none()) {
-        // TODO replace new?
-        return ActionResult::alternate(new RestAction(game_, pos_, entity_));
+        return ActionResult::alternate(
+            std::make_unique<RestAction>(game_, pos_, entity_));
     }
 
     auto new_pos = Point(pos_.x + direction_.x, pos_.y + direction_.y);
     auto target = game()->stage()->entity_at(new_pos);
     if (target != nullptr && target != entity()) {
-        // TODO replace new?
         return ActionResult::alternate(
-            new AttackAction(entity(), target, game(), pos()));
+            std::make_unique<AttackAction>(entity(), target, game(), pos()));
     }
 
     auto tile = game()->stage()->tile_at(new_pos).type();

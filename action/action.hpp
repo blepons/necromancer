@@ -3,6 +3,7 @@
 #include "event.hpp"
 #include "game.hpp"
 #include "point.hpp"
+#include <memory>
 
 namespace rln {
 
@@ -35,18 +36,18 @@ protected:
 };
 
 struct ActionResult {
-    ActionResult(bool success, bool done, Action* alternative = nullptr);
+    ActionResult(bool success, bool done, std::unique_ptr<Action>&& alternative = nullptr);
 
     bool success;
     bool done;
-    Action* alternative = nullptr;
+    std::unique_ptr<Action> alternative;
 
-    static ActionResult succeed() { return ActionResult(true, true, nullptr); }
+    static ActionResult succeed() { return ActionResult(true, true); }
 
-    static ActionResult fail() { return ActionResult(false, true, nullptr); }
+    static ActionResult fail() { return ActionResult(false, true); }
 
-    static ActionResult alternate(Action* alternative) {
-        return ActionResult(false, true, alternative);
+    static ActionResult alternate(std::unique_ptr<Action>&& alternative) {
+        return ActionResult(false, true, std::move(alternative));
     }
 };
 
