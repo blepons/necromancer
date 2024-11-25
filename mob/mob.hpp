@@ -26,6 +26,8 @@ public:
 
     void wake_up();
 
+    int vision() const;
+
     int tracking() const;
 
 protected:
