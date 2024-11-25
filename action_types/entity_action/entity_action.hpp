@@ -10,9 +10,7 @@ class EntityAction : public Action {
 public:
     EntityAction(Game* game, Point pos, Entity* entity);
 
-    Entity* entity() const;
-
-    virtual bool consumes_energy() const;
+    Entity* entity();
 
 protected:
     Entity* entity_;
