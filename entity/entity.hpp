@@ -1,9 +1,9 @@
 #pragma once
 
+#include <memory>
 #include "energy.hpp"
 #include "passability.hpp"
 #include "point.hpp"
-#include <memory>
 
 namespace rln {
 
@@ -38,7 +38,9 @@ public:
 
     void move(Point point, Game* game);
 
-    bool take_damage(Action* action, int damage, std::shared_ptr<Entity> source);
+    bool take_damage(Action* action,
+                     int damage,
+                     std::shared_ptr<Entity> source);
 
     void end_turn(Action* action);
 
@@ -48,7 +50,9 @@ public:
 
     virtual bool attack(std::shared_ptr<Entity> target) = 0;
 
-    virtual void on_take_damage(Action* action, int damage, std::shared_ptr<Entity> source) = 0;
+    virtual void on_take_damage(Action* action,
+                                int damage,
+                                std::shared_ptr<Entity> source) = 0;
 
     virtual void on_death(Action* action, std::shared_ptr<Entity> source) = 0;
 

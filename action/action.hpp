@@ -1,9 +1,9 @@
 #pragma once
 
+#include <memory>
 #include "event.hpp"
 #include "game.hpp"
 #include "point.hpp"
-#include <memory>
 
 namespace rln {
 
@@ -37,7 +37,9 @@ protected:
 };
 
 struct ActionResult {
-    ActionResult(bool success, bool done, std::unique_ptr<Action>&& alternative = nullptr);
+    ActionResult(bool success,
+                 bool done,
+                 std::unique_ptr<Action>&& alternative = nullptr);
 
     bool success;
     bool done;

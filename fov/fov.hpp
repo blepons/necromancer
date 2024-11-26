@@ -8,7 +8,6 @@ namespace rln {
 class Stage;
 struct Slope;
 
-
 // TODO
 class Fov {
 public:

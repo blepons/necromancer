@@ -1,7 +1,7 @@
 #pragma once
 
-#include "mob_state.hpp"
 #include <memory>
+#include "mob_state.hpp"
 
 namespace rln {
 

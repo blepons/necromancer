@@ -31,7 +31,8 @@ struct Point {
     static unsigned euclidean_ceil(Point start, Point end) {
         const int x_offset = end.x - start.x;
         const int y_offset = end.y - start.y;
-        return static_cast<unsigned>(std::ceil(std::sqrt(x_offset * x_offset + y_offset * y_offset)));
+        return static_cast<unsigned>(
+            std::ceil(std::sqrt(x_offset * x_offset + y_offset * y_offset)));
     }
 
     static unsigned euclidean_ceil(int x, int y) {

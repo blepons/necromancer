@@ -1,9 +1,7 @@
 #pragma once
 
-#include "entity_action.hpp"
 #include <memory>
-
-
+#include "entity_action.hpp"
 
 // remove when json placeholder is removed
 #include <string>
@@ -18,7 +16,10 @@ public:
 
 class SpawnAction : public EntityAction {
 public:
-    SpawnAction(Game* game, Point pos, std::shared_ptr<Entity> entity, const json& data);
+    SpawnAction(Game* game,
+                Point pos,
+                std::shared_ptr<Entity> entity,
+                const json& data);
 
     ActionResult perform() override;
 
@@ -26,4 +27,4 @@ private:
     json data_;
 };
 
-}
+}  // namespace rln

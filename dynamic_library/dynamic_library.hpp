@@ -26,14 +26,17 @@ public:
     void close() noexcept;
 
     template <class T>
-    T symbol(const std::string& name) const requires std::is_pointer_v<T>;
+    T symbol(const std::string& name) const
+        requires std::is_pointer_v<T>;
 
 private:
     void* lib;
 };
 
 template <class T>
-T DynamicLibrary::symbol(const std::string& name) const requires std::is_pointer_v<T> {
+T DynamicLibrary::symbol(const std::string& name) const
+    requires std::is_pointer_v<T>
+{
     auto ret = reinterpret_cast<T>(dlsym(lib, name.c_str()));
     if (ret == nullptr) {
         throw std::runtime_error(dlerror());

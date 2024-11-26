@@ -1,7 +1,7 @@
 #pragma once
 
-#include "action.hpp"
 #include <memory>
+#include "action.hpp"
 
 namespace rln {
 

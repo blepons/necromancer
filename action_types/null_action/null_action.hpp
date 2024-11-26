@@ -11,4 +11,4 @@ public:
     ActionResult perform() override;
 };
 
-}
+}  // namespace rln

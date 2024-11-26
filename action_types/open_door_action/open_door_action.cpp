@@ -1,10 +1,10 @@
 #include "open_door_action.hpp"
+#include <memory>
 #include "action.hpp"
 #include "entity_action.hpp"
 #include "stage.hpp"
 #include "tile.hpp"
 #include "tile_type.hpp"
-#include <memory>
 
 #include <string_view>
 // remove after implementing TileRegistry

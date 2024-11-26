@@ -1,9 +1,9 @@
 #include "close_door_action.hpp"
+#include <memory>
 #include "action.hpp"
 #include "entity_action.hpp"
 #include "stage.hpp"
 #include "tile.hpp"
-#include <memory>
 
 // remove after implementing TileRegistry
 #include <string_view>

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "point.hpp"
 #include <memory>
+#include "point.hpp"
 
 namespace rln {
 

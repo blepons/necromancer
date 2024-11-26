@@ -1,8 +1,8 @@
 #pragma once
 
+#include <memory>
 #include "action.hpp"
 #include "entity_action.hpp"
-#include <memory>
 
 namespace rln {
 

@@ -13,15 +13,17 @@ public:
         DynamicLibrary library;
         std::reference_wrapper<const rln::MobPlugin> plugin;
     };
-    
-    void scan(const std::string& path, const std::string& extension, const std::string& symbol);
-    
+
+    void scan(const std::string& path,
+              const std::string& extension,
+              const std::string& symbol);
+
     void clear();
-    
+
     const std::vector<PluginInfo>& plugins() const;
-    
+
 private:
     std::vector<PluginInfo> plugins_;
 };
 
-#endif // !PLUGIN_MANAGER_HPP_
+#endif  // !PLUGIN_MANAGER_HPP_

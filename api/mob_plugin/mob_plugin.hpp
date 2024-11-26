@@ -24,6 +24,6 @@ public:
     virtual std::shared_ptr<Mob> create_mob(const json& data) const = 0;
 };
 
-}
+}  // namespace rln
 
 #endif
