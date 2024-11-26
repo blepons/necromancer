@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <queue>
+#include <string>
 #include "event.hpp"
 #include "turn_result.hpp"
 
@@ -10,6 +11,8 @@ namespace rln {
 class Hero;
 class Action;
 class Stage;
+class PluginManager;
+class MobPlugin;
 
 // TODO
 class Game {
@@ -17,6 +20,8 @@ public:
     std::shared_ptr<Hero> hero();
 
     Stage* stage();
+
+    const MobPlugin& plugin(const std::string& id);
 
     TurnResult update();
 
@@ -33,6 +38,7 @@ private:
     std::vector<Action*> immediate_actions_;
     std::vector<Event> events_;
     Stage* stage_;
+    PluginManager* plugin_manager_;
 };
 
 }  // namespace rln

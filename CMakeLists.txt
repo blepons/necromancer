@@ -17,9 +17,13 @@ add_subdirectory(action)
 
 add_subdirectory(action_types)
 
+add_subdirectory(api)
+
 add_subdirectory(cost_priority_queue)
 
 add_subdirectory(direction)
+
+add_subdirectory(dynamic_library)
 
 add_subdirectory(energy)
 
@@ -46,6 +50,8 @@ add_subdirectory(mob_state_types)
 add_subdirectory(passability)
 
 add_subdirectory(pathfinder)
+
+add_subdirectory(plugin_manager)
 
 add_subdirectory(point)
 
