@@ -55,7 +55,11 @@ Point Entity::position() const {
     return position_;
 }
 
-void Entity::position(Point point, Game* game) {
+void Entity::position(Point point) {
+    position_ = point;
+}
+
+void Entity::move(Point point, Game* game) {
     const auto pos = position();
     if (point == pos) {
         return;

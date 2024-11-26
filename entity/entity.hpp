@@ -34,7 +34,9 @@ public:
 
     Point position() const;
 
-    void position(Point point, Game* game);
+    void position(Point point);
+
+    void move(Point point, Game* game);
 
     bool take_damage(Action* action, int damage, std::shared_ptr<Entity> source);
 
