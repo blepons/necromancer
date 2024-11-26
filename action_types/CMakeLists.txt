@@ -17,7 +17,6 @@ add_subdirectory(open_door_action)
 
 add_subdirectory(rest_action)
 
-# TODO
-# add_subdirectory(spawn_action)
+add_subdirectory(spawn_action)
 
 add_subdirectory(walk_action)
