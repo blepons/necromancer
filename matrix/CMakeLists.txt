@@ -1,6 +1,6 @@
 add_library(
     matrix
-    INTERFACE
+    INTERFACE matrix.hpp
 )
 
 target_include_directories(

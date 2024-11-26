@@ -1,6 +1,6 @@
 add_library(
     point
-    INTERFACE
+    INTERFACE point.hpp
 )
 
 target_include_directories(

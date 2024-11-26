@@ -1,6 +1,6 @@
 add_library(
     direction
-    INTERFACE
+    INTERFACE direction.hpp
 )
 
 target_include_directories(

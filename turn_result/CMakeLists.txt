@@ -1,6 +1,6 @@
 add_library(
     turn_result
-    INTERFACE
+    INTERFACE turn_result.hpp
 )
 
 target_include_directories(

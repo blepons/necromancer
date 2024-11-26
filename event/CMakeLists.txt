@@ -1,6 +1,6 @@
 add_library(
     event
-    INTERFACE
+    INTERFACE event.hpp
 )
 
 target_include_directories(

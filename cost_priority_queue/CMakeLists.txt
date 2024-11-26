@@ -1,6 +1,6 @@
 add_library(
     cost_priority_queue
-    INTERFACE
+    INTERFACE cost_priority_queue.hpp
 )
 
 target_include_directories(

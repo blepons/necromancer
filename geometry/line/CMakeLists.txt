@@ -1,6 +1,6 @@
 add_library(
     line
-    INTERFACE
+    INTERFACE line.hpp
 )
 
 target_include_directories(
