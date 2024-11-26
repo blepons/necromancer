@@ -1,4 +1,5 @@
 #include "action.hpp"
+#include <memory>
 #include "entity.hpp"
 #include "game.hpp"
 
@@ -26,8 +27,8 @@ void Action::add_event(Event event) {
     game_->add_event(event);
 }
 
-void Action::move_entity(Entity* entity, Point destination) {
-    entity->position(destination, game_);
+void Action::move_entity(std::shared_ptr<Entity> entity, Point destination) {
+    entity->move(destination, game_);
 }
 
 }  // namespace rln

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "point.hpp"
+#include <memory>
 
 namespace rln {
 
@@ -15,10 +16,10 @@ public:
         SPAWN,
     };
 
-    Event(EventType type, Entity* entity, Point pos);
+    Event(EventType type, std::shared_ptr<Entity> entity, Point pos);
 
     EventType type;
-    Entity* entity;
+    std::shared_ptr<Entity> entity;
     Point pos;
 };
 

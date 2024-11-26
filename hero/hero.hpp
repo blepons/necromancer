@@ -25,9 +25,9 @@ public:
 
     std::unique_ptr<Action> action(Game* game) override;
 
-    void on_take_damage(Action* action, int damage, Entity* source) override;
+    void on_take_damage(Action* action, int damage, std::shared_ptr<Entity> source) override;
 
-    void on_death(Action* action, Entity* source) override;
+    void on_death(Action* action, std::shared_ptr<Entity> source) override;
 
     void on_change_position(Game* game, Point from, Point to) override;
 

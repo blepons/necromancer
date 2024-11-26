@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <string>
 
 namespace rln {
@@ -14,7 +15,7 @@ public:
 
     int max_level() const;
 
-    int level(Hero* hero);
+    int level(std::shared_ptr<Hero> hero);
 
     std::string identifier() const;
 

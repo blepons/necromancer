@@ -13,7 +13,7 @@ ManaAction::ManaAction(std::unique_ptr<EntityAction>&& action, int mana_cost)
       mana_cost_(mana_cost) {}
 
 ActionResult ManaAction::perform() {
-    Hero* hero = dynamic_cast<Hero*>(entity());
+    std::shared_ptr<Hero> hero = std::dynamic_pointer_cast<Hero>(entity());
     if (hero->mana() < mana_cost_) {
         return ActionResult::fail();
     }

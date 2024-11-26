@@ -10,7 +10,7 @@ namespace rln {
 class Action;
 class Game;
 
-class Entity {
+class Entity : public std::enable_shared_from_this<Entity> {
 public:
     Entity(Passability passability, int max_hp, int speed, Point position);
 
@@ -36,7 +36,7 @@ public:
 
     void position(Point point, Game* game);
 
-    bool take_damage(Action* action, int damage, Entity* source);
+    bool take_damage(Action* action, int damage, std::shared_ptr<Entity> source);
 
     void end_turn(Action* action);
 
@@ -44,11 +44,11 @@ public:
 
     virtual std::unique_ptr<Action> action(Game* game) = 0;
 
-    virtual bool attack(Entity* target) = 0;
+    virtual bool attack(std::shared_ptr<Entity> target) = 0;
 
-    virtual void on_take_damage(Action* action, int damage, Entity* source) = 0;
+    virtual void on_take_damage(Action* action, int damage, std::shared_ptr<Entity> source) = 0;
 
-    virtual void on_death(Action* action, Entity* source) = 0;
+    virtual void on_death(Action* action, std::shared_ptr<Entity> source) = 0;
 
     virtual void on_change_position(Game* game, Point from, Point to) = 0;
 

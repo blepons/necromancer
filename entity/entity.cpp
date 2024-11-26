@@ -1,5 +1,6 @@
 #include "entity.hpp"
 #include <algorithm>
+#include <memory>
 #include "action.hpp"
 #include "energy.hpp"
 #include "event.hpp"
@@ -64,12 +65,15 @@ void Entity::position(Point point, Game* game) {
     position_ = point;
 }
 
-bool Entity::take_damage(Action* action, int damage, Entity* source) {
+bool Entity::take_damage(Action* action,
+                         int damage,
+                         std::shared_ptr<Entity> source) {
     on_take_damage(action, damage, source);
     if (alive()) {
         return false;
     }
-    action->add_event(Event(Event::EventType::DIE, this, position()));
+    action->add_event(
+        Event(Event::EventType::DIE, shared_from_this(), position()));
     on_death(action, source);
     return true;
 }

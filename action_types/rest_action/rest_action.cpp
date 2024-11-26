@@ -1,4 +1,5 @@
 #include "rest_action.hpp"
+#include <memory>
 #include "action.hpp"
 #include "entity_action.hpp"
 #include "hero.hpp"
@@ -6,11 +7,12 @@
 
 namespace rln {
 
-RestAction::RestAction(Game* game, Point pos, Entity* entity)
+RestAction::RestAction(Game* game, Point pos, std::shared_ptr<Entity> entity)
     : EntityAction(game, pos, entity) {}
 
 ActionResult RestAction::perform() {
-    if (auto hero = dynamic_cast<Hero*>(entity()); hero != nullptr) {
+    if (auto hero = std::dynamic_pointer_cast<Hero>(entity());
+        hero != nullptr) {
         hero->increase_health(3);
         hero->gain_mana(15);
     } else if (game()->stage()->visible_to_hero(entity())) {

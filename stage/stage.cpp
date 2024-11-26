@@ -23,11 +23,11 @@ const Tile& Stage::tile_at(Point position) const {
     return tiles.at(position.x, position.y);
 }
 
-Entity* Stage::entity_at(Point position) {
+std::shared_ptr<Entity> Stage::entity_at(Point position) {
     return entities_grid.at(position.x, position.y);
 }
 
-const Entity* Stage::entity_at(Point position) const {
+std::shared_ptr<const Entity> Stage::entity_at(Point position) const {
     return entities_grid.at(position.x, position.y);
 }
 
@@ -35,11 +35,12 @@ bool Stage::occupied(Point position) const {
     return entity_at(position) != nullptr;
 }
 
-void Stage::set_entity_no_check(Entity* entity, Point position) {
+void Stage::set_entity_no_check(std::shared_ptr<Entity> entity,
+                                Point position) {
     entities_grid.at(position.x, position.y) = entity;
 }
 
-void Stage::add_entity(Entity* entity) {
+void Stage::add_entity(std::shared_ptr<Entity> entity) {
     auto pos = entity->position();
     if (occupied(pos)) {
         // throw?
@@ -56,7 +57,7 @@ void Stage::move_entity(Point from, Point to) {
     set_entity_no_check(entity, to);
 }
 
-void Stage::remove_entity(Entity* entity) {
+void Stage::remove_entity(std::shared_ptr<Entity> entity) {
     auto pos = entity->position();
 
     // do something with entity order that changes after removal
@@ -64,7 +65,7 @@ void Stage::remove_entity(Entity* entity) {
     entities_grid.at(pos.x, pos.y) = nullptr;
 }
 
-bool Stage::visible(Entity* entity, Point position) const {
+bool Stage::visible(std::shared_ptr<Entity> entity, Point position) const {
     for (auto point : geom::Line(entity->position(), position)) {
         if (point == position) {
             return true;
@@ -91,11 +92,11 @@ bool Stage::targetable(Point from, Point to) const {
     std::unreachable();
 }
 
-bool Stage::targetable(Entity* entity, Point position) const {
+bool Stage::targetable(std::shared_ptr<Entity> entity, Point position) const {
     return targetable(position, entity->position());
 }
 
-bool Stage::visible_to_hero(Entity* entity) const {
+bool Stage::visible_to_hero(std::shared_ptr<Entity> entity) const {
     return tile_at(entity->position()).visible();
 }
 

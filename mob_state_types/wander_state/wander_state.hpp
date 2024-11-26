@@ -6,7 +6,7 @@
 namespace rln {
 
 class WanderState : public MobState {
-    WanderState(Mob* mob);
+    WanderState(std::shared_ptr<Mob> mob);
 
     std::unique_ptr<Action> action(Game* game) override;
 };

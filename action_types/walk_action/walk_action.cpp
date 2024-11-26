@@ -14,7 +14,7 @@ namespace rln {
 
 WalkAction::WalkAction(Game* game,
                        Point pos,
-                       Entity* entity,
+                       std::shared_ptr<Entity> entity,
                        Direction direction)
     : EntityAction(game, pos, entity), direction_(direction) {}
 
@@ -37,7 +37,8 @@ ActionResult WalkAction::perform() {
     }
 
     if (!game()->stage()->can_occupy(new_pos, entity()->passability())) {
-        if (auto hero = dynamic_cast<Hero*>(entity()); hero != nullptr) {
+        if (auto hero = std::dynamic_pointer_cast<Hero>(entity());
+            hero != nullptr) {
             game()->stage()->explore(new_pos, true);
         }
         return ActionResult::fail();

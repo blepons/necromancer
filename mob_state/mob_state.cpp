@@ -1,11 +1,12 @@
 #include "mob_state.hpp"
+#include <memory>
 #include "mob.hpp"
 
 namespace rln {
 
-MobState::MobState(Mob* mob) : mob_(mob) {}
+MobState::MobState(std::shared_ptr<Mob> mob) : mob_(mob) {}
 
-Mob* MobState::mob() {
+std::shared_ptr<Mob> MobState::mob() {
     return mob_;
 }
 

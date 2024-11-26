@@ -11,18 +11,18 @@ class Game;
 
 class MobState {
 public:
-    MobState(Mob* mob);
+    MobState(std::shared_ptr<Mob> mob);
 
     virtual ~MobState() = default;
 
-    Mob* mob();
+    std::shared_ptr<Mob> mob();
 
     Point position();
 
     virtual std::unique_ptr<Action> action(Game* game) = 0;
 
 protected:
-    Mob* mob_;
+    std::shared_ptr<Mob> mob_;
 };
 
 }  // namespace rln

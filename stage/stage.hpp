@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 #include "entity.hpp"
 #include "matrix.hpp"
@@ -21,27 +22,25 @@ public:
 
     const Tile& tile_at(Point position) const;
 
-    Entity* entity_at(Point position);
+    std::shared_ptr<Entity> entity_at(Point position);
 
-    const Entity* entity_at(Point position) const;
+    std::shared_ptr<const Entity> entity_at(Point position) const;
 
     bool occupied(Point position) const;
 
-    bool visible(Entity* entity, Point position) const;
+    bool visible(std::shared_ptr<Entity> entity, Point position) const;
 
     bool targetable(Point from, Point to) const;
 
-    bool targetable(Entity* entity, Point position)
-        const;  // can_see() that returns false if position is blocked by
-                // another entity
+    bool targetable(std::shared_ptr<Entity> entity, Point position) const;
 
-    bool visible_to_hero(Entity* entity) const;
+    bool visible_to_hero(std::shared_ptr<Entity> entity) const;
 
-    void add_entity(Entity* entity);
+    void add_entity(std::shared_ptr<Entity> entity);
 
     void move_entity(Point from, Point to);
 
-    void remove_entity(Entity* entity);
+    void remove_entity(std::shared_ptr<Entity> entity);
 
     void explore(Point position, bool force);
 
@@ -55,12 +54,12 @@ public:
 
 private:
     Game* game;
-    std::vector<Entity*> entities;
+    std::vector<std::shared_ptr<Entity>> entities;
     Fov* fov;
     bpns::matrix<Tile> tiles;
-    bpns::matrix<Entity*> entities_grid;
+    bpns::matrix<std::shared_ptr<Entity>> entities_grid;
 
-    void set_entity_no_check(Entity* entity, Point position);
+    void set_entity_no_check(std::shared_ptr<Entity> entity, Point position);
 };
 
 }  // namespace rln

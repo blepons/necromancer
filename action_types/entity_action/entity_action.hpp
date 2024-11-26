@@ -1,6 +1,7 @@
 #pragma once
 
 #include "action.hpp"
+#include <memory>
 
 namespace rln {
 
@@ -8,12 +9,12 @@ class Entity;
 
 class EntityAction : public Action {
 public:
-    EntityAction(Game* game, Point pos, Entity* entity);
+    EntityAction(Game* game, Point pos, std::shared_ptr<Entity> entity);
 
-    Entity* entity();
+    std::shared_ptr<Entity> entity();
 
 protected:
-    Entity* entity_;
+    std::shared_ptr<Entity> entity_;
 };
 
 }  // namespace rln

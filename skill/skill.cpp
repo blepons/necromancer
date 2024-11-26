@@ -1,4 +1,5 @@
 #include "skill.hpp"
+#include <memory>
 #include <string>
 #include <utility>
 #include "hero.hpp"
@@ -13,7 +14,7 @@ int Skill::max_level() const {
     return max_level_;
 }
 
-int Skill::level(Hero* hero) {
+int Skill::level(std::shared_ptr<Hero> hero) {
     return hero->skill_set()->level(this);
 }
 

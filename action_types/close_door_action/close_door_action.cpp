@@ -3,6 +3,7 @@
 #include "entity_action.hpp"
 #include "stage.hpp"
 #include "tile.hpp"
+#include <memory>
 
 // remove after implementing TileRegistry
 #include <string_view>
@@ -17,7 +18,7 @@ public:
 
 CloseDoorAction::CloseDoorAction(Game* game,
                                  Point pos,
-                                 Entity* entity,
+                                 std::shared_ptr<Entity> entity,
                                  Point door_pos)
     : EntityAction(game, pos, entity), door_pos_(door_pos) {}
 

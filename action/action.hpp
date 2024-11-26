@@ -28,7 +28,8 @@ public:
 
     void add_event(Event event);
 
-    void move_entity(Entity* entity, Point destination);
+    // TODO: const reference?
+    void move_entity(std::shared_ptr<Entity> entity, Point destination);
 
 protected:
     Game* game_;

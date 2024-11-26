@@ -17,6 +17,7 @@ public:
 
     Passability passability() const;
 
+    // TODO: decide if flag should be stored instead
     virtual bool transparent() const;
 
     bool can_enter(Passability passability) const;
