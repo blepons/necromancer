@@ -7,6 +7,7 @@
 namespace rln {
 
 class ManaAction : public EntityAction {
+public:
     ManaAction(std::unique_ptr<EntityAction>&& action, int mana_cost);
 
     ActionResult perform() override;
