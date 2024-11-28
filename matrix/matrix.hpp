@@ -13,6 +13,16 @@
 namespace bpns {
 
 template <class Allocator>
+static void swap_allocator(Allocator& a, Allocator& b, std::true_type) noexcept(
+    std::allocator_traits<Allocator>::propagate_on_container_swap::value ||
+    std::allocator_traits<Allocator>::is_always_equal::value) {
+    std::swap(a, b);
+}
+
+template <class Allocator>
+static void swap_allocator(Allocator&, Allocator&, std::false_type) noexcept {}
+
+template <class Allocator>
 static void swap_allocator(Allocator& a, Allocator& b) noexcept(
     std::allocator_traits<Allocator>::propagate_on_container_swap::value ||
     std::allocator_traits<Allocator>::is_always_equal::value) {
@@ -22,16 +32,6 @@ static void swap_allocator(Allocator& a, Allocator& b) noexcept(
             bool, std::allocator_traits<Allocator>::
                       propagate_on_container_copy_assignment::value>());
 }
-
-template <class Allocator>
-static void swap_allocator(Allocator& a, Allocator& b, std::true_type) noexcept(
-    std::allocator_traits<Allocator>::propagate_on_container_swap::value ||
-    std::allocator_traits<Allocator>::is_always_equal::value) {
-    std::swap(a, b);
-}
-
-template <class Allocator>
-static void swap_allocator(Allocator&, Allocator&, std::false_type) noexcept {}
 
 template <class T, class Allocator>
 class matrix_base {
@@ -55,7 +55,7 @@ protected:
     matrix_base() noexcept(noexcept(Allocator())) : matrix_base(Allocator()) {}
 
     explicit matrix_base(const allocator_type& alloc) noexcept
-        : allocator_(alloc), data_(nullptr) {}
+        : allocator_(alloc), data_(nullptr), data_end_(nullptr) {}
 
     ~matrix_base() {
         if (data_ != nullptr) {
@@ -69,6 +69,7 @@ protected:
             clear();
             allocator_.deallocate(data_, capacity());
             data_ = nullptr;
+            data_end_ = nullptr;
         }
     }
 
@@ -232,7 +233,7 @@ public:
         auto n = other.size();
         if (n > 0) {
             allocate(n);
-            std::uninitialized_fill_n(data(), n, T());
+            std::uninitialized_copy_n(other.data(), n, data());
         }
     }
 
@@ -278,13 +279,13 @@ public:
     matrix(std::initializer_list<std::initializer_list<T>> init,
            const Allocator& alloc = Allocator())
         : base(alloc), rows_(0), columns_(0) {
-        size_type columns = init.size();
-        size_type rows = 0;
-        if (columns > 0) {
-            rows = init[0].size();
+        size_type rows = init.size();
+        size_type columns = 0;
+        if (rows > 0) {
+            columns = (*init.begin()).size();
             if (std::any_of(
                     init.begin() + 1, init.end(),
-                    [rows](const auto& i) { return i.size() != rows; })) {
+                    [columns](const auto& i) { return i.size() != columns; })) {
                 throw std::logic_error(
                     "bpns::matrix::matrix: sizes of initializer lists differ");
             }
@@ -293,7 +294,7 @@ public:
         if (n > 0) {
             allocate(n);
             for (const auto& row : init) {
-                std::uninitialized_copy_n(row.begin(), columns, data());
+                std::uninitialized_copy_n(row.begin(), columns, data() + columns * rows_);
                 ++rows_;
             }
             columns_ = columns;
@@ -520,8 +521,8 @@ public:
                 tmp.rows_ = r;
                 tmp.columns_ = c;
                 for (size_type i = 0; i < std::min(rows(), r); ++i) {
-                    auto row = get_row(i);
-                    auto tmp_row = tmp.get_row(i);
+                    auto row = (*this)[i];
+                    auto tmp_row = tmp[i];
                     std::uninitialized_move_n(
                         row.begin(), std::min(columns(), c), tmp_row.begin());
                     std::uninitialized_fill_n(
@@ -529,7 +530,7 @@ public:
                         c - std::min(columns(), c), v);
                 }
                 for (size_type i = std::min(rows(), r); i < r; ++i) {
-                    auto tmp_row = tmp.get_row(i);
+                    auto tmp_row = tmp[i];
                     std::uninitialized_fill_n(tmp_row.begin(), c, v);
                 }
             }
@@ -537,21 +538,21 @@ public:
         } else if (r != rows()) {
             if (c > columns()) {
                 for (size_type i = r; i > 0; --i) {
-                    auto row = get_row(i);
+                    auto row = (*this)[i];
                     std::copy_n(row.begin(), columns(), data() + i * columns());
                 }
-                const auto prev_rows = rows();
+                // const auto prev_rows = rows();
                 const auto prev_columns = columns();
                 rows_ = r;
                 columns_ = c;
                 for (size_type i = 0; i < r; ++i) {
-                    auto row = get_row(i);
+                    auto row = (*this)[i];
                     std::fill_n(row.begin() + prev_columns,
                                 columns() - prev_columns, v);
                 }
             } else {
                 for (size_type i = 1; i < rows(); ++i) {
-                    auto row = get_row(i);
+                    auto row = (*this)[i];
                     std::copy_n(row.begin(), c, data() + i * c);
                 }
                 std::fill(data() + c * rows(), this->data_end_, v);
@@ -650,23 +651,43 @@ public:
     const T* data() const noexcept { return this->data_; }
 
     /*!
-     * \brief Returns a row object representing the row at index `r`.
+     * \brief Returns a row object representing the row at index `r` with bound checking.
+     *
+     * Returns a row at index `r`.
+     * If `r` is not within the range [`0`, `rows()`), std::out_of_range is thrown.
      *
      * \param r The index of the row to access.
      * \return row A row object representing the row at index `r`.
+     * \throws std::out_of_range If `r >= rows()`.
      */
-    row get_row(size_type r) { return row(*this, r); }
+    row at(size_type r) {
+        if (r >= rows()) {
+            throw std::out_of_range("matrix::at: r >= rows()");
+        }
+        return row(*this, r);
+    }
+
+    /*!
+     * \brief Returns a row object representing the row at index `r` with bound checking.
+     *
+     * Returns a row at index `r`.
+     * If `r` is not within the range [`0`, `rows()`), std::out_of_range is thrown.
+     *
+     * \param r The index of the row to access.
+     * \return row A row object representing the row at index `r`.
+     * \throws std::out_of_range If `r >= rows()`.
+     */
+    const_row at(size_type r) const {
+        if (r >= rows()) {
+            throw std::out_of_range("matrix::at: r >= rows()");
+        }
+        return const_row(*this, r);
+    }
 
     /*!
      * \brief Returns a row object representing the row at index `r`.
      *
-     * \param r The index of the row to access.
-     * \return row A row object representing the row at index `r`.
-     */
-    const_row get_row(size_type r) const { return const_row(*this, r); }
-
-    /*!
-     * \brief Returns a row object representing the row at index `r`.
+     * No bounds checking is performed.
      *
      * \param r The index of the row to access.
      * \return row A row object representing the row at index `r`.
@@ -675,6 +696,8 @@ public:
 
     /*!
      * \brief Returns a row object representing the row at index `r`.
+     *
+     * No bounds checking is performed.
      *
      * \param r The index of the row to access.
      * \return row A row object representing the row at index `r`.
@@ -685,7 +708,7 @@ public:
      * \brief Erases all elements from the container.
      */
     void clear() noexcept {
-        base::clear();
+        base::deallocate();
         rows_ = 0;
         columns_ = 0;
     }
@@ -974,6 +997,20 @@ public:
     size_type size() const noexcept { return matrix_.get().columns(); }
 
     /*!
+     * \brief Returns the number of columns matrix has.
+     *
+     * \return The capacity of the currently allocated storage.
+     */
+    size_type capacity() const noexcept { return matrix_.get().columns(); }
+
+    /*!
+     * \brief Returns the row index of this row in the matrix.
+     *
+     * \return The row index.
+     */
+    size_type row() const noexcept { return row_; }
+
+    /*!
      * \brief Returns a reference to the element at `n` with bound checking.
      *
      * Returns a reference to the element at index `n`.
@@ -1079,11 +1116,35 @@ inline bool operator==(const matrix<T, Allocator>& lhs,
 }
 
 /*!
- * See `bpns::dynamic_array::swap()`
+ * \brief Compares two rows for equality.
+ *
+ * \param lhs A row.
+ * \param rhs A row.
+ * \return `true` if sizes and elements
+ *          of rows are equal, false otherwise.
+ */
+template <class T, class Allocator, bool IsConstL, bool IsConstR>
+inline bool operator==(const row_base<T, Allocator, IsConstL>& lhs,
+                       const row_base<T, Allocator, IsConstR>& rhs) {
+    return lhs.size() == rhs.size() &&
+           std::equal(lhs.begin(), lhs.end(), rhs.begin());
+}
+
+/*!
+ * See `bpns::matrix::swap()`
  */
 template <class T, class Allocator>
 void swap(matrix<T, Allocator>& lhs,
           matrix<T, Allocator>& rhs) noexcept(noexcept(lhs.swap(rhs))) {
+    lhs.swap(rhs);
+}
+
+/*!
+ * See `bpns::row_base::swap()`
+ */
+template <class T, class Allocator, bool IsConst>
+void swap(row_base<T, Allocator, IsConst>& lhs,
+          row_base<T, Allocator, IsConst>& rhs) noexcept(noexcept(lhs.swap(rhs))) {
     lhs.swap(rhs);
 }
 
