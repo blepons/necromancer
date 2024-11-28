@@ -13,7 +13,7 @@ public:
 
     virtual int range(Game* game, int level) const = 0;
 
-    virtual std::unique_ptr<Action> action(Game* game,
+    virtual std::shared_ptr<Action> action(Game* game,
                                            int level,
                                            Point pos) = 0;
 };

@@ -8,12 +8,12 @@ namespace rln {
 
 class ManaAction : public EntityAction {
 public:
-    ManaAction(std::unique_ptr<EntityAction>&& action, int mana_cost);
+    ManaAction(std::shared_ptr<EntityAction> action, int mana_cost);
 
     ActionResult perform() override;
 
 protected:
-    std::unique_ptr<EntityAction> wrapped_action_;
+    std::shared_ptr<EntityAction> wrapped_action_;
     int mana_cost_;
 };
 

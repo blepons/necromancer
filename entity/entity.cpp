@@ -69,7 +69,7 @@ void Entity::move(Point point, Game* game) {
     position_ = point;
 }
 
-bool Entity::take_damage(Action* action,
+bool Entity::take_damage(std::shared_ptr<Action> action,
                          int damage,
                          std::shared_ptr<Entity> source) {
     on_take_damage(action, damage, source);
@@ -82,7 +82,7 @@ bool Entity::take_damage(Action* action,
     return true;
 }
 
-void Entity::end_turn(Action* action) {
+void Entity::end_turn(std::shared_ptr<Action> action) {
     energy_.spend();
     if (alive()) {
         on_end_turn(action);

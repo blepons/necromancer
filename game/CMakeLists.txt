@@ -10,6 +10,7 @@ target_include_directories(
 
 target_link_libraries(
     game
+    PUBLIC action
     PUBLIC event
     PUBLIC turn_result
     PUBLIC stage

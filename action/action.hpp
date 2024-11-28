@@ -24,11 +24,10 @@ public:
 
     virtual bool immediate() const;
 
-    void add_action(Action* action);
+    void add_action(std::shared_ptr<Action> action);
 
     void add_event(Event event);
 
-    // TODO: const reference?
     void move_entity(std::shared_ptr<Entity> entity, Point destination);
 
 protected:
@@ -39,17 +38,17 @@ protected:
 struct ActionResult {
     ActionResult(bool success,
                  bool done,
-                 std::unique_ptr<Action>&& alternative = nullptr);
+                 std::shared_ptr<Action> alternative = nullptr);
 
     bool success;
     bool done;
-    std::unique_ptr<Action> alternative;
+    std::shared_ptr<Action> alternative;
 
     static ActionResult succeed() { return ActionResult(true, true); }
 
     static ActionResult fail() { return ActionResult(false, true); }
 
-    static ActionResult alternate(std::unique_ptr<Action>&& alternative) {
+    static ActionResult alternate(std::shared_ptr<Action> alternative) {
         return ActionResult(false, true, std::move(alternative));
     }
 };

@@ -10,7 +10,7 @@ class ActionSkill : public UsableSkill {
 public:
     ActionSkill(std::string identifier, int max_level);
 
-    virtual std::unique_ptr<Action> action(Game* game, int level) = 0;
+    virtual std::shared_ptr<Action> action(Game* game, int level) = 0;
 };
 
 }  // namespace rln

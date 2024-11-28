@@ -19,7 +19,7 @@ bool Action::immediate() const {
     return true;
 }
 
-void Action::add_action(Action* action) {
+void Action::add_action(std::shared_ptr<Action> action) {
     game_->add_action(action);
 }
 

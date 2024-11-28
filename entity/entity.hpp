@@ -38,27 +38,28 @@ public:
 
     void move(Point point, Game* game);
 
-    bool take_damage(Action* action,
+    bool take_damage(std::shared_ptr<Action> action,
                      int damage,
                      std::shared_ptr<Entity> source);
 
-    void end_turn(Action* action);
+    void end_turn(std::shared_ptr<Action> action);
 
     virtual bool needs_input() const;
 
-    virtual std::unique_ptr<Action> action(Game* game) = 0;
+    virtual std::shared_ptr<Action> action(Game* game) = 0;
 
     virtual bool attack(std::shared_ptr<Entity> target) = 0;
 
-    virtual void on_take_damage(Action* action,
+    virtual void on_take_damage(std::shared_ptr<Action> action,
                                 int damage,
                                 std::shared_ptr<Entity> source) = 0;
 
-    virtual void on_death(Action* action, std::shared_ptr<Entity> source) = 0;
+    virtual void on_death(std::shared_ptr<Action> action,
+                          std::shared_ptr<Entity> source) = 0;
 
     virtual void on_change_position(Game* game, Point from, Point to) = 0;
 
-    virtual void on_end_turn(Action* action) = 0;
+    virtual void on_end_turn(std::shared_ptr<Action> action) = 0;
 
 protected:
     Energy energy_;

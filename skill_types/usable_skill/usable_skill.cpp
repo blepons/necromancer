@@ -10,10 +10,10 @@ namespace rln {
 UsableSkill::UsableSkill(std::string identifier, int max_level)
     : Skill(std::move(identifier), max_level) {}
 
-std::unique_ptr<Action> UsableSkill::wrap_action(
+std::shared_ptr<Action> UsableSkill::wrap_action(
     std::shared_ptr<Hero> hero,
     int level,
-    std::unique_ptr<EntityAction>&& action) {
+    std::shared_ptr<EntityAction> action) {
     return std::make_unique<ManaAction>(std::move(action),
                                         mana_cost(hero, level));
 }

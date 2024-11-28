@@ -1,15 +1,14 @@
 #include "mana_action.hpp"
 #include <memory>
-#include <utility>
 #include "action.hpp"
 #include "entity_action.hpp"
 #include "hero.hpp"
 
 namespace rln {
 
-ManaAction::ManaAction(std::unique_ptr<EntityAction>&& action, int mana_cost)
+ManaAction::ManaAction(std::shared_ptr<EntityAction> action, int mana_cost)
     : EntityAction(action->game(), action->pos(), action->entity()),
-      wrapped_action_(std::move(action)),
+      wrapped_action_(action),
       mana_cost_(mana_cost) {}
 
 ActionResult ManaAction::perform() {
@@ -18,7 +17,7 @@ ActionResult ManaAction::perform() {
         return ActionResult::fail();
     }
     hero->spend_mana(mana_cost_);
-    return ActionResult::alternate(std::move(wrapped_action_));
+    return ActionResult::alternate(wrapped_action_);
 }
 
 }  // namespace rln
