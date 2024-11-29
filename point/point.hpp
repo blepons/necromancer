@@ -4,13 +4,26 @@
 #include <cmath>
 #include <cstddef>
 #include <cstdlib>
-namespace geom {}
+#include <vector>
 
 struct Point {
     Point(int x, int y) : x(x), y(y) {}
 
     int x;
     int y;
+
+    std::vector<Point> neighbors() const {
+        auto vec = std::vector<Point>{};
+        for (int i = -1; i <= 1; ++i) {
+            for (int j = -1; j <= 1; ++j) {
+                if (i == 0 && j == 0) {
+                    continue;
+                }
+                vec.emplace_back(x + i, x + j);
+            }
+        }
+        return vec;
+    }
 
     static unsigned chebyshev(Point start, Point end) {
         return std::max(std::abs(end.x - start.x), std::abs(end.y - start.y));
