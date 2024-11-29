@@ -1,9 +1,9 @@
 #define CATCH_CONFIG_MAIN
-#include <catch2/catch_test_macros.hpp>
-#include "matrix.hpp"
 #include <algorithm>
-#include <utility>
+#include <catch2/catch_test_macros.hpp>
 #include <string>
+#include <utility>
+#include "matrix.hpp"
 
 using namespace bpns;
 
@@ -24,7 +24,8 @@ TEST_CASE("matrix constructors", "[matrix][constructor]") {
         REQUIRE(m.capacity() >= 4 * 6);
         REQUIRE(m.rows() == 4);
         REQUIRE(m.columns() == 6);
-        REQUIRE(std::ranges::all_of(m, [](const auto& item) { return item == ":)"; }));
+        REQUIRE(std::ranges::all_of(
+            m, [](const auto& item) { return item == ":)"; }));
 
         matrix<int> empty1(4, 0);
         matrix<int> empty2(0, 1);
@@ -45,14 +46,15 @@ TEST_CASE("matrix constructors", "[matrix][constructor]") {
         REQUIRE(empty3.rows() == 0);
         REQUIRE(empty3.columns() == 0);
 
-        REQUIRE_THROWS([](){
-            matrix<int> a(1, -1);
-        }());
+        REQUIRE_THROWS([]() { matrix<int> a(1, -1); }());
     }
 
     SECTION("initializer list constructor") {
-        matrix<std::string> m = {{"1", "2", "3", "4"}, {"5", "6", "7", "8"}, {"9", "10", "11", "12"}};
-        std::vector<std::string> elems = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+        matrix<std::string> m = {{"1", "2", "3", "4"},
+                                 {"5", "6", "7", "8"},
+                                 {"9", "10", "11", "12"}};
+        std::vector<std::string> elems = {"1", "2", "3", "4",  "5",  "6",
+                                          "7", "8", "9", "10", "11", "12"};
 
         REQUIRE(m.size() == 12);
         REQUIRE(m.capacity() >= 12);
@@ -60,11 +62,10 @@ TEST_CASE("matrix constructors", "[matrix][constructor]") {
         REQUIRE(m.columns() == 4);
         REQUIRE(std::ranges::equal(m, elems));
 
-        REQUIRE_THROWS([](){
-            matrix<int> a = {{1, 2, 3}, {1, 2}};
-        }());
+        REQUIRE_THROWS([]() { matrix<int> a = {{1, 2, 3}, {1, 2}}; }());
 
-        matrix<int> empty1 = std::initializer_list<std::initializer_list<int>>{};
+        matrix<int> empty1 =
+            std::initializer_list<std::initializer_list<int>>{};
         matrix<int> empty2 = {{}, {}};
 
         REQUIRE(empty1.size() == 0);
@@ -79,7 +80,9 @@ TEST_CASE("matrix constructors", "[matrix][constructor]") {
     }
 
     SECTION("copy constructor") {
-        matrix<std::string> m = {{"1", "2", "3", "4"}, {"5", "6", "7", "8"}, {"9", "10", "11", "12"}};
+        matrix<std::string> m = {{"1", "2", "3", "4"},
+                                 {"5", "6", "7", "8"},
+                                 {"9", "10", "11", "12"}};
         matrix<std::string> cp(m);
 
         REQUIRE(cp.size() == m.size());
@@ -99,7 +102,9 @@ TEST_CASE("matrix constructors", "[matrix][constructor]") {
     }
 
     SECTION("move constructor") {
-        matrix<std::string> m = {{"1", "2", "3", "4"}, {"5", "6", "7", "8"}, {"9", "10", "11", "12"}};
+        matrix<std::string> m = {{"1", "2", "3", "4"},
+                                 {"5", "6", "7", "8"},
+                                 {"9", "10", "11", "12"}};
         matrix<std::string> cp(m);
         matrix<std::string> mv(std::move(m));
 
@@ -114,7 +119,9 @@ TEST_CASE("matrix constructors", "[matrix][constructor]") {
 
 TEST_CASE("matrix assignment operators", "[matrix][assignment]") {
     SECTION("copy assignment") {
-        matrix<std::string> m = {{"1", "2", "3", "4"}, {"5", "6", "7", "8"}, {"9", "10", "11", "12"}};
+        matrix<std::string> m = {{"1", "2", "3", "4"},
+                                 {"5", "6", "7", "8"},
+                                 {"9", "10", "11", "12"}};
         matrix<std::string> cp = {{"0"}};
         cp = m;
 
@@ -152,7 +159,9 @@ TEST_CASE("matrix assignment operators", "[matrix][assignment]") {
     }
 
     SECTION("move assignment") {
-        matrix<std::string> m = {{"1", "2", "3", "4"}, {"5", "6", "7", "8"}, {"9", "10", "11", "12"}};
+        matrix<std::string> m = {{"1", "2", "3", "4"},
+                                 {"5", "6", "7", "8"},
+                                 {"9", "10", "11", "12"}};
         matrix<std::string> m_copy(m);
         matrix<std::string> cp1 = {{"0"}};
         cp1 = std::move(m);
@@ -172,7 +181,6 @@ TEST_CASE("matrix assignment operators", "[matrix][assignment]") {
         REQUIRE(cp2.capacity() == 0);
         REQUIRE(cp2.rows() == 0);
         REQUIRE(cp2.columns() == 0);
-
     }
 }
 
@@ -206,7 +214,6 @@ TEST_CASE("matrix element access", "[matrix][element_access]") {
 
         REQUIRE(const_m(0, 1) == "2");
         REQUIRE(std::ranges::equal(const_m[1], second_row));
-
     }
 
     SECTION("data") {
@@ -247,17 +254,17 @@ TEST_CASE("matrix capacity", "[matrix][capacity]") {
     }
 
     SECTION("size") {
-        matrix<int> m = {{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}};
+        matrix<int> m = {
+            {1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}};
 
         REQUIRE(m.size() == m.rows() * m.columns());
     }
 
-    SECTION("max_size") {
-
-    }
+    SECTION("max_size") {}
 
     SECTION("capacity") {
-        matrix<int> m = {{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}};
+        matrix<int> m = {
+            {1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}};
 
         REQUIRE(m.capacity() >= m.size());
     }
@@ -266,7 +273,7 @@ TEST_CASE("matrix capacity", "[matrix][capacity]") {
 TEST_CASE("matrix modifiers", "[matrix][modifiers]") {
     SECTION("clear") {
         matrix<int> m = {{1, 2}, {3, 4}};
-        m.clear(); 
+        m.clear();
 
         REQUIRE(m.empty());
         REQUIRE(m.size() == 0);
@@ -275,7 +282,8 @@ TEST_CASE("matrix modifiers", "[matrix][modifiers]") {
     }
 
     SECTION("resize") {
-        matrix<std::string> m = {{"1", "2", "3"}, {"4", "5", "6"}, {"7", "8", "9"}};
+        matrix<std::string> m = {
+            {"1", "2", "3"}, {"4", "5", "6"}, {"7", "8", "9"}};
         matrix<std::string> cp(m);
 
         m.resize(3, 3);
@@ -306,7 +314,10 @@ TEST_CASE("matrix modifiers", "[matrix][modifiers]") {
 
         REQUIRE(m.rows() == 4);
         REQUIRE(m.columns() == 4);
-        REQUIRE(m == matrix<std::string>{{"1", "y", "y", "y"},{"z", "z", "z", "z"},{"z", "z", "z", "z"},{"z", "z", "z", "z"}});
+        REQUIRE(m == matrix<std::string>{{"1", "y", "y", "y"},
+                                         {"z", "z", "z", "z"},
+                                         {"z", "z", "z", "z"},
+                                         {"z", "z", "z", "z"}});
 
         m.resize(0, 0);
 
@@ -359,7 +370,7 @@ TEST_CASE("row") {
     SECTION("access") {
         matrix m = {{1, 2}, {3, 4}};
         auto row = m[1];
-        
+
         REQUIRE(row.row() == 1);
         REQUIRE(std::ranges::equal(row, std::vector{3, 4}));
     }

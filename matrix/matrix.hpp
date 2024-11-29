@@ -294,7 +294,8 @@ public:
         if (n > 0) {
             allocate(n);
             for (const auto& row : init) {
-                std::uninitialized_copy_n(row.begin(), columns, data() + columns * rows_);
+                std::uninitialized_copy_n(row.begin(), columns,
+                                          data() + columns * rows_);
                 ++rows_;
             }
             columns_ = columns;
@@ -651,10 +652,12 @@ public:
     const T* data() const noexcept { return this->data_; }
 
     /*!
-     * \brief Returns a row object representing the row at index `r` with bound checking.
+     * \brief Returns a row object representing the row at index `r` with bound
+     * checking.
      *
      * Returns a row at index `r`.
-     * If `r` is not within the range [`0`, `rows()`), std::out_of_range is thrown.
+     * If `r` is not within the range [`0`, `rows()`), std::out_of_range is
+     * thrown.
      *
      * \param r The index of the row to access.
      * \return row A row object representing the row at index `r`.
@@ -668,10 +671,12 @@ public:
     }
 
     /*!
-     * \brief Returns a row object representing the row at index `r` with bound checking.
+     * \brief Returns a row object representing the row at index `r` with bound
+     * checking.
      *
      * Returns a row at index `r`.
-     * If `r` is not within the range [`0`, `rows()`), std::out_of_range is thrown.
+     * If `r` is not within the range [`0`, `rows()`), std::out_of_range is
+     * thrown.
      *
      * \param r The index of the row to access.
      * \return row A row object representing the row at index `r`.
@@ -1143,8 +1148,9 @@ void swap(matrix<T, Allocator>& lhs,
  * See `bpns::row_base::swap()`
  */
 template <class T, class Allocator, bool IsConst>
-void swap(row_base<T, Allocator, IsConst>& lhs,
-          row_base<T, Allocator, IsConst>& rhs) noexcept(noexcept(lhs.swap(rhs))) {
+void swap(
+    row_base<T, Allocator, IsConst>& lhs,
+    row_base<T, Allocator, IsConst>& rhs) noexcept(noexcept(lhs.swap(rhs))) {
     lhs.swap(rhs);
 }
 
