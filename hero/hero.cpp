@@ -10,7 +10,7 @@ int Hero::level() const {
         std::floor(1 + std::sqrt(100 - 2 * (50 - experience_)) / 10));
 }
 
-SkillSet* Hero::skill_set() {
+SkillSet& Hero::skill_set() {
     return skills_;
 }
 

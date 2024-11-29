@@ -13,7 +13,7 @@ public:
 
     int level() const;
 
-    SkillSet* skill_set();
+    SkillSet& skill_set();
 
     int mana() const;
 
@@ -41,10 +41,10 @@ public:
     //     constexpr int experience_needed_to_gain_lvl(int level);
 
 private:
-    int mana_;
     int max_mana_;
+    int mana_;
     int experience_;
-    SkillSet* skills_;
+    SkillSet skills_;
 };
 
 }  // namespace rln

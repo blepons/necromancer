@@ -15,7 +15,7 @@ int Skill::max_level() const {
 }
 
 int Skill::level(std::shared_ptr<Hero> hero) {
-    return hero->skill_set()->level(this);
+    return hero->skill_set().level(shared_from_this());
 }
 
 std::string Skill::identifier() const {
