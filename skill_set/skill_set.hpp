@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <unordered_map>
 #include <vector>
 
@@ -11,16 +12,18 @@ class SkillSet {
 public:
     SkillSet() = default;
 
-    int level(Skill* skill) const;
+    int level(std::shared_ptr<Skill> skill) const;
 
-    void upgrade_skill(Skill* skill, int points);
+    void acquire_skill(std::shared_ptr<Skill> skill);
 
-    std::vector<Skill*> skills();
+    void upgrade_skill(std::shared_ptr<Skill> skill, int points);
 
-    std::vector<Skill*> castable();
+    std::vector<std::shared_ptr<Skill>> skills();
+
+    std::vector<std::shared_ptr<Skill>> castable();
 
 private:
-    std::unordered_map<Skill*, int> level_map_;
+    std::unordered_map<std::shared_ptr<Skill>, int> level_map_;
 };
 
 }  // namespace rln

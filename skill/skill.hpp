@@ -7,7 +7,7 @@ namespace rln {
 
 class Hero;
 
-class Skill {
+class Skill : public std::enable_shared_from_this<Skill> {
 public:
     Skill(std::string identifier, int max_level);
 
