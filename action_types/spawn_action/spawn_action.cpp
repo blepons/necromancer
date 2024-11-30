@@ -1,7 +1,6 @@
 #include "spawn_action.hpp"
 #include <memory>
 #include <nlohmann/json.hpp>
-#include <utility>
 #include "mob.hpp"
 #include "mob_plugin.hpp"
 #include "stage.hpp"
@@ -17,9 +16,8 @@ SpawnAction::SpawnAction(Game* game,
 ActionResult SpawnAction::perform() {
     std::string id = data_["id"];
     auto& plugin = game()->plugin(id);
-    auto spawned_mob = plugin.create_mob(data_);
-    spawned_mob->position(pos());
-    game()->stage()->add_entity(spawned_mob);
+    std::shared_ptr<Mob> spawned_mob = plugin.create_mob(data_);
+    game()->stage()->add_entity(spawned_mob, pos());
     add_event(Event(Event::EventType::SPAWN, spawned_mob, pos()));
     return ActionResult::succeed();
 }
