@@ -19,7 +19,7 @@ public:
 
     Point position();
 
-    virtual std::unique_ptr<Action> action(Game* game) = 0;
+    virtual std::shared_ptr<Action> action(Game* game) = 0;
 
 protected:
     std::shared_ptr<Mob> mob_;

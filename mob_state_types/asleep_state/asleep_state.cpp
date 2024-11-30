@@ -8,7 +8,7 @@ namespace rln {
 
 AsleepState::AsleepState(std::shared_ptr<Mob> mob) : MobState(mob) {}
 
-std::unique_ptr<Action> AsleepState::action(Game* game) {
+std::shared_ptr<Action> AsleepState::action(Game* game) {
     return std::make_unique<RestAction>(game, mob()->position(), mob());
 }
 
