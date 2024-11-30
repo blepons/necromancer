@@ -9,7 +9,6 @@
 #include "mob.hpp"
 #include "stage.hpp"
 #include "tile.hpp"
-#include "tile_type.hpp"
 
 namespace rln {
 
@@ -74,7 +73,7 @@ std::optional<int> Pathfinder::cost(Point pos, const Tile& tile) {
         }
         return occupied_cost;
     }
-    if (tile.type()->identifier() == "closed_door") {
+    if (tile.identifier() == "closed_door") {
         if (mob_->passability().overlaps(Passability::door())) {
             return default_cost * 2;
         } else if (is_first_step) {

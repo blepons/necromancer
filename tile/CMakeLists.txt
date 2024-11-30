@@ -11,5 +11,6 @@ target_include_directories(
 target_link_libraries(
     tile
     PUBLIC passability
-    PUBLIC tile_type
+    PUBLIC point
+    PRIVATE null_action
 )

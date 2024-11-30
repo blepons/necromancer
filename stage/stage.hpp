@@ -22,6 +22,8 @@ public:
 
     const Tile& tile_at(Point position) const;
 
+    void tile_at(Point position, std::unique_ptr<Tile> tile);
+
     std::shared_ptr<Entity> entity_at(Point position);
 
     std::shared_ptr<const Entity> entity_at(Point position) const;
@@ -56,7 +58,7 @@ private:
     Game* game;
     std::vector<std::shared_ptr<Entity>> entities;
     Fov* fov;
-    bpns::matrix<Tile> tiles;
+    bpns::matrix<std::unique_ptr<Tile>> tiles;
     bpns::matrix<std::shared_ptr<Entity>> entities_grid;
 
     void set_entity_no_check(std::shared_ptr<Entity> entity, Point position);

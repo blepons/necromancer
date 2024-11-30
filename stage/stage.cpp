@@ -8,19 +8,19 @@
 namespace rln {
 
 Tile& Stage::operator[](Point position) {
-    return tiles(position.x, position.y);
+    return *tiles(position.x, position.y);
 }
 
 const Tile& Stage::operator[](Point position) const {
-    return tiles(position.x, position.y);
+    return *tiles(position.x, position.y);
 }
 
 Tile& Stage::tile_at(Point position) {
-    return tiles.at(position.x, position.y);
+    return *tiles.at(position.x, position.y);
 }
 
 const Tile& Stage::tile_at(Point position) const {
-    return tiles.at(position.x, position.y);
+    return *tiles.at(position.x, position.y);
 }
 
 std::shared_ptr<Entity> Stage::entity_at(Point position) {

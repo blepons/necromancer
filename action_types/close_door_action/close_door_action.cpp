@@ -13,7 +13,7 @@ namespace rln {
 // TODO (make it a class)
 class TileRegistry {
 public:
-    static TileType* get(std::string_view);
+    static std::unique_ptr<Tile> build(std::string_view);
 };
 
 CloseDoorAction::CloseDoorAction(Game* game,
@@ -27,8 +27,7 @@ ActionResult CloseDoorAction::perform() {
     if (blocking_entity != nullptr) {
         return ActionResult::fail();
     }
-    game()->stage()->tile_at(door_pos_).type() =
-        TileRegistry::get("closed_door");
+    game()->stage()->tile_at(door_pos_, TileRegistry::build("closed_door"));
     game()->stage()->fov_needs_update();
     return ActionResult::succeed();
 }

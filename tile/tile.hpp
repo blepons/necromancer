@@ -1,48 +1,40 @@
 #pragma once
 
+#include <memory>
+#include <string>
 #include "passability.hpp"
-#include "tile_type.hpp"
+#include "point.hpp"
 
 namespace rln {
 
+class Action;
+
 class Tile {
 public:
-    // TODO: ctor
+    Tile(std::string identifier, Passability passability, bool transparent);
 
-    TileType*& type();
+    virtual ~Tile() = default;
 
-    TileType* const& type() const;
+    Passability passability() const;
 
-    bool transparent() const { return type_->transparent(); }
+    bool transparent() const;
 
-    bool visible() const { return visible_; }
+    bool can_enter(Passability passability) const;
 
-    void visible(bool is_visible) { visible_ = is_visible; }
+    bool walkable() const;
 
-    bool explored() const { return explored_; }
+    bool traversable() const;
 
-    bool try_explore(bool force) {
-        if (!explored_ && (visible_ || force)) {
-            explored_ = true;
-            return true;
-        }
-        return false;
-    }
+    virtual bool can_operate() const;
 
-    bool walkable() const { return type_->walkable(); }
+    virtual std::shared_ptr<Action> on_operate(Point pos) const;
 
-    bool traversable() const { return type_->traversable(); }
-
-    bool can_enter(Passability passability) const {
-        return type_->can_enter(passability);
-    }
-
-    bool can_operate() const;
+    std::string identifier() const;
 
 private:
-    TileType* type_;
-    bool visible_;
-    bool explored_;
+    std::string identifier_;
+    Passability passability_;
+    bool transparent_;
 };
 
 }  // namespace rln

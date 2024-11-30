@@ -8,7 +8,6 @@
 #include "rest_action.hpp"
 #include "stage.hpp"
 #include "tile.hpp"
-#include "tile_type.hpp"
 
 namespace rln {
 
@@ -31,9 +30,9 @@ ActionResult WalkAction::perform() {
             std::make_unique<AttackAction>(entity(), target, game(), pos()));
     }
 
-    auto tile = game()->stage()->tile_at(new_pos).type();
-    if (tile->can_operate() && tile->can_enter(entity()->passability())) {
-        return ActionResult::alternate(tile->on_operate(new_pos));
+    auto tile = game()->stage()->tile_at(new_pos);
+    if (tile.can_operate() && tile.can_enter(entity()->passability())) {
+        return ActionResult::alternate(tile.on_operate(new_pos));
     }
 
     if (!game()->stage()->can_occupy(new_pos, entity()->passability())) {
