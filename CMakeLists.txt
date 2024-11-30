@@ -39,6 +39,8 @@ add_subdirectory(geometry)
 
 add_subdirectory(hero)
 
+add_subdirectory(library_manager)
+
 add_subdirectory(matrix)
 
 add_subdirectory(mob)
@@ -50,6 +52,8 @@ add_subdirectory(mob_state_types)
 add_subdirectory(passability)
 
 add_subdirectory(pathfinder)
+
+add_subdirectory(plugin_keeper)
 
 add_subdirectory(plugin_manager)
 

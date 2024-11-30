@@ -1,29 +1,28 @@
 #ifndef PLUGIN_MANAGER_HPP_
 #define PLUGIN_MANAGER_HPP_
 
-#include <dlfcn.h>
-#include <vector>
-
-#include "dynamic_library.hpp"
+#include <functional>
+#include <string>
+#include <unordered_map>
 #include "mob_plugin.hpp"
 
 class PluginManager {
+private:
+    PluginManager() = default;
+
 public:
-    struct PluginInfo {
-        DynamicLibrary library;
-        std::reference_wrapper<const rln::MobPlugin> plugin;
-    };
+    using ref_type = std::reference_wrapper<const rln::MobPlugin>;
 
-    void scan(const std::string& path,
-              const std::string& extension,
-              const std::string& symbol);
+    static PluginManager& get_instance();
 
-    void clear();
+    void add(const rln::MobPlugin& plugin);
 
-    const std::vector<PluginInfo>& plugins() const;
+    void remove(const std::string& name);
+
+    const std::unordered_map<std::string, ref_type>& plugins() const;
 
 private:
-    std::vector<PluginInfo> plugins_;
+    std::unordered_map<std::string, ref_type> plugins_;
 };
 
 #endif  // !PLUGIN_MANAGER_HPP_

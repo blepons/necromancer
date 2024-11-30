@@ -1,29 +1,21 @@
 #include "plugin_manager.hpp"
-#include <filesystem>
 #include <string>
-#include <vector>
+#include "mob_plugin.hpp"
 
-namespace fs = std::filesystem;
-
-void PluginManager::scan(const std::string& path,
-                         const std::string& extension,
-                         const std::string& symbol) {
-    fs::path dir_path(path);
-    for (auto& file : fs::directory_iterator(dir_path)) {
-        if ((file.is_regular_file() || file.is_symlink()) &&
-            file.path().extension() == extension) {
-            DynamicLibrary lib(file.path());
-            const rln::MobPlugin& plug =
-                lib.symbol<rln::MobPlugin& (*)()>(symbol)();
-            plugins_.emplace_back(std::move(lib), std::ref(plug));
-        }
-    }
+void PluginManager::add(const rln::MobPlugin& plugin) {
+    plugins_.try_emplace(plugin.name(), plugin);
 }
 
-void PluginManager::clear() {
-    plugins_.clear();
+void PluginManager::remove(const std::string& name) {
+    plugins_.erase(name);
 }
 
-const std::vector<PluginManager::PluginInfo>& PluginManager::plugins() const {
+const std::unordered_map<std::string, PluginManager::ref_type>&
+PluginManager::plugins() const {
     return plugins_;
+}
+
+PluginManager& PluginManager::get_instance() {
+    static PluginManager manager;
+    return manager;
 }
