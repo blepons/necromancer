@@ -16,11 +16,25 @@ auto operator<=>(const Slope& lhs, const Slope& rhs) {
     return lhs.y * rhs.x <=> rhs.y * lhs.x;
 }
 
-// TODO: store Fov in every entity, remove it from Stage;
+Fov::Fov() : stage_(nullptr), needs_recalculation_(true), visibility_() {}
+
+void Fov::init(Stage* stage) {
+    stage_ = stage;
+    visibility_(stage->bound_x(), stage_->bound_y());
+}
+
+bool Fov::visible(Point pos) const {
+    return visibility_(pos.x, pos.y);
+}
+
+void Fov::visible(Point pos, bool is_visible) {
+    visibility_(pos.x, pos.y) = is_visible;
+}
+
 void Fov::update(Point origin, Point bound) {
     for (int x = 0; x < bound.x; ++x) {
         for (int y = 0; y < bound.y; ++y) {
-            stage_->tile_at(origin).visible(false);
+            visible({x, y}, false);
         }
     }
 
@@ -28,7 +42,7 @@ void Fov::update(Point origin, Point bound) {
         compute(octant, origin, 1, Slope(1, 1), Slope(0, 1));
     }
 
-    stage_->tile_at(origin).visible(true);
+    visible(origin, true);
 }
 
 void Fov::compute(unsigned octant,
@@ -211,7 +225,7 @@ void Fov::set_visible(int x, int y, unsigned octant, Point origin) {
             ny += y;
             break;
     }
-    stage_->tile_at({nx, ny}).visible(true);
+    visible({nx, ny}, true);
 }
 
 }  // namespace rln

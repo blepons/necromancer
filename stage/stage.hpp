@@ -14,6 +14,10 @@ class Fov;
 
 class Stage {
 public:
+    int bound_x() const;
+
+    int bound_y() const;
+
     Tile& operator[](Point position);
 
     const Tile& operator[](Point position) const;
@@ -36,15 +40,11 @@ public:
 
     bool targetable(std::shared_ptr<Entity> entity, Point position) const;
 
-    bool visible_to_hero(std::shared_ptr<Entity> entity) const;
-
-    void add_entity(std::shared_ptr<Entity> entity);
+    void add_entity(std::shared_ptr<Entity> entity, Point position);
 
     void move_entity(Point from, Point to);
 
     void remove_entity(std::shared_ptr<Entity> entity);
-
-    void explore(Point position, bool force);
 
     void update_fov();
 
@@ -57,7 +57,6 @@ public:
 private:
     Game* game;
     std::vector<std::shared_ptr<Entity>> entities;
-    Fov* fov;
     bpns::matrix<std::unique_ptr<Tile>> tiles;
     bpns::matrix<std::shared_ptr<Entity>> entities_grid;
 

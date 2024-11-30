@@ -4,6 +4,7 @@
 #include "energy.hpp"
 #include "passability.hpp"
 #include "point.hpp"
+#include "fov.hpp"
 
 namespace rln {
 
@@ -16,7 +17,11 @@ public:
 
     virtual ~Entity() = default;
 
+    Energy& energy();
+
     Passability passability() const;
+
+    Fov& fov();
 
     int max_health() const;
 
@@ -64,6 +69,7 @@ public:
 protected:
     Energy energy_;
     Passability passability_;
+    Fov fov_;
 
     int max_hp_;
     int hp_;

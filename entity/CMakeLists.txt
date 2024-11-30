@@ -11,7 +11,7 @@ target_include_directories(
 target_link_libraries(
     entity
     PUBLIC energy
-    # PUBLIC game
+    PUBLIC fov
     PRIVATE stage
     PRIVATE action
     PUBLIC passability

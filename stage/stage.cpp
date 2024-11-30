@@ -40,13 +40,14 @@ void Stage::set_entity_no_check(std::shared_ptr<Entity> entity,
     entities_grid.at(position.x, position.y) = entity;
 }
 
-void Stage::add_entity(std::shared_ptr<Entity> entity) {
-    auto pos = entity->position();
-    if (occupied(pos)) {
+void Stage::add_entity(std::shared_ptr<Entity> entity, Point position) {
+    if (occupied(position)) {
         // throw?
     }
+    entity->position(position);
+    entity->fov().init(this);
     entities.push_back(entity);
-    entities_grid(pos.x, pos.y) = entity;
+    entities_grid(position.x, position.y) = entity;
 }
 
 void Stage::move_entity(Point from, Point to) {
@@ -96,17 +97,5 @@ bool Stage::targetable(std::shared_ptr<Entity> entity, Point position) const {
     return targetable(position, entity->position());
 }
 
-bool Stage::visible_to_hero(std::shared_ptr<Entity> entity) const {
-    return tile_at(entity->position()).visible();
-}
-
-void Stage::explore(Point position, bool force) {
-    auto tile = tile_at(position);
-    tile.try_explore(force);
-}
-
-void Stage::update_fov() {
-    fov->update(game->hero()->position(), Point(tiles.rows(), tiles.columns()));
-}
 
 }  // namespace rln
