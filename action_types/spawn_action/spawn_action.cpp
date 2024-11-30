@@ -1,5 +1,6 @@
 #include "spawn_action.hpp"
 #include <memory>
+#include <nlohmann/json.hpp>
 #include <utility>
 #include "mob.hpp"
 #include "mob_plugin.hpp"

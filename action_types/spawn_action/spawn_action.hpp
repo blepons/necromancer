@@ -1,18 +1,12 @@
 #pragma once
 
 #include <memory>
+#include <nlohmann/json.hpp>
 #include "entity_action.hpp"
 
-// remove when json placeholder is removed
-#include <string>
+using json = nlohmann::json;
 
 namespace rln {
-
-// TODO: include json library
-class json {
-public:
-    std::string operator[](const std::string&) const;
-};
 
 class SpawnAction : public EntityAction {
 public:

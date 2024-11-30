@@ -2,14 +2,14 @@
 #define API_MOB_PLUGIN_HPP_
 
 #include <memory>
+#include <nlohmann/json.hpp>
 #include <string>
+
+using json = nlohmann::json;
 
 namespace rln {
 
 class Mob;
-
-// TODO: replace json placeholder
-class json;
 
 class MobPlugin {
 public:
