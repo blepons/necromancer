@@ -12,8 +12,7 @@ add_subdirectory(null_action)
 
 add_subdirectory(open_door_action)
 
-# TODO
-# add_subdirectory(polymorph_action)
+add_subdirectory(polymorph_action)
 
 add_subdirectory(rest_action)
 
