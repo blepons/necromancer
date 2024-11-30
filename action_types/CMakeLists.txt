@@ -4,6 +4,8 @@ add_subdirectory(close_door_action)
 
 add_subdirectory(entity_action)
 
+add_subdirectory(heal_action)
+
 add_subdirectory(line_action)
 
 add_subdirectory(mana_action)
