@@ -36,6 +36,8 @@ public:
 
     bool occupied(Point position) const;
 
+    bool visible(Point from, Point to) const;
+
     bool visible(std::shared_ptr<Entity> entity, Point position) const;
 
     bool targetable(Point from, Point to) const;

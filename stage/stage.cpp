@@ -74,9 +74,9 @@ void Stage::remove_entity(std::shared_ptr<Entity> entity) {
     entities_grid_.at(pos.x, pos.y) = nullptr;
 }
 
-bool Stage::visible(std::shared_ptr<Entity> entity, Point position) const {
-    for (auto point : geom::Line(entity->position(), position)) {
-        if (point == position) {
+bool Stage::visible(Point from, Point to) const {
+    for (auto point : geom::Line(from, to)) {
+        if (point == to) {
             return true;
         }
         if (!tile_at(point).transparent()) {
@@ -84,6 +84,10 @@ bool Stage::visible(std::shared_ptr<Entity> entity, Point position) const {
         }
     }
     std::unreachable();
+}
+
+bool Stage::visible(std::shared_ptr<Entity> entity, Point position) const {
+    return visible(position, entity->position());
 }
 
 bool Stage::targetable(Point from, Point to) const {
