@@ -20,6 +20,7 @@ public:
         int vision,
         int hearing,
         int tracking,
+        int experience_reward,
         Passability passability,
         std::string faction,
         int max_hp,
@@ -33,8 +34,6 @@ public:
 
     bool can_use_move(std::shared_ptr<Move> move) const;
 
-    virtual int experience() const;
-
     std::shared_ptr<Action> action(Game* game) override;
 
     int vision() const;
@@ -42,6 +41,8 @@ public:
     int hearing() const;
 
     int tracking() const;
+
+    int experience_reward() const;
 
     MobState& state();
 
@@ -55,6 +56,7 @@ protected:
     int vision_;
     int hearing_;
     int tracking_;
+    int experience_reward_;
 
     std::unique_ptr<MobState> state_;
 };

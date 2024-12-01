@@ -13,6 +13,7 @@ Mob::Mob(std::string race,
          int vision,
          int hearing,
          int tracking,
+         int experience_reward,
          Passability passability,
          std::string faction,
          int max_hp,
@@ -22,7 +23,8 @@ Mob::Mob(std::string race,
       attack_(std::move(attack)),
       vision_(vision),
       hearing_(hearing),
-      tracking_(tracking) {
+      tracking_(tracking),
+      experience_reward_(experience_reward) {
     for (auto& item : moves) {
         cooldowns_[item] = 0;
     }
