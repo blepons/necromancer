@@ -20,6 +20,8 @@ public:
 
     bool can_take_turn() const;
 
+    bool will_take_turn(std::size_t speed_index) const;
+
     void gain(std::size_t speed_index);
 
     void spend();
