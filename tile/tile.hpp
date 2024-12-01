@@ -8,6 +8,7 @@
 namespace rln {
 
 class Action;
+class Entity;
 
 class Tile {
 public:
@@ -28,6 +29,9 @@ public:
     virtual bool can_operate() const;
 
     virtual std::shared_ptr<Action> on_operate(Point pos) const;
+
+    virtual std::shared_ptr<Action> on_turn(
+        std::shared_ptr<Entity> entity) const;
 
     std::string identifier() const;
 

@@ -36,8 +36,18 @@ bool Tile::can_operate() const {
 }
 
 std::shared_ptr<Action> Tile::on_operate(Point) const {
-    // Should it throw instead?
+    // TODO: decide if it should:
+    //           1. throw
+    //           2. return NullAction
+    //           3. return nullptr (further check needed)
     return std::make_unique<NullAction>();
+}
+
+std::shared_ptr<Action> Tile::on_turn(std::shared_ptr<Entity>) const {
+    // TODO: decide if it should:
+    //           1. return NullAction
+    //           2. return nullptr (further check needed)
+    return nullptr;
 }
 
 std::string Tile::identifier() const {
