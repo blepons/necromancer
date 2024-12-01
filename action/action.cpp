@@ -15,10 +15,6 @@ Point Action::pos() const {
     return pos_;
 }
 
-bool Action::immediate() const {
-    return true;
-}
-
 void Action::add_action(std::shared_ptr<Action> action) {
     game_->add_action(action);
 }

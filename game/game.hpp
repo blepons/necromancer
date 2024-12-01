@@ -37,7 +37,6 @@ private:
     std::shared_ptr<Hero> hero_;
 
     std::deque<std::shared_ptr<Action>> actions_;
-    std::vector<std::shared_ptr<Action>> immediate_actions_;
     std::vector<Event> events_;
 
     PluginManager* plugin_manager_;

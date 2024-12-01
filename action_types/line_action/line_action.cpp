@@ -27,8 +27,4 @@ ActionResult LineAction::perform() {
     return ActionResult::succeed();
 }
 
-bool LineAction::immediate() const {
-    return false;
-}
-
 }  // namespace rln

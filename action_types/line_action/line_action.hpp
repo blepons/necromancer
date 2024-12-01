@@ -10,8 +10,6 @@ public:
 
     ActionResult perform() override;
 
-    bool immediate() const override;
-
     virtual void on_hit(Point pos) = 0;
 
 protected:

@@ -22,8 +22,6 @@ public:
 
     virtual ActionResult perform() = 0;
 
-    virtual bool immediate() const;
-
     void add_action(std::shared_ptr<Action> action);
 
     void add_event(Event event);
