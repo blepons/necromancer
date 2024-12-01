@@ -108,8 +108,4 @@ bool Entity::needs_input() const {
     return false;
 }
 
-void Entity::react_to_damage(std::shared_ptr<Action>,
-                             int,
-                             std::shared_ptr<Entity>) {}
-
 }  // namespace rln
