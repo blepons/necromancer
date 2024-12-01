@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 #include <unordered_map>
 #include <vector>
 #include "attack.hpp"
@@ -13,21 +14,32 @@ class Move;
 
 class Mob : public Entity {
 public:
-    // TODO: ctor
+    Mob(std::string race,
+        Attack attack,
+        std::vector<std::shared_ptr<Move>> moves,
+        int vision,
+        int hearing,
+        int tracking,
+        Passability passability,
+        std::string faction,
+        int max_hp,
+        int speed);
 
     std::shared_ptr<Mob> getptr();
 
     void init(Point pos) override;
 
-    void use_move(Move* move);
+    void use_move(std::shared_ptr<Move> move);
 
-    bool can_use_move(Move* move) const;
+    bool can_use_move(std::shared_ptr<Move> move) const;
 
     virtual int experience() const;
 
     std::shared_ptr<Action> action(Game* game) override;
 
     int vision() const;
+
+    int hearing() const;
 
     int tracking() const;
 
@@ -36,11 +48,14 @@ public:
     void change_state(std::unique_ptr<MobState>&& new_state);
 
 protected:
-    std::vector<Move*> moves_;
+    std::string race_;
     Attack attack_;
+    std::unordered_map<std::shared_ptr<Move>, int> cooldowns_;
+
     int vision_;
+    int hearing_;
     int tracking_;
-    std::unordered_map<Move*, int> cooldowns_;
+
     std::unique_ptr<MobState> state_;
 };
 

@@ -12,4 +12,7 @@ target_link_libraries(
     mob
     PUBLIC entity
     PUBLIC attack
+    PUBLIC move
+    PRIVATE mob_state
+    PRIVATE asleep_state
 )
