@@ -11,10 +11,13 @@ namespace rln {
 class MobState;
 class Move;
 
-// TODO
 class Mob : public Entity {
 public:
     // TODO: ctor
+
+    std::shared_ptr<Mob> getptr();
+
+    void init(Point pos) override;
 
     void use_move(Move* move);
 
@@ -24,14 +27,13 @@ public:
 
     std::shared_ptr<Action> action(Game* game) override;
 
-    void wake_up();
-
     int vision() const;
 
     int tracking() const;
 
-protected:
-    void change_state(MobState* new_state);
+    MobState& state();
+
+    void change_state(std::unique_ptr<MobState>&& new_state);
 
 protected:
     std::vector<Move*> moves_;
@@ -39,7 +41,7 @@ protected:
     int vision_;
     int tracking_;
     std::unordered_map<Move*, int> cooldowns_;
-    MobState* state_;
+    std::unique_ptr<MobState> state_;
 };
 
 }  // namespace rln

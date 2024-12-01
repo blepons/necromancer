@@ -18,6 +18,8 @@ public:
 
     virtual ~Entity() = default;
 
+    virtual void init(Point pos);
+
     Energy& energy();
 
     Passability passability() const;

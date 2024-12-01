@@ -25,6 +25,10 @@ Entity::Entity(Passability passability,
       speed_(speed),
       position_({0, 0}) {}
 
+void Entity::init(Point pos) {
+    position(pos);
+}
+
 Passability Entity::passability() const {
     return passability_;
 }

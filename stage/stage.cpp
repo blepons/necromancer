@@ -44,10 +44,14 @@ void Stage::add_entity(std::shared_ptr<Entity> entity, Point position) {
     if (occupied(position)) {
         // throw?
     }
-    entity->position(position);
+    entity->init(position);
     entity->fov().init(this);
     entities_.push_back(entity);
     entities_grid_(position.x, position.y) = entity;
+}
+
+void Stage::replace_entity(std::shared_ptr<Entity> entity, Point position) {
+    // TODO
 }
 
 void Stage::move_entity(Point from, Point to) {
