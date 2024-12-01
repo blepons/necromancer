@@ -55,10 +55,10 @@ public:
     bool at_bounds(Point position) const;
 
 private:
-    Game* game;
-    std::vector<std::shared_ptr<Entity>> entities;
-    bpns::matrix<std::unique_ptr<Tile>> tiles;
-    bpns::matrix<std::shared_ptr<Entity>> entities_grid;
+    Game* game_;
+    std::vector<std::shared_ptr<Entity>> entities_;
+    bpns::matrix<std::unique_ptr<Tile>> tiles_;
+    bpns::matrix<std::shared_ptr<Entity>> entities_grid_;
 
     void set_entity_no_check(std::shared_ptr<Entity> entity, Point position);
 };
