@@ -11,7 +11,6 @@ namespace rln {
 class Hero;
 class Action;
 class Stage;
-class PluginManager;
 class MobPlugin;
 
 // TODO
@@ -38,8 +37,6 @@ private:
 
     std::deque<std::shared_ptr<Action>> actions_;
     std::vector<Event> events_;
-
-    PluginManager* plugin_manager_;
 };
 
 }  // namespace rln
