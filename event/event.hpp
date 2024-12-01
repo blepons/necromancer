@@ -11,6 +11,7 @@ struct Event {
 public:
     enum class EventType {
         DIE,
+        HEAL,
         HIT,
         POLYMORPH,
         SPAWN,
