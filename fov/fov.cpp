@@ -31,9 +31,9 @@ void Fov::visible(Point pos, bool is_visible) {
     visibility_(pos.x, pos.y) = is_visible;
 }
 
-void Fov::update(Point origin, Point bound) {
-    for (int x = 0; x < bound.x; ++x) {
-        for (int y = 0; y < bound.y; ++y) {
+void Fov::update(Point origin) {
+    for (int x = 0; x < stage_->bound_x(); ++x) {
+        for (int y = 0; y < stage_->bound_y(); ++y) {
             visible({x, y}, false);
         }
     }

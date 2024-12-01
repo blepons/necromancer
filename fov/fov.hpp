@@ -19,7 +19,7 @@ public:
 
     void init(Stage* stage);
 
-    void update(Point origin, Point bound);
+    void update(Point origin);
 
     bool visible(Point pos) const;
 

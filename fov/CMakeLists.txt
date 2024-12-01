@@ -13,5 +13,5 @@ target_link_libraries(
     PRIVATE point
     PRIVATE stage
     PRIVATE tile
-    PRIVATE matrix
+    PUBLIC matrix
 )
