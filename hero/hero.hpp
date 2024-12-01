@@ -23,6 +23,8 @@ public:
 
     void gain_mana(int amount);
 
+    void explore(Point pos, bool forced);
+
     std::shared_ptr<Action> action(Game* game) override;
 
     bool on_take_damage(std::shared_ptr<Action> action,

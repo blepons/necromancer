@@ -38,7 +38,7 @@ ActionResult WalkAction::perform() {
     if (!game()->stage()->can_occupy(new_pos, entity()->passability())) {
         if (auto hero = std::dynamic_pointer_cast<Hero>(entity());
             hero != nullptr) {
-            game()->stage()->explore(new_pos, true);
+            hero->explore(new_pos, true);
         }
         return ActionResult::fail();
     }
