@@ -3,13 +3,13 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
+#include "attack.hpp"
 #include "entity.hpp"
 
 namespace rln {
 
 class MobState;
 class Move;
-class Attack;
 
 // TODO
 class Mob : public Entity {
@@ -34,8 +34,8 @@ protected:
     void change_state(MobState* new_state);
 
 protected:
-    std::vector<Attack*> attacks_;
     std::vector<Move*> moves_;
+    Attack attack_;
     int vision_;
     int tracking_;
     std::unordered_map<Move*, int> cooldowns_;

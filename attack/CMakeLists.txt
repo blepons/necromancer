@@ -1,15 +1,14 @@
 add_library(
-    mob
-    mob.hpp mob.cpp
+    attack
+    attack.hpp attack.cpp
 )
 
 target_include_directories(
-    mob
+    attack
     INTERFACE .
 )
 
 target_link_libraries(
-    mob
-    PUBLIC entity
-    PUBLIC attack
+    attack
+    PRIVATE entity
 )
