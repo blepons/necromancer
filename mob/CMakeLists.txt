@@ -15,4 +15,7 @@ target_link_libraries(
     PUBLIC move
     PRIVATE mob_state
     PRIVATE asleep_state
+    PRIVATE wander_state
+    PRIVATE change_state_action
+    PRIVATE stage
 )

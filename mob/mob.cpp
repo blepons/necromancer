@@ -1,9 +1,15 @@
 #include "mob.hpp"
+#include <algorithm>
 #include <memory>
+#include <ranges>
 #include <utility>
+#include <vector>
 #include "asleep_state.hpp"
+#include "change_state_action.hpp"
 #include "mob_state.hpp"
 #include "move.hpp"
+#include "stage.hpp"
+#include "wander_state.hpp"
 
 namespace rln {
 
@@ -47,7 +53,56 @@ bool Mob::can_use_move(std::shared_ptr<Move> move) {
     return cooldowns_[move] == 0;
 }
 
-// TODO: action
+bool Mob::needs_input() const {
+    return false;
+}
+
+std::shared_ptr<Action> Mob::action(Game* game) {
+    for (auto& [_, cooldown] : cooldowns_) {
+        cooldown = std::max(cooldown - 1, 0);
+    }
+    if (asleep() && entity_nearby(game, hearing())) {
+        auto mob = getptr();
+        return std::make_shared<ChangeStateAction>(
+            game, position(), mob, std::make_unique<WanderState>(mob));
+    }
+    return state().action(game);
+}
+
+void Mob::attack(std::shared_ptr<Entity> target) {
+    attack_.perform(getptr(), target);
+}
+
+bool Mob::on_take_damage(std::shared_ptr<Action>,
+                         int damage,
+                         std::shared_ptr<Entity>) {
+    decrease_health(damage);
+    return true;
+}
+
+void Mob::react_to_damage(std::shared_ptr<Action> action,
+                          int damage,
+                          std::shared_ptr<Entity>) {
+    auto mob = getptr();
+    auto available_moves =
+        cooldowns_ | std::views::filter([mob, damage](const auto& item) {
+            return item.first->should_use_on_damage(mob, damage) &&
+                   item.second == 0;
+        }) |
+        std::views::keys;
+    auto moves = std::vector<std::shared_ptr<Move>>(available_moves.begin(),
+                                                    available_moves.end());
+    auto game = action->game();
+    action->add_action(moves[game->random(0, moves.size())]->action(game, mob));
+}
+
+void Mob::on_death(std::shared_ptr<Action> action, std::shared_ptr<Entity>) {
+    action->game()->stage()->remove_entity(getptr());
+}
+
+void Mob::on_change_position(Game*, Point, Point) {}
+
+void Mob::on_end_turn(std::shared_ptr<Action>) {}
 
 std::string Mob::race() const {
     return race_;
@@ -75,6 +130,23 @@ MobState& Mob::state() {
 
 void Mob::change_state(std::unique_ptr<MobState>&& new_state) {
     state_ = std::move(new_state);
+}
+
+bool Mob::asleep() const {
+    return dynamic_cast<AsleepState*>(state_.get()) != nullptr;
+}
+
+bool Mob::wandering() const {
+    return dynamic_cast<WanderState*>(state_.get()) != nullptr;
+}
+
+bool Mob::entity_nearby(Game* game, int distance) {
+    return std::ranges::any_of(game->stage()->entities(), [&](auto& other) {
+        return this != other.get() &&
+               Point::euclidean_ceil(position(), other->position()) <=
+                   distance &&
+               game->stage()->visible(position(), other->position());
+    });
 }
 
 }  // namespace rln

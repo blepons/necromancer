@@ -34,7 +34,26 @@ public:
 
     bool can_use_move(std::shared_ptr<Move> move);
 
+    bool needs_input() const override final;
+
     std::shared_ptr<Action> action(Game* game) override;
+
+    void attack(std::shared_ptr<Entity> target) override;
+
+    bool on_take_damage(std::shared_ptr<Action> action,
+                        int damage,
+                        std::shared_ptr<Entity> source) override;
+
+    void react_to_damage(std::shared_ptr<Action> action,
+                         int damage,
+                         std::shared_ptr<Entity> source) override;
+
+    void on_death(std::shared_ptr<Action> action,
+                  std::shared_ptr<Entity> source) override;
+
+    void on_change_position(Game* game, Point from, Point to) override;
+
+    void on_end_turn(std::shared_ptr<Action> action) override;
 
     std::string race() const;
 
@@ -49,6 +68,12 @@ public:
     MobState& state();
 
     void change_state(std::unique_ptr<MobState>&& new_state);
+
+    bool asleep() const;
+
+    bool wandering() const;
+
+    bool entity_nearby(Game* game, int distance);
 
 protected:
     std::string race_;
