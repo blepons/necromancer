@@ -2,9 +2,9 @@
 
 #include <memory>
 #include "energy.hpp"
+#include "fov.hpp"
 #include "passability.hpp"
 #include "point.hpp"
-#include "fov.hpp"
 
 namespace rln {
 
@@ -58,6 +58,10 @@ public:
     virtual void on_take_damage(std::shared_ptr<Action> action,
                                 int damage,
                                 std::shared_ptr<Entity> source) = 0;
+
+    virtual void react_to_damage(std::shared_ptr<Action> action,
+                                 int damage,
+                                 std::shared_ptr<Entity> source);
 
     virtual void on_death(std::shared_ptr<Action> action,
                           std::shared_ptr<Entity> source) = 0;

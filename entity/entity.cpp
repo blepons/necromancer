@@ -74,6 +74,7 @@ bool Entity::take_damage(std::shared_ptr<Action> action,
                          std::shared_ptr<Entity> source) {
     on_take_damage(action, damage, source);
     if (alive()) {
+        react_to_damage(action, damage, source);
         return false;
     }
     action->add_event(
@@ -92,5 +93,9 @@ void Entity::end_turn(std::shared_ptr<Action> action) {
 bool Entity::needs_input() const {
     return false;
 }
+
+void Entity::react_to_damage(std::shared_ptr<Action>,
+                             int,
+                             std::shared_ptr<Entity>) {}
 
 }  // namespace rln
