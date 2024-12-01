@@ -86,8 +86,7 @@ void Entity::move(Point point, Game* game) {
 bool Entity::take_damage(std::shared_ptr<Action> action,
                          int damage,
                          std::shared_ptr<Entity> source) {
-    on_take_damage(action, damage, source);
-    if (alive()) {
+    if (on_take_damage(action, damage, source) && alive()) {
         react_to_damage(action, damage, source);
         return false;
     }
