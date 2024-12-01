@@ -1,5 +1,7 @@
 add_subdirectory(attack_action)
 
+add_subdirectory(change_state_action)
+
 add_subdirectory(close_door_action)
 
 add_subdirectory(entity_action)
