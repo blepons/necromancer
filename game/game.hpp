@@ -28,6 +28,8 @@ public:
 
     void add_event(Event event);
 
+    int random(int min, int max);
+
 protected:
     TurnResult turn_result(bool game_changed);
 
