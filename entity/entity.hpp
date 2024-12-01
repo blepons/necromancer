@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "energy.hpp"
+#include "faction.hpp"
 #include "fov.hpp"
 #include "passability.hpp"
 #include "point.hpp"
@@ -13,7 +14,7 @@ class Game;
 
 class Entity : public std::enable_shared_from_this<Entity> {
 public:
-    Entity(Passability passability, int max_hp, int speed, Point position);
+    Entity(Passability passability, std::string faction, int max_hp, int speed);
 
     virtual ~Entity() = default;
 
@@ -22,6 +23,8 @@ public:
     Passability passability() const;
 
     Fov& fov();
+
+    Faction& faction();
 
     int max_health() const;
 
@@ -74,6 +77,7 @@ protected:
     Energy energy_;
     Passability passability_;
     Fov fov_;
+    Faction faction_;
 
     int max_hp_;
     int hp_;

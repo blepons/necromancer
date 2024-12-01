@@ -16,4 +16,5 @@ target_link_libraries(
     PRIVATE action
     PUBLIC passability
     PUBLIC point
+    PUBLIC faction
 )

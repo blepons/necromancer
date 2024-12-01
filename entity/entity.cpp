@@ -1,9 +1,11 @@
 #include "entity.hpp"
 #include <algorithm>
 #include <memory>
+#include <utility>
 #include "action.hpp"
 #include "energy.hpp"
 #include "event.hpp"
+#include "faction.hpp"
 #include "game.hpp"
 #include "passability.hpp"
 #include "point.hpp"
@@ -11,16 +13,24 @@
 
 namespace rln {
 
-Entity::Entity(Passability passability, int max_hp, int speed, Point position)
+Entity::Entity(Passability passability,
+               std::string faction,
+               int max_hp,
+               int speed)
     : energy_(),
       passability_(passability),
+      faction_(std::move(faction)),
       max_hp_(max_hp),
       hp_(max_hp_),
       speed_(speed),
-      position_(position) {}
+      position_({0, 0}) {}
 
 Passability Entity::passability() const {
     return passability_;
+}
+
+Faction& Entity::faction() {
+    return faction_;
 }
 
 int Entity::max_health() const {
