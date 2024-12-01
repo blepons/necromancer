@@ -4,6 +4,7 @@
 
 namespace rln {
 
+// TODO: should it be removed?
 class NullAction : public Action {
 public:
     NullAction();

@@ -13,7 +13,6 @@ public:
     PolymorphAction(Game* game,
                     Point pos,
                     std::shared_ptr<Entity> entity,
-                    // std::string_view kind);
                     const json& data);
 
     ActionResult perform() override;

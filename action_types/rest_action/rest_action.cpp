@@ -15,7 +15,7 @@ ActionResult RestAction::perform() {
         hero != nullptr) {
         hero->increase_health(3);
         hero->gain_mana(15);
-    } else if (game()->stage()->visible_to_hero(entity())) {
+    } else {  // TODO: check if it's visible by hostile entities
         entity()->increase_health(2);
     }
     return ActionResult::succeed();

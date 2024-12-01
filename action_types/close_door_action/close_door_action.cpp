@@ -28,6 +28,7 @@ ActionResult CloseDoorAction::perform() {
         return ActionResult::fail();
     }
     game()->stage()->tile_at(door_pos_, TileRegistry::build("closed_door"));
+    // TODO: do something with this line after FOV was moved to Entity
     game()->stage()->fov_needs_update();
     return ActionResult::succeed();
 }
