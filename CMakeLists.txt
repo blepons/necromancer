@@ -39,6 +39,8 @@ add_subdirectory(entity)
 
 add_subdirectory(event)
 
+add_subdirectory(faction)
+
 add_subdirectory(fov)
 
 add_subdirectory(game)
