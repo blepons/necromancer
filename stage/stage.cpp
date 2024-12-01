@@ -31,6 +31,10 @@ std::shared_ptr<const Entity> Stage::entity_at(Point position) const {
     return entities_grid_.at(position.x, position.y);
 }
 
+std::vector<std::shared_ptr<Entity>>& Stage::entities() {
+    return entities_;
+}
+
 bool Stage::occupied(Point position) const {
     return entity_at(position) != nullptr;
 }

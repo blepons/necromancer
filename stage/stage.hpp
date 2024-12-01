@@ -32,6 +32,8 @@ public:
 
     std::shared_ptr<const Entity> entity_at(Point position) const;
 
+    std::vector<std::shared_ptr<Entity>>& entities();
+
     bool occupied(Point position) const;
 
     bool visible(std::shared_ptr<Entity> entity, Point position) const;
