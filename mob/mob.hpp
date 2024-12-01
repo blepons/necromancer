@@ -32,9 +32,11 @@ public:
 
     void use_move(std::shared_ptr<Move> move);
 
-    bool can_use_move(std::shared_ptr<Move> move) const;
+    bool can_use_move(std::shared_ptr<Move> move);
 
     std::shared_ptr<Action> action(Game* game) override;
+
+    std::string race() const;
 
     int vision() const;
 

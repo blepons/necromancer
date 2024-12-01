@@ -43,4 +43,38 @@ void Mob::use_move(std::shared_ptr<Move> move) {
     cooldowns_.at(move) += move->cooldown();
 }
 
+bool Mob::can_use_move(std::shared_ptr<Move> move) {
+    return cooldowns_[move] == 0;
+}
+
+// TODO: action
+
+std::string Mob::race() const {
+    return race_;
+}
+
+int Mob::vision() const {
+    return vision_;
+}
+
+int Mob::hearing() const {
+    return hearing_;
+}
+
+int Mob::tracking() const {
+    return tracking_;
+}
+
+int Mob::experience_reward() const {
+    return experience_reward_;
+}
+
+MobState& Mob::state() {
+    return *state_;
+}
+
+void Mob::change_state(std::unique_ptr<MobState>&& new_state) {
+    state_ = std::move(new_state);
+}
+
 }  // namespace rln
