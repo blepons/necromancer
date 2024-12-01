@@ -1,4 +1,6 @@
 #include "stage.hpp"
+#include <algorithm>
+#include <iterator>
 #include "entity.hpp"
 #include "fov.hpp"
 #include "game.hpp"
@@ -68,9 +70,15 @@ void Stage::move_entity(Point from, Point to) {
 
 void Stage::remove_entity(std::shared_ptr<Entity> entity) {
     auto pos = entity->position();
-
-    // do something with entity order that changes after removal
-
+    auto it = std::find(entities_.begin(), entities_.end(), entity);
+    auto index = std::distance(entities_.begin(), it);
+    if (entity_index_ > index) {
+        --entity_index_;
+    }
+    entities_.erase(it);
+    if (entity_index_ >= entities_.size()) {
+        entity_index_ = 0;
+    }
     entities_grid_.at(pos.x, pos.y) = nullptr;
 }
 
@@ -107,6 +115,14 @@ bool Stage::targetable(Point from, Point to) const {
 
 bool Stage::targetable(std::shared_ptr<Entity> entity, Point position) const {
     return targetable(position, entity->position());
+}
+
+std::shared_ptr<Entity> Stage::current_entity() {
+    return entities_[entity_index_];
+}
+
+void Stage::increment_entity_index() {
+    entity_index_ = (entity_index_ + 1) % entities_.size();
 }
 
 }  // namespace rln

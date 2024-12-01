@@ -60,9 +60,16 @@ public:
 
     bool at_bounds(Point position) const;
 
+    std::shared_ptr<Entity> current_entity();
+
+    void increment_entity_index();
+
 private:
     Game* game_;
+
     std::vector<std::shared_ptr<Entity>> entities_;
+    int entity_index_;
+
     bpns::matrix<std::unique_ptr<Tile>> tiles_;
     bpns::matrix<std::shared_ptr<Entity>> entities_grid_;
 
