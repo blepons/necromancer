@@ -23,17 +23,18 @@ public:
 
     void gain_mana(int amount);
 
-    std::unique_ptr<Action> action(Game* game) override;
+    std::shared_ptr<Action> action(Game* game) override;
 
-    void on_take_damage(Action* action,
+    bool on_take_damage(std::shared_ptr<Action> action,
                         int damage,
                         std::shared_ptr<Entity> source) override;
 
-    void on_death(Action* action, std::shared_ptr<Entity> source) override;
+    void on_death(std::shared_ptr<Action> action,
+                  std::shared_ptr<Entity> source) override;
 
     void on_change_position(Game* game, Point from, Point to) override;
 
-    void on_end_turn(Action* action) override;
+    void on_end_turn(std::shared_ptr<Action> action) override;
 
     void refresh_skills();
 

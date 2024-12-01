@@ -58,7 +58,7 @@ public:
 
     virtual bool attack(std::shared_ptr<Entity> target) = 0;
 
-    virtual void on_take_damage(std::shared_ptr<Action> action,
+    virtual bool on_take_damage(std::shared_ptr<Action> action,
                                 int damage,
                                 std::shared_ptr<Entity> source) = 0;
 
