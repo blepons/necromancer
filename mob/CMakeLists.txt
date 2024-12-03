@@ -13,7 +13,7 @@ target_link_libraries(
     PUBLIC entity
     PUBLIC attack
     PUBLIC move
-    PRIVATE mob_state
+    PUBLIC mob_state
     PRIVATE asleep_state
     PRIVATE wander_state
     PRIVATE change_state_action

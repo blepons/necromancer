@@ -6,10 +6,10 @@
 #include <vector>
 #include "attack.hpp"
 #include "entity.hpp"
+#include "mob_state.hpp"
 
 namespace rln {
 
-class MobState;
 class Move;
 
 class Mob : public Entity {
