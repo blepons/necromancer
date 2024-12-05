@@ -84,4 +84,6 @@ add_subdirectory(stage)
 
 add_subdirectory(tile)
 
+add_subdirectory(tile_types)
+
 add_subdirectory(turn_result)

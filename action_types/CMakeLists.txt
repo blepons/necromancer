@@ -14,6 +14,8 @@ add_subdirectory(line_action)
 
 add_subdirectory(mana_action)
 
+add_subdirectory(next_floor_action)
+
 add_subdirectory(null_action)
 
 add_subdirectory(open_door_action)

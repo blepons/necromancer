@@ -36,6 +36,8 @@ public:
 
     void assign_id(std::shared_ptr<Entity> entity);
 
+    void next_floor();
+
 protected:
     TurnResult turn_result(bool game_changed);
 

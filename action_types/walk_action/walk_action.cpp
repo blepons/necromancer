@@ -32,7 +32,8 @@ ActionResult WalkAction::perform() {
 
     auto tile = game()->stage()->tile_at(new_pos);
     if (tile.can_operate() && tile.can_enter(entity()->passability())) {
-        return ActionResult::alternate(tile.on_operate(new_pos));
+        return ActionResult::alternate(
+            tile.on_operate(game(), entity(), new_pos));
     }
 
     if (!game()->stage()->can_occupy(new_pos, entity()->passability())) {
