@@ -1,7 +1,7 @@
 #pragma once
 
-#include "tile.hpp"
 #include <memory>
+#include "tile.hpp"
 
 namespace rln {
 
@@ -12,4 +12,4 @@ public:
     std::shared_ptr<Action> on_turn(Game* game, Point position) const override;
 };
 
-}
+}  // namespace rln

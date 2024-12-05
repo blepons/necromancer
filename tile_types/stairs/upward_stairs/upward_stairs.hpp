@@ -9,4 +9,4 @@ public:
     UpwardStairs();
 };
 
-}
+}  // namespace rln

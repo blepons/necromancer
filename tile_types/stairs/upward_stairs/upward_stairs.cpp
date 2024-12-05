@@ -5,4 +5,4 @@ namespace rln {
 UpwardStairs::UpwardStairs()
     : Tile("upward_stairs", Passability::walk(), true) {}
 
-}
+}  // namespace rln
