@@ -64,6 +64,8 @@ add_subdirectory(mob_state_types)
 
 add_subdirectory(move)
 
+add_subdirectory(move_types)
+
 add_subdirectory(passability)
 
 add_subdirectory(pathfinder)
