@@ -35,7 +35,9 @@ bool Tile::can_operate() const {
     return false;
 }
 
-std::shared_ptr<Action> Tile::on_operate(Point) const {
+std::shared_ptr<Action> Tile::on_operate(Game*,
+                                         std::shared_ptr<Entity>,
+                                         Point) const {
     // TODO: decide if it should:
     //           1. throw
     //           2. return NullAction
@@ -43,7 +45,7 @@ std::shared_ptr<Action> Tile::on_operate(Point) const {
     return std::make_unique<NullAction>();
 }
 
-std::shared_ptr<Action> Tile::on_turn(std::shared_ptr<Entity>) const {
+std::shared_ptr<Action> Tile::on_turn(Game*, Point) const {
     // TODO: decide if it should:
     //           1. return NullAction
     //           2. return nullptr (further check needed)
