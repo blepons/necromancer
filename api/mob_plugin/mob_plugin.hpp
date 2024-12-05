@@ -5,9 +5,9 @@
 #include <nlohmann/json.hpp>
 #include <string>
 
-using json = nlohmann::json;
-
 namespace rln {
+
+using json = nlohmann::json;
 
 class Mob;
 

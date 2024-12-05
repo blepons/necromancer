@@ -4,9 +4,9 @@
 #include <nlohmann/json.hpp>
 #include "entity_action.hpp"
 
-using json = nlohmann::json;
-
 namespace rln {
+
+using json = nlohmann::json;
 
 class SpawnAction : public EntityAction {
 public:
