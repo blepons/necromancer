@@ -16,6 +16,8 @@ class MobPlugin;
 // TODO
 class Game {
 public:
+    // TODO: ctor
+
     std::shared_ptr<Hero> hero();
 
     Stage* stage();
@@ -29,6 +31,10 @@ public:
     void add_event(Event event);
 
     int random(int min, int max);
+
+    int unique_id();
+
+    void assign_id(std::shared_ptr<Entity> entity);
 
 protected:
     TurnResult turn_result(bool game_changed);

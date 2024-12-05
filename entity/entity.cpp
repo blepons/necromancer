@@ -29,6 +29,14 @@ void Entity::init(Point pos) {
     position(pos);
 }
 
+int Entity::id() const {
+    return id_;
+}
+
+void Entity::id(int id) {
+    id_ = id;
+}
+
 Passability Entity::passability() const {
     return passability_;
 }

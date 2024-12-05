@@ -46,10 +46,11 @@ void Stage::set_entity_no_check(std::shared_ptr<Entity> entity,
     entities_grid_.at(position.x, position.y) = entity;
 }
 
-void Stage::add_entity(std::shared_ptr<Entity> entity, Point position) {
+void Stage::add_entity(Game* game, std::shared_ptr<Entity> entity, Point position) {
     if (occupied(position)) {
         // throw?
     }
+    game->assign_id(entity);
     entity->init(position);
     entity->fov().init(this);
     entities_.push_back(entity);

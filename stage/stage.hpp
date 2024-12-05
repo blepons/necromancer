@@ -44,7 +44,7 @@ public:
 
     bool targetable(std::shared_ptr<Entity> entity, Point position) const;
 
-    void add_entity(std::shared_ptr<Entity> entity, Point position);
+    void add_entity(Game* game, std::shared_ptr<Entity> entity, Point position);
 
     void replace_entity(std::shared_ptr<Entity> entity, Point position);
 

@@ -20,6 +20,10 @@ public:
 
     virtual void init(Point pos);
 
+    int id() const;
+
+    void id(int id);
+
     Energy& energy();
 
     Passability passability() const;
@@ -86,6 +90,7 @@ protected:
     int speed_;
 
     Point position_;
+    int id_;
 };
 
 }  // namespace rln

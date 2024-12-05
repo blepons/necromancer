@@ -17,7 +17,7 @@ ActionResult SpawnAction::perform() {
     std::string id = data_["id"];
     auto& plugin = game()->plugin(id);
     std::shared_ptr<Mob> spawned_mob = plugin.create_mob(data_);
-    game()->stage()->add_entity(spawned_mob, pos());
+    game()->stage()->add_entity(game(), spawned_mob, pos());
     add_event(Event(Event::EventType::SPAWN, spawned_mob, pos()));
     return ActionResult::succeed();
 }
