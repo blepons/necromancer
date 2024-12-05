@@ -17,6 +17,7 @@ public:
     Mob(std::string race,
         Attack attack,
         std::vector<std::shared_ptr<Move>> moves,
+        int damage,
         int vision,
         int hearing,
         int tracking,

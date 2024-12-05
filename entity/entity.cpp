@@ -16,12 +16,14 @@ namespace rln {
 Entity::Entity(Passability passability,
                std::string faction,
                int max_hp,
+               int damage,
                int speed)
     : energy_(),
       passability_(passability),
       faction_(std::move(faction)),
       max_hp_(max_hp),
       hp_(max_hp_),
+      damage_(damage),
       speed_(speed),
       position_({0, 0}) {}
 
@@ -67,6 +69,10 @@ void Entity::health(int amount) {
 
 bool Entity::alive() const {
     return hp_ > 0;
+}
+
+int Entity::damage() const {
+    return damage_;
 }
 
 int Entity::speed() const {

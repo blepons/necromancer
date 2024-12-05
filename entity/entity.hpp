@@ -14,7 +14,11 @@ class Game;
 
 class Entity : public std::enable_shared_from_this<Entity> {
 public:
-    Entity(Passability passability, std::string faction, int max_hp, int speed);
+    Entity(Passability passability,
+           std::string faction,
+           int max_hp,
+           int damage,
+           int speed);
 
     virtual ~Entity() = default;
 
@@ -43,6 +47,8 @@ public:
     void health(int amount);
 
     bool alive() const;
+
+    int damage() const;
 
     int speed() const;
 
@@ -87,6 +93,7 @@ protected:
 
     int max_hp_;
     int hp_;
+    int damage_;
     int speed_;
 
     Point position_;

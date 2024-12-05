@@ -7,15 +7,16 @@ class Entity;
 
 class Attack {
 public:
-    Attack(int damage, int range);
+    Attack(int range);
 
     void perform(std::shared_ptr<Entity> source,
                  std::shared_ptr<Entity> target);
 
     bool ranged() const;
 
+    static Attack melee();
+
 private:
-    int damage_;
     int range_;
 };
 

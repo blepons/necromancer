@@ -1,5 +1,6 @@
 add_library(
     mob
+    # TODO: make it shared?
     mob.hpp mob.cpp
 )
 
