@@ -10,7 +10,7 @@ namespace rln {
 struct ActionResult;
 class Entity;
 
-class Action {
+class Action : public std::enable_shared_from_this<Action> {
 public:
     Action(Game* game, Point pos);
 

@@ -8,6 +8,8 @@ add_subdirectory(entity_action)
 
 add_subdirectory(heal_action)
 
+add_subdirectory(lava_burn_action)
+
 add_subdirectory(line_action)
 
 add_subdirectory(mana_action)
