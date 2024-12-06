@@ -10,6 +10,10 @@ namespace rln {
 UsableSkill::UsableSkill(std::string identifier, int max_level)
     : Skill(std::move(identifier), max_level) {}
 
+bool UsableSkill::usable(Game*) {
+    return true;
+}
+
 std::shared_ptr<Action> UsableSkill::wrap_action(
     std::shared_ptr<Hero> hero,
     int level,

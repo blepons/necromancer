@@ -16,7 +16,7 @@ public:
 
     virtual int mana_cost(std::shared_ptr<Hero> hero, int level) = 0;
 
-    virtual bool usable(Game* game) = 0;
+    virtual bool usable(Game* game);
 
 protected:
     std::shared_ptr<Action> wrap_action(std::shared_ptr<Hero> hero,
