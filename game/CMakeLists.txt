@@ -14,5 +14,6 @@ target_link_libraries(
     PUBLIC event
     PUBLIC turn_result
     PUBLIC stage
+    PUBLIC tile_registry
     PRIVATE plugin_manager
 )

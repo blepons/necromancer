@@ -5,16 +5,7 @@
 #include "stage.hpp"
 #include "tile.hpp"
 
-// remove after implementing TileRegistry
-#include <string_view>
-
 namespace rln {
-
-// TODO (make it a class)
-class TileRegistry {
-public:
-    static std::unique_ptr<Tile> build(std::string_view);
-};
 
 CloseDoorAction::CloseDoorAction(Game* game,
                                  Point pos,
@@ -27,7 +18,8 @@ ActionResult CloseDoorAction::perform() {
     if (blocking_entity != nullptr) {
         return ActionResult::fail();
     }
-    game()->stage()->tile_at(door_pos_, TileRegistry::build("closed_door"));
+    game()->stage()->tile_at(door_pos_,
+                             game()->tile_registry().build("closed_door"));
     // TODO: do something with this line after FOV was moved to Entity
     game()->stage()->fov_needs_update();
     return ActionResult::succeed();

@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include "event.hpp"
+#include "tile_registry.hpp"
 #include "turn_result.hpp"
 
 namespace rln {
@@ -23,6 +24,8 @@ public:
     Stage* stage();
 
     const MobPlugin& plugin(const std::string& id);
+
+    const TileRegistry& tile_registry() const;
 
     TurnResult update();
 
@@ -47,6 +50,8 @@ private:
 
     std::deque<std::shared_ptr<Action>> actions_;
     std::vector<Event> events_;
+
+    TileRegistry tile_registry_;
 };
 
 }  // namespace rln
