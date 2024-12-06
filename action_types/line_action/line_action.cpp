@@ -10,7 +10,7 @@ LineAction::LineAction(Game* game, Point init, Point target, int range)
     : Action(game, init), target_(target), range_(range) {}
 
 ActionResult LineAction::perform() {
-    if (Point::manhattan(target_, pos()) > range_) {
+    if (Point::manhattan(target_, pos()) > static_cast<unsigned>(range_)) {
         return ActionResult::succeed();
     }
 

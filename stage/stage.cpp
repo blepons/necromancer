@@ -79,7 +79,7 @@ void Stage::remove_entity(std::shared_ptr<Entity> entity) {
         --entity_index_;
     }
     entities_.erase(it);
-    if (entity_index_ >= entities_.size()) {
+    if (static_cast<unsigned>(entity_index_) >= entities_.size()) {
         entity_index_ = 0;
     }
     entities_grid_.at(pos.x, pos.y) = nullptr;

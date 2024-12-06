@@ -145,7 +145,7 @@ bool Mob::entity_nearby(Game* game, int distance) {
     return std::ranges::any_of(game->stage()->entities(), [&](auto& other) {
         return this != other.get() &&
                Point::euclidean_ceil(position(), other->position()) <=
-                   distance &&
+                   static_cast<unsigned>(distance) &&
                game->stage()->visible(position(), other->position());
     });
 }
