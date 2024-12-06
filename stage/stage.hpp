@@ -52,13 +52,9 @@ public:
 
     void remove_entity(std::shared_ptr<Entity> entity);
 
-    void update_fov();
-
-    void fov_needs_update();
-
     bool can_occupy(Point position, Passability passability) const;
 
-    bool at_bounds(Point position) const;
+    bool out_of_bounds(Point position) const;
 
     std::shared_ptr<Entity> current_entity();
 

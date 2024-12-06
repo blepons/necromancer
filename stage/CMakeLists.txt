@@ -12,7 +12,6 @@ target_link_libraries(
     stage
     PUBLIC entity
     PRIVATE game
-    PRIVATE hero
     PRIVATE fov
     PUBLIC matrix
     PUBLIC tile

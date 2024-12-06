@@ -1,13 +1,21 @@
 #include "stage.hpp"
 #include <algorithm>
 #include <iterator>
+#include <memory>
 #include "entity.hpp"
 #include "fov.hpp"
 #include "game.hpp"
-#include "hero.hpp"
 #include "line.hpp"
 
 namespace rln {
+
+int Stage::bound_x() const {
+    return tiles_.rows();
+}
+
+int Stage::bound_y() const {
+    return tiles_.columns();
+}
 
 Tile& Stage::operator[](Point position) {
     return *tiles_(position.x, position.y);
@@ -25,6 +33,10 @@ const Tile& Stage::tile_at(Point position) const {
     return *tiles_.at(position.x, position.y);
 }
 
+void Stage::tile_at(Point position, std::unique_ptr<Tile> tile) {
+    tiles_(position.x, position.y) = std::move(tile);
+}
+
 std::shared_ptr<Entity> Stage::entity_at(Point position) {
     return entities_grid_.at(position.x, position.y);
 }
@@ -39,50 +51,6 @@ std::vector<std::shared_ptr<Entity>>& Stage::entities() {
 
 bool Stage::occupied(Point position) const {
     return entity_at(position) != nullptr;
-}
-
-void Stage::set_entity_no_check(std::shared_ptr<Entity> entity,
-                                Point position) {
-    entities_grid_.at(position.x, position.y) = entity;
-}
-
-void Stage::add_entity(Game* game,
-                       std::shared_ptr<Entity> entity,
-                       Point position) {
-    if (occupied(position)) {
-        // throw?
-    }
-    game->assign_id(entity);
-    entity->init(position);
-    entity->fov().init(this);
-    entities_.push_back(entity);
-    entities_grid_(position.x, position.y) = entity;
-}
-
-void Stage::replace_entity(std::shared_ptr<Entity> entity, Point position) {
-    // TODO
-}
-
-void Stage::move_entity(Point from, Point to) {
-    auto entity = entity_at(from);
-    if (entity == nullptr) {
-        // throw?
-    }
-    set_entity_no_check(entity, to);
-}
-
-void Stage::remove_entity(std::shared_ptr<Entity> entity) {
-    auto pos = entity->position();
-    auto it = std::find(entities_.begin(), entities_.end(), entity);
-    auto index = std::distance(entities_.begin(), it);
-    if (entity_index_ > index) {
-        --entity_index_;
-    }
-    entities_.erase(it);
-    if (static_cast<unsigned>(entity_index_) >= entities_.size()) {
-        entity_index_ = 0;
-    }
-    entities_grid_.at(pos.x, pos.y) = nullptr;
 }
 
 bool Stage::visible(Point from, Point to) const {
@@ -118,6 +86,67 @@ bool Stage::targetable(Point from, Point to) const {
 
 bool Stage::targetable(std::shared_ptr<Entity> entity, Point position) const {
     return targetable(position, entity->position());
+}
+
+void Stage::set_entity_no_check(std::shared_ptr<Entity> entity,
+                                Point position) {
+    entities_grid_.at(position.x, position.y) = entity;
+}
+
+void Stage::add_entity(Game* game,
+                       std::shared_ptr<Entity> entity,
+                       Point position) {
+    if (occupied(position)) {
+        // throw?
+    }
+    game->assign_id(entity);
+    entity->init(position);
+    entity->fov().init(this);
+    entities_.push_back(entity);
+    entities_grid_(position.x, position.y) = entity;
+}
+
+void Stage::replace_entity(std::shared_ptr<Entity> entity, Point position) {
+    auto old_entity = entity_at(position);
+    if (old_entity == nullptr) {
+        // throw?
+    }
+    set_entity_no_check(entity, position);
+    auto it = std::ranges::find_if(
+        entities_,
+        [id = entity->id()](const auto& e) { return e->id() == id; });
+    *it = entity;
+}
+
+void Stage::move_entity(Point from, Point to) {
+    auto entity = entity_at(from);
+    if (entity == nullptr) {
+        // throw?
+    }
+    set_entity_no_check(entity, to);
+}
+
+void Stage::remove_entity(std::shared_ptr<Entity> entity) {
+    auto pos = entity->position();
+    auto it = std::find(entities_.begin(), entities_.end(), entity);
+    auto index = std::distance(entities_.begin(), it);
+    if (entity_index_ > index) {
+        --entity_index_;
+    }
+    entities_.erase(it);
+    if (static_cast<unsigned>(entity_index_) >= entities_.size()) {
+        entity_index_ = 0;
+    }
+    entities_grid_.at(pos.x, pos.y) = nullptr;
+}
+
+bool Stage::can_occupy(Point position, Passability passability) const {
+    return tile_at(position).passability().overlaps(passability);
+}
+
+bool Stage::out_of_bounds(Point position) const {
+    return position.x >= bound_x() || position.x < 0 ||
+           position.y >= bound_y() || position.y < 0;
 }
 
 std::shared_ptr<Entity> Stage::current_entity() {

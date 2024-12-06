@@ -36,7 +36,8 @@ std::optional<Direction> Pathfinder::search() {
         }
         for (auto dir : Direction::all()) {
             auto neighbor = Point(path.pos.x + dir.x, path.pos.y + dir.y);
-            if (explored.contains(neighbor) || stage_->at_bounds(neighbor)) {
+            if (explored.contains(neighbor) ||
+                stage_->out_of_bounds(neighbor)) {
                 continue;
             }
             auto cst = cost(neighbor, stage_->tile_at(neighbor));
