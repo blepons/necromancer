@@ -30,6 +30,8 @@ add_subdirectory(api)
 
 add_subdirectory(attack)
 
+add_subdirectory(corpse)
+
 add_subdirectory(cost_priority_queue)
 
 add_subdirectory(direction)

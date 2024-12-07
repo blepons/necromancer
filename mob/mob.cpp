@@ -6,6 +6,7 @@
 #include <vector>
 #include "asleep_state.hpp"
 #include "change_state_action.hpp"
+#include "corpse.hpp"
 #include "mob_state.hpp"
 #include "move.hpp"
 #include "stage.hpp"
@@ -98,7 +99,12 @@ void Mob::react_to_damage(std::shared_ptr<Action> action,
 }
 
 void Mob::on_death(std::shared_ptr<Action> action, std::shared_ptr<Entity>) {
-    action->game()->stage()->remove_entity(getptr());
+    auto moves = std::views::keys(cooldowns_);
+    auto corpse = std::make_shared<Corpse>(
+        std::min(max_health() / 15, 1), race(), attack_,
+        std::vector(moves.begin(), moves.end()), damage(), vision(), hearing(),
+        tracking(), passability(), max_health(), speed());
+    action->game()->stage()->replace_entity(action->game(), corpse, position());
 }
 
 void Mob::on_change_position(Game*, Point, Point) {}

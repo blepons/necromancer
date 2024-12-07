@@ -14,6 +14,7 @@ class Game;
 
 class Entity : public std::enable_shared_from_this<Entity> {
 public:
+    // TODO: add identifier abstract method
     Entity(Passability passability,
            std::string faction,
            int max_hp,

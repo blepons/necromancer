@@ -19,4 +19,5 @@ target_link_libraries(
     PRIVATE wander_state
     PRIVATE change_state_action
     PRIVATE stage
+    PRIVATE corpse
 )
