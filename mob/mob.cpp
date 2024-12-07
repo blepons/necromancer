@@ -143,7 +143,7 @@ bool Mob::wandering() const {
 
 bool Mob::entity_nearby(Game* game, int distance) {
     return std::ranges::any_of(game->stage()->entities(), [&](auto& other) {
-        return this != other.get() &&
+        return id() != other->id() &&
                Point::euclidean_ceil(position(), other->position()) <=
                    static_cast<unsigned>(distance) &&
                game->stage()->visible(position(), other->position());
