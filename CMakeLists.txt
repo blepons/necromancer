@@ -42,6 +42,8 @@ add_subdirectory(energy)
 
 add_subdirectory(entity)
 
+add_subdirectory(essence)
+
 add_subdirectory(event)
 
 add_subdirectory(faction)
