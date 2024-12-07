@@ -46,7 +46,9 @@ public:
 
     void add_entity(Game* game, std::shared_ptr<Entity> entity, Point position);
 
-    void replace_entity(std::shared_ptr<Entity> entity, Point position);
+    void replace_entity(Game* game,
+                        std::shared_ptr<Entity> entity,
+                        Point position);
 
     void move_entity(Point from, Point to);
 

@@ -23,7 +23,7 @@ ActionResult PolymorphAction::perform() {
     spawned_mob->health(
         std::max(static_cast<int>(hp_fraction * spawned_mob->max_health()), 1));
     spawned_mob->energy() = entity()->energy();
-    game()->stage()->replace_entity(spawned_mob, entity()->position());
+    game()->stage()->replace_entity(game(), spawned_mob, entity()->position());
     add_event(Event(Event::EventType::POLYMORPH, spawned_mob,
                     spawned_mob->position()));
     return ActionResult::succeed();

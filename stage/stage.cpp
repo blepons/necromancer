@@ -106,12 +106,17 @@ void Stage::add_entity(Game* game,
     entities_grid_(position.x, position.y) = entity;
 }
 
-void Stage::replace_entity(std::shared_ptr<Entity> entity, Point position) {
+void Stage::replace_entity(Game* game,
+                           std::shared_ptr<Entity> entity,
+                           Point position) {
     auto old_entity = entity_at(position);
     if (old_entity == nullptr) {
         // throw?
     }
     set_entity_no_check(entity, position);
+    game->assign_id(entity);
+    entity->init(position);
+    entity->fov().init(this);
     auto it = std::ranges::find_if(
         entities_,
         [id = entity->id()](const auto& e) { return e->id() == id; });
