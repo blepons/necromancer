@@ -13,6 +13,8 @@ public:
 
     int level() const;
 
+    void gain_experience(int amount);
+
     SkillSet& skill_set();
 
     int mana() const;

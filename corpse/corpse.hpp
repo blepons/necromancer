@@ -12,7 +12,6 @@ class Move;
 
 class Corpse : public Entity {
 public:
-    // TODO: ctor
     Corpse(int corpse_hp,
            std::string dead_mob_type,
            Attack attack,

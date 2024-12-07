@@ -20,4 +20,5 @@ target_link_libraries(
     PRIVATE change_state_action
     PRIVATE stage
     PRIVATE corpse
+    PRIVATE hero
 )

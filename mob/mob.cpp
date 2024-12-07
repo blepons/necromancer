@@ -7,6 +7,7 @@
 #include "asleep_state.hpp"
 #include "change_state_action.hpp"
 #include "corpse.hpp"
+#include "hero.hpp"
 #include "mob_state.hpp"
 #include "move.hpp"
 #include "stage.hpp"
@@ -98,7 +99,11 @@ void Mob::react_to_damage(std::shared_ptr<Action> action,
     action->add_action(moves[game->random(0, moves.size())]->action(game, mob));
 }
 
-void Mob::on_death(std::shared_ptr<Action> action, std::shared_ptr<Entity>) {
+void Mob::on_death(std::shared_ptr<Action> action,
+                   std::shared_ptr<Entity> entity) {
+    if (auto hero = std::dynamic_pointer_cast<Hero>(entity); hero != nullptr) {
+        hero->gain_experience(experience_reward());
+    }
     auto moves = std::views::keys(cooldowns_);
     auto corpse = std::make_shared<Corpse>(
         std::min(max_health() / 15, 1), race(), attack_,
