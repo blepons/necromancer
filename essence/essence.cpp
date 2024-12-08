@@ -7,7 +7,7 @@
 namespace rln {
 
 Essence::Essence(int amount)
-    : Entity(Passability::walk(), Faction::non_entity, 1, 0, 0),
+    : Entity(Passability::walk(), 0, Faction::non_entity, 1, 0, 0),
       amount_(amount) {}
 
 std::shared_ptr<Action> Essence::action(Game*) {

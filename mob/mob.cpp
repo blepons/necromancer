@@ -27,7 +27,7 @@ Mob::Mob(std::string race,
          std::string faction,
          int max_hp,
          int speed)
-    : Entity(passability, std::move(faction), max_hp, damage, speed),
+    : Entity(passability, vision, std::move(faction), max_hp, damage, speed),
       race_(std::move(race)),
       attack_(std::move(attack)),
       vision_(vision),

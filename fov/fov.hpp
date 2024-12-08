@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cstddef>
 #include "matrix.hpp"
 #include "point.hpp"
 
@@ -12,10 +11,7 @@ struct Slope;
 // TODO
 class Fov {
 public:
-    // TODO: move to update() parameter if Fov is moved to Entity
-    static constexpr std::size_t view_distance = 10;
-
-    Fov();
+    Fov(int view_distance);
 
     void init(Stage* stage);
 
@@ -29,6 +25,7 @@ private:
     Stage* stage_;
     bool needs_recalculation_;
     bpns::matrix<bool> visibility_;
+    int view_distance_;
 
     void compute(unsigned octant, Point origin, int x, Slope top, Slope bottom);
 

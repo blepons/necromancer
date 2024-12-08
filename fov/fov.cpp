@@ -16,7 +16,11 @@ auto operator<=>(const Slope& lhs, const Slope& rhs) {
     return lhs.y * rhs.x <=> rhs.y * lhs.x;
 }
 
-Fov::Fov() : stage_(nullptr), needs_recalculation_(true), visibility_() {}
+Fov::Fov(int view_distance)
+    : stage_(nullptr),
+      needs_recalculation_(true),
+      visibility_(),
+      view_distance_(view_distance) {}
 
 void Fov::init(Stage* stage) {
     stage_ = stage;
@@ -50,7 +54,7 @@ void Fov::compute(unsigned octant,
                   int x,
                   Slope top,
                   Slope bottom) {
-    for (; x <= static_cast<int>(view_distance); ++x) {
+    for (; x <= view_distance_; ++x) {
         int top_y;
         if (top.x == 1) {
             top_y = x;
@@ -89,7 +93,7 @@ void Fov::compute(unsigned octant,
 
         int was_opaque = -1;
         for (int y = top_y; y >= bottom_y; --y) {
-            if (Point::euclidean_ceil(x, y) <= view_distance) {
+            if (Point::euclidean_ceil(x, y) <= view_distance_) {
                 bool is_opaque = blocks_light(x, y, octant, origin);
 
                 if ((y != top_y || top >= Slope(y, x)) &&
@@ -97,7 +101,7 @@ void Fov::compute(unsigned octant,
                     set_visible(x, y, octant, origin);
                 }
 
-                if (x != view_distance) {
+                if (x != view_distance_) {
                     if (is_opaque) {
                         if (was_opaque == 0) {
                             int nx = x * 2;

@@ -14,12 +14,14 @@
 namespace rln {
 
 Entity::Entity(Passability passability,
+               int view_distance,
                std::string faction,
                int max_hp,
                int damage,
                int speed)
     : energy_(),
       passability_(passability),
+      fov_(view_distance),
       faction_(std::move(faction)),
       max_hp_(max_hp),
       hp_(max_hp_),
