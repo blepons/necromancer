@@ -15,7 +15,7 @@ class Fov;
 class Stage {
 public:
     Stage(std::vector<std::shared_ptr<Entity>> entities,
-          bpns::matrix<std::unique_ptr<Tile>> tiles,
+          bpns::matrix<std::shared_ptr<Tile>> tiles,
           Point start_pos);
 
     Point start_pos() const;
@@ -32,7 +32,7 @@ public:
 
     const Tile& tile_at(Point position) const;
 
-    void tile_at(Point position, std::unique_ptr<Tile> tile);
+    void tile_at(Point position, std::shared_ptr<Tile> tile);
 
     std::shared_ptr<Entity> entity_at(Point position);
 
@@ -72,7 +72,7 @@ private:
     std::vector<std::shared_ptr<Entity>> entities_;
     int entity_index_;
 
-    bpns::matrix<std::unique_ptr<Tile>> tiles_;
+    bpns::matrix<std::shared_ptr<Tile>> tiles_;
     bpns::matrix<std::shared_ptr<Entity>> entities_grid_;
 
     Point start_pos_;

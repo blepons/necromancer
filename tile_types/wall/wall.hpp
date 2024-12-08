@@ -6,6 +6,7 @@
 namespace rln {
 
 class Wall : public Tile {
+public:
     Wall(std::string identifier);
 };
 

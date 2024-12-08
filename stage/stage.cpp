@@ -10,7 +10,7 @@
 namespace rln {
 
 Stage::Stage(std::vector<std::shared_ptr<Entity>> entities,
-             bpns::matrix<std::unique_ptr<Tile>> tiles,
+             bpns::matrix<std::shared_ptr<Tile>> tiles,
              Point start_pos)
     : entities_(std::move(entities)),
       entity_index_(0),
@@ -49,7 +49,7 @@ const Tile& Stage::tile_at(Point position) const {
     return *tiles_.at(position.x, position.y);
 }
 
-void Stage::tile_at(Point position, std::unique_ptr<Tile> tile) {
+void Stage::tile_at(Point position, std::shared_ptr<Tile> tile) {
     tiles_(position.x, position.y) = std::move(tile);
 }
 

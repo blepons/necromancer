@@ -11,13 +11,13 @@ class Tile;
 
 class TileRegistry {
 public:
-    using TileFactory = std::function<std::unique_ptr<Tile>()>;
+    using TileFactory = std::function<std::shared_ptr<Tile>()>;
 
     TileRegistry() = default;
 
     void add(const std::string& identifier, TileFactory&& factory);
 
-    std::unique_ptr<Tile> build(const std::string& identifier) const;
+    std::shared_ptr<Tile> build(const std::string& identifier) const;
 
 private:
     std::unordered_map<std::string, TileFactory> tile_factories_;
