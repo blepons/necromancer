@@ -6,15 +6,13 @@ class Passability {
 public:
     Passability(unsigned mask) : bitmask_(mask) {}
 
-    Passability(std::bitset<4> mask) : bitmask_(mask) {}
+    Passability(std::bitset<2> mask) : bitmask_(mask) {}
 
     static Passability none() { return Passability(0); }
 
     static Passability walk() { return Passability(1); }
 
     static Passability door() { return Passability(2); }
-
-    static Passability swim() { return Passability(4); }
 
     static Passability door_or_walk();
 
@@ -32,10 +30,10 @@ public:
         return *this;
     }
 
-    std::bitset<4> bitmask() const;
+    std::bitset<2> bitmask() const;
 
 private:
-    std::bitset<4> bitmask_;
+    std::bitset<2> bitmask_;
 };
 
 inline Passability operator|(const Passability& lhs, const Passability& rhs) {
@@ -59,7 +57,7 @@ inline Passability Passability::door_or_walk() {
 }
 
 inline Passability Passability::all() {
-    return walk() | door() | swim();
+    return walk() | door();
 }
 
 inline bool Passability::overlaps(Passability other) const {
