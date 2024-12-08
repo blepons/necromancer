@@ -6,6 +6,7 @@
 #include "event.hpp"
 #include "tile_registry.hpp"
 #include "turn_result.hpp"
+#include "undead_registry.hpp"
 
 namespace rln {
 
@@ -26,6 +27,8 @@ public:
     const MobPlugin& plugin(const std::string& id);
 
     const TileRegistry& tile_registry() const;
+
+    const UndeadRegistry& undead_registry() const;
 
     TurnResult update();
 
@@ -52,6 +55,7 @@ private:
     std::vector<Event> events_;
 
     TileRegistry tile_registry_;
+    UndeadRegistry undead_registry_;
 };
 
 }  // namespace rln

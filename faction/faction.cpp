@@ -15,4 +15,8 @@ bool Faction::hostile(const Faction& other) const {
     return faction_ != other.faction_;
 }
 
+std::string Faction::string() const {
+    return faction_;
+}
+
 }  // namespace rln

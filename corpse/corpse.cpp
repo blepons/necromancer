@@ -58,4 +58,8 @@ std::string Corpse::dead_mob_race() const {
     return dead_mob_type_;
 }
 
+const Corpse::DeadMobStats& Corpse::dead_mob_stats() const {
+    return stats_;
+}
+
 }  // namespace rln

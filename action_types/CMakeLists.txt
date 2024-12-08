@@ -20,6 +20,8 @@ add_subdirectory(mana_action)
 
 add_subdirectory(mana_gain_action)
 
+add_subdirectory(necromancy_action)
+
 add_subdirectory(next_floor_action)
 
 add_subdirectory(null_action)

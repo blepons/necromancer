@@ -15,5 +15,6 @@ target_link_libraries(
     PUBLIC turn_result
     PUBLIC stage
     PUBLIC tile_registry
+    PUBLIC undead_registry
     PRIVATE plugin_manager
 )

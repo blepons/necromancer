@@ -95,3 +95,7 @@ add_subdirectory(tile_registry)
 add_subdirectory(tile_types)
 
 add_subdirectory(turn_result)
+
+add_subdirectory(undead)
+
+add_subdirectory(undead_registry)

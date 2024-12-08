@@ -12,6 +12,18 @@ class Move;
 
 class Corpse : public Entity {
 public:
+    struct DeadMobStats {
+        Attack attack;
+        std::vector<std::shared_ptr<Move>> moves;
+        int damage;
+        int vision;
+        int hearing;
+        int tracking;
+        Passability passability;
+        int max_hp;
+        int speed;
+    };
+
     Corpse(int corpse_hp,
            std::string dead_mob_type,
            Attack attack,
@@ -45,19 +57,9 @@ public:
 
     std::string dead_mob_race() const;
 
-private:
-    struct DeadMobStats {
-        Attack attack;
-        std::vector<std::shared_ptr<Move>> moves;
-        int damage;
-        int vision;
-        int hearing;
-        int tracking;
-        Passability passability;
-        int max_hp;
-        int speed;
-    };
+    const DeadMobStats& dead_mob_stats() const;
 
+private:
     std::string dead_mob_type_;
     DeadMobStats stats_;
 };

@@ -16,6 +16,8 @@ public:
 
     bool hostile(const Faction& other) const;
 
+    std::string string() const;
+
 private:
     std::string faction_;
 };
