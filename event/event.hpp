@@ -17,7 +17,8 @@ public:
         SPAWN,
     };
 
-    Event(EventType type, std::shared_ptr<Entity> entity, Point pos);
+    Event(EventType type, std::shared_ptr<Entity> entity, Point pos)
+        : type(type), entity(entity), pos(pos) {}
 
     EventType type;
     std::shared_ptr<Entity> entity;

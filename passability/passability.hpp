@@ -30,7 +30,7 @@ public:
         return *this;
     }
 
-    std::bitset<2> bitmask() const;
+    std::bitset<2> bitmask() const { return bitmask_; }
 
 private:
     std::bitset<2> bitmask_;

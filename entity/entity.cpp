@@ -37,12 +37,36 @@ int Entity::id() const {
     return id_;
 }
 
+json Entity::serialize() {
+    auto pos = position();
+    json data = {{"type", "entity"},
+                 {"identifier", identifier()},
+                 {"energy", energy_.amount()},
+                 // {"passability", passability} // TODO
+                 {"faction", faction_.string()},
+                 {"max_hp", max_health()},
+                 {"hp", health()},
+                 {"damage", damage()},
+                 {"speed", speed()},
+                 {"position", std::array<int, 2>{pos.x, pos.y}},
+                 {"id", id()}};
+    return data;
+}
+
 void Entity::id(int id) {
     id_ = id;
 }
 
+Energy& Entity::energy() {
+    return energy_;
+}
+
 Passability Entity::passability() const {
     return passability_;
+}
+
+Fov& Entity::fov() {
+    return fov_;
 }
 
 Faction& Entity::faction() {

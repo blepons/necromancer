@@ -155,6 +155,12 @@ TurnResult Game::update() {
     }
 }
 
+TurnResult Game::turn_result(bool game_changed) {
+    TurnResult tr = {std::move(events_), game_changed};
+    events_ = {};
+    return tr;
+}
+
 void Game::add_action(std::shared_ptr<Action> action) {
     actions_.push_back(action);
 }

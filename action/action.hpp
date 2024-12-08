@@ -36,7 +36,8 @@ protected:
 struct ActionResult {
     ActionResult(bool success,
                  bool done,
-                 std::shared_ptr<Action> alternative = nullptr);
+                 std::shared_ptr<Action> alternative = nullptr)
+        : success(success), done(done), alternative(alternative) {}
 
     bool success;
     bool done;

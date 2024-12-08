@@ -26,7 +26,7 @@ public:
 
     virtual void init(Point pos);
 
-    virtual std::string identifier() const;
+    virtual std::string identifier() const = 0;
 
     int id() const;
 
