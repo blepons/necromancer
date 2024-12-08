@@ -42,7 +42,7 @@ std::shared_ptr<Action> Tile::on_operate(Game*,
     //           1. throw
     //           2. return NullAction
     //           3. return nullptr (further check needed)
-    return std::make_unique<NullAction>();
+    return std::make_shared<NullAction>();
 }
 
 std::shared_ptr<Action> Tile::on_turn(Game*, Point) const {

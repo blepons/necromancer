@@ -20,14 +20,14 @@ WalkAction::WalkAction(Game* game,
 ActionResult WalkAction::perform() {
     if (direction_ == Direction::none()) {
         return ActionResult::alternate(
-            std::make_unique<RestAction>(game_, pos_, entity_));
+            std::make_shared<RestAction>(game_, pos_, entity_));
     }
 
     auto new_pos = Point(pos_.x + direction_.x, pos_.y + direction_.y);
     auto target = game()->stage()->entity_at(new_pos);
     if (target != nullptr && target != entity()) {
         return ActionResult::alternate(
-            std::make_unique<AttackAction>(entity(), target, game(), pos()));
+            std::make_shared<AttackAction>(entity(), target, game(), pos()));
     }
 
     auto tile = game()->stage()->tile_at(new_pos);
