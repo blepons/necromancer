@@ -53,6 +53,10 @@ int Entity::max_health() const {
     return max_hp_;
 }
 
+void Entity::max_health(int amount) {
+    max_hp_ = amount;
+}
+
 int Entity::health() const {
     return hp_;
 }

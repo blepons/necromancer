@@ -42,6 +42,8 @@ public:
 
     int max_health() const;
 
+    void max_health(int amount);
+
     int health() const;
 
     void increase_health(int amount);
