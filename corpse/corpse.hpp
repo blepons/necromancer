@@ -36,6 +36,8 @@ public:
            int max_hp,
            int speed);
 
+    std::string identifier() const override;
+
     std::shared_ptr<Action> action(Game* game) override;
 
     void attack(std::shared_ptr<Entity> target) override;

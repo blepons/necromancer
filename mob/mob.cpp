@@ -48,6 +48,10 @@ void Mob::init(Point pos) {
     state_ = std::make_unique<AsleepState>(getptr());
 }
 
+std::string Mob::identifier() const {
+    return race();
+}
+
 void Mob::use_move(std::shared_ptr<Move> move) {
     cooldowns_.at(move) += move->cooldown();
 }

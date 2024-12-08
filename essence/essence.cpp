@@ -10,6 +10,10 @@ Essence::Essence(int amount)
     : Entity(Passability::walk(), 0, Faction::non_entity, 1, 0, 0),
       amount_(amount) {}
 
+std::string Essence::identifier() const {
+    return "essence";
+}
+
 std::shared_ptr<Action> Essence::action(Game*) {
     return std::make_shared<NullAction>();
 }

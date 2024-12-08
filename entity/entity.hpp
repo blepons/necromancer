@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 #include "energy.hpp"
 #include "faction.hpp"
 #include "fov.hpp"
@@ -14,7 +15,6 @@ class Game;
 
 class Entity : public std::enable_shared_from_this<Entity> {
 public:
-    // TODO: add identifier abstract method
     Entity(Passability passability,
            int view_distance,
            std::string faction,
@@ -25,6 +25,8 @@ public:
     virtual ~Entity() = default;
 
     virtual void init(Point pos);
+
+    virtual std::string identifier() const;
 
     int id() const;
 

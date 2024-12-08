@@ -31,6 +31,8 @@ public:
 
     void init(Point pos) override;
 
+    std::string identifier() const override;
+
     void use_move(std::shared_ptr<Move> move);
 
     bool can_use_move(std::shared_ptr<Move> move);

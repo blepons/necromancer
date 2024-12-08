@@ -1,5 +1,6 @@
 #include "corpse.hpp"
 #include <memory>
+#include <string>
 #include <utility>
 #include "null_action.hpp"
 #include "stage.hpp"
@@ -33,6 +34,10 @@ Corpse::Corpse(int corpse_hp,
              passability,
              max_hp,
              speed) {}
+
+std::string Corpse::identifier() const {
+    return "corpse";
+}
 
 std::shared_ptr<Action> Corpse::action(Game*) {
     return std::make_shared<NullAction>();
