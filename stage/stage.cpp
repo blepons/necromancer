@@ -9,6 +9,10 @@
 
 namespace rln {
 
+Point Stage::start_pos() const {
+    return start_pos_;
+}
+
 int Stage::bound_x() const {
     return tiles_.rows();
 }
