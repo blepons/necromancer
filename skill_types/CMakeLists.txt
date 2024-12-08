@@ -6,3 +6,5 @@ add_subdirectory(usable_skill)
 
 
 add_subdirectory(curse_skill)
+
+add_subdirectory(desiccation_skill)

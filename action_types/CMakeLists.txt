@@ -6,6 +6,8 @@ add_subdirectory(change_state_action)
 
 add_subdirectory(close_door_action)
 
+add_subdirectory(desiccation_action)
+
 add_subdirectory(entity_action)
 
 add_subdirectory(heal_action)
@@ -15,6 +17,8 @@ add_subdirectory(lava_burn_action)
 add_subdirectory(line_action)
 
 add_subdirectory(mana_action)
+
+add_subdirectory(mana_gain_action)
 
 add_subdirectory(next_floor_action)
 
