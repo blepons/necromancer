@@ -1,13 +1,47 @@
 #include "hero.hpp"
 #include <algorithm>
 #include <cmath>
+#include <memory>
+#include "action.hpp"
+#include "rest_action.hpp"
 #include "skill_set.hpp"
+#include "stage.hpp"
+#include "walk_action.hpp"
 
 namespace rln {
 
+std::string Hero::identifier() const {
+    return "hero";
+}
+
 int Hero::level() const {
-    return static_cast<int>(
-        std::floor(1 + std::sqrt(100 - 2 * (50 - experience_)) / 10));
+    int level = 1;
+    while (level < max_lvl && experience_needed_for_lvl[level] <= experience_) {
+        ++level;
+    }
+    return level;
+}
+
+void Hero::gain_experience(int amount) {
+    auto lvl = level();
+    experience_ += amount;
+    recalculate_level(lvl);
+}
+
+void Hero::recalculate_level(int previous_lvl) {
+    auto lvl = level();
+    if (lvl - previous_lvl) {
+        on_level_up(previous_lvl, lvl);
+    }
+}
+
+void Hero::on_level_up(int previous_lvl, int new_lvl) {
+    auto lvl_diff = new_lvl - previous_lvl;
+
+    max_health(max_health() + hp_increment * lvl_diff);
+    max_mana(max_mana() + mp_increment * lvl_diff);
+    increase_health(hp_increment * lvl_diff);
+    gain_mana(mp_increment * lvl_diff);
 }
 
 SkillSet& Hero::skill_set() {
@@ -22,6 +56,10 @@ int Hero::max_mana() const {
     return max_mana_;
 }
 
+void Hero::max_mana(int amount) {
+    max_mana_ = amount;
+}
+
 void Hero::spend_mana(int amount) {
     if (mana() < amount) {
         // throw?
@@ -32,5 +70,54 @@ void Hero::spend_mana(int amount) {
 void Hero::gain_mana(int amount) {
     mana_ = std::clamp(mana_ + amount, 0, max_mana());
 }
+
+void Hero::explore(Point pos, bool forced) {
+    // TODO: store matrix of explored tiles?
+}
+
+void Hero::wait_for_input() {
+    next_action_ = nullptr;
+}
+
+void Hero::rest(Game* game) {
+    next_action(
+        std::make_shared<RestAction>(game, position(), shared_from_this()));
+}
+
+void Hero::walk(Game* game, Direction dir) {
+    next_action(std::make_shared<WalkAction>(game, position(),
+                                             shared_from_this(), dir));
+}
+
+std::shared_ptr<Action> Hero::action(Game*) {
+    auto action = next_action();
+    wait_for_input();
+    return action;
+}
+
+std::shared_ptr<Action> Hero::next_action() {
+    return next_action_;
+}
+
+void Hero::next_action(std::shared_ptr<Action> action) {
+    next_action_ = action;
+}
+
+bool Hero::on_take_damage(std::shared_ptr<Action>,
+                          int damage,
+                          std::shared_ptr<Entity>) {
+    decrease_health(damage);
+    return true;
+}
+
+void Hero::on_death(std::shared_ptr<Action> action, std::shared_ptr<Entity>) {
+    action->game()->stage()->remove_entity(shared_from_this());
+}
+
+void Hero::on_change_position(Game*, Point, Point to) {
+    fov().update(to);
+}
+
+void Hero::on_end_turn(std::shared_ptr<Action>) {}
 
 }  // namespace rln

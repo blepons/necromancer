@@ -1,7 +1,9 @@
 #pragma once
 
+#include <array>
 #include <cstddef>
 #include <memory>
+#include "direction.hpp"
 #include "entity.hpp"
 #include "skill_set.hpp"
 
@@ -9,7 +11,9 @@ namespace rln {
 
 class Hero : public Entity {
 public:
-    static constexpr std::size_t max_lvl = 100;
+    // TODO: ctor
+
+    std::string identifier() const override;
 
     int level() const;
 
@@ -21,13 +25,25 @@ public:
 
     int max_mana() const;
 
+    void max_mana(int amount);
+
     void spend_mana(int amount);
 
     void gain_mana(int amount);
 
     void explore(Point pos, bool forced);
 
+    void wait_for_input();
+
+    void rest(Game* game);
+
+    void walk(Game* game, Direction dir);
+
     std::shared_ptr<Action> action(Game* game) override;
+
+    std::shared_ptr<Action> next_action();
+
+    void next_action(std::shared_ptr<Action> action);
 
     bool on_take_damage(std::shared_ptr<Action> action,
                         int damage,
@@ -40,16 +56,26 @@ public:
 
     void on_end_turn(std::shared_ptr<Action> action) override;
 
-    void refresh_skills();
+protected:
+    static constexpr int max_lvl = 15;
 
-    // protected:
-    //     constexpr int experience_needed_to_gain_lvl(int level);
+    static constexpr std::array<int, max_lvl + 1> experience_needed_for_lvl = {
+        0,   10,  25,   50,   100,  200,  300,  400,
+        500, 750, 1000, 1250, 1500, 2000, 2500, 3000};
+
+    void recalculate_level(int previous_lvl);
+
+    void on_level_up(int previous_lvl, int new_lvl);
+
+    static constexpr std::size_t hp_increment = 5;
+    static constexpr std::size_t mp_increment = 10;
 
 private:
     int max_mana_;
     int mana_;
     int experience_;
     SkillSet skills_;
+    std::shared_ptr<Action> next_action_;
 };
 
 }  // namespace rln
