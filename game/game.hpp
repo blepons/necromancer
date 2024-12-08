@@ -22,7 +22,9 @@ class MobPlugin;
 // TODO
 class Game {
 public:
-    // TODO: ctor
+    Game(FloorManager* floor_manager,
+         TileRegistry tile_registry,
+         UndeadRegistry undead_registry);
 
     std::shared_ptr<Hero> hero();
 

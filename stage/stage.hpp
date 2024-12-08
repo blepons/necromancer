@@ -14,7 +14,9 @@ class Fov;
 
 class Stage {
 public:
-    // TODO: ctor
+    Stage(std::vector<std::shared_ptr<Entity>> entities,
+          bpns::matrix<std::unique_ptr<Tile>> tiles,
+          Point start_pos);
 
     Point start_pos() const;
 

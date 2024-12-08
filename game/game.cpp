@@ -9,6 +9,13 @@
 
 namespace rln {
 
+Game::Game(FloorManager* floor_manager,
+           TileRegistry tile_registry,
+           UndeadRegistry undead_registry)
+    : floor_manager_(floor_manager),
+      tile_registry_(std::move(tile_registry)),
+      undead_registry_(std::move(undead_registry)) {}
+
 std::shared_ptr<Hero> Game::hero() {
     return hero_;
 }
@@ -178,7 +185,7 @@ void Game::next_floor() {
     actions_.clear();
     events_.clear();
     floor_manager()->unload_current_floor();
-    floor_manager()->load_next_floor();
+    floor_manager()->load_next_floor(this);
     transfer_hero();
 }
 

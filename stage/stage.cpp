@@ -9,6 +9,18 @@
 
 namespace rln {
 
+Stage::Stage(std::vector<std::shared_ptr<Entity>> entities,
+             bpns::matrix<std::unique_ptr<Tile>> tiles,
+             Point start_pos)
+    : entities_(std::move(entities)),
+      entity_index_(0),
+      tiles_(std::move(tiles)),
+      start_pos_(start_pos) {
+    for (const auto& entity : entities_) {
+        set_entity_no_check(entity, entity->position());
+    }
+}
+
 Point Stage::start_pos() const {
     return start_pos_;
 }
