@@ -1,9 +1,13 @@
 #pragma once
 
 #include <deque>
+#include <limits>
 #include <memory>
+#include <random>
 #include <string>
+#include <unordered_set>
 #include "event.hpp"
+#include "floor_manager.hpp"
 #include "tile_registry.hpp"
 #include "turn_result.hpp"
 #include "undead_registry.hpp"
@@ -36,7 +40,7 @@ public:
 
     void add_event(Event event);
 
-    int random(int min, int max);
+    int random(int min, int max = std::numeric_limits<int>::max());
 
     int unique_id();
 
@@ -47,8 +51,12 @@ public:
 protected:
     TurnResult turn_result(bool game_changed);
 
+    FloorManager* floor_manager();
+
+    void transfer_hero();
+
 private:
-    Stage* stage_;
+    FloorManager* floor_manager_;
     std::shared_ptr<Hero> hero_;
 
     std::deque<std::shared_ptr<Action>> actions_;
@@ -56,6 +64,9 @@ private:
 
     TileRegistry tile_registry_;
     UndeadRegistry undead_registry_;
+
+    std::mt19937 gen_;
+    std::unordered_set<int> used_ids_;
 };
 
 }  // namespace rln

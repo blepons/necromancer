@@ -16,5 +16,8 @@ target_link_libraries(
     PUBLIC stage
     PUBLIC tile_registry
     PUBLIC undead_registry
+    PUBLIC floor_manager
     PRIVATE plugin_manager
+    PRIVATE hero
+    PRIVATE entity_action
 )

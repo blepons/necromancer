@@ -48,6 +48,8 @@ add_subdirectory(event)
 
 add_subdirectory(faction)
 
+add_subdirectory(floor_manager)
+
 add_subdirectory(fov)
 
 add_subdirectory(game)
