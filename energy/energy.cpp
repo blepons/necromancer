@@ -22,4 +22,8 @@ void Energy::spend() {
     amount_ -= action_cost;
 }
 
+int Energy::amount() {
+    return amount_;
+}
+
 }  // namespace rln

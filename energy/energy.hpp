@@ -26,6 +26,8 @@ public:
 
     void spend();
 
+    int amount();
+
 private:
     int amount_ = 0;
 };
