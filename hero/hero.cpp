@@ -10,6 +10,19 @@
 
 namespace rln {
 
+Hero::Hero(int max_mana, SkillSet skills, int max_hp, int damage)
+    : Entity(Passability::door_or_walk(),
+             20,
+             Faction::hero,
+             max_hp,
+             damage,
+             Energy::normal_speed),
+      max_mana_(max_mana),
+      mana_(max_mana),
+      experience_(0),
+      skills_(std::move(skills)),
+      next_action_() {}
+
 std::string Hero::identifier() const {
     return "hero";
 }

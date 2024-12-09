@@ -11,7 +11,7 @@ namespace rln {
 
 class Hero : public Entity {
 public:
-    // TODO: ctor
+    Hero(int max_mana, SkillSet skills, int max_hp, int damage);
 
     std::string identifier() const override;
 
