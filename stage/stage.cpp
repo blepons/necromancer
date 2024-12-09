@@ -15,6 +15,7 @@ Stage::Stage(std::vector<std::shared_ptr<Entity>> entities,
     : entities_(std::move(entities)),
       entity_index_(0),
       tiles_(std::move(tiles)),
+      entities_grid_(tiles_.rows(), tiles_.columns()),
       start_pos_(start_pos) {
     for (const auto& entity : entities_) {
         set_entity_no_check(entity, entity->position());
@@ -50,7 +51,7 @@ const Tile& Stage::tile_at(Point position) const {
 }
 
 void Stage::tile_at(Point position, std::shared_ptr<Tile> tile) {
-    tiles_(position.x, position.y) = std::move(tile);
+    tiles_(position.x, position.y) = tile;
 }
 
 std::shared_ptr<Entity> Stage::entity_at(Point position) {
@@ -90,10 +91,7 @@ bool Stage::targetable(Point from, Point to) const {
         if (point == to) {
             return true;
         }
-        if (occupied(point)) {
-            return false;
-        }
-        if (!tile_at(point).transparent()) {
+        if (!tile_at(point).transparent() || occupied(point)) {
             return false;
         }
     }
