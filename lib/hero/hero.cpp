@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cmath>
 #include <memory>
+#include <nlohmann/json.hpp>
 #include "action.hpp"
 #include "rest_action.hpp"
 #include "skill_set.hpp"
@@ -23,8 +24,27 @@ Hero::Hero(int max_mana, SkillSet skills, int max_hp, int damage)
       skills_(std::move(skills)),
       next_action_() {}
 
+void Hero::init(const json& data) {
+    Entity::init(data);
+    auto mana__ = data.value("mana", max_mana());
+    auto experience__ = data.value("experience", 0);
+
+    mana_ = mana__;
+    experience_ = experience__;
+}
+
 std::string Hero::identifier() const {
     return "hero";
+}
+
+json Hero::serialize() {
+    json data = Entity::serialize();
+    json hero_data = {{"max_mana", max_mana()},
+                      {"mana", mana()},
+                      {"experience", experience()},
+                      {"skills", skills_.serialize()}};
+    data.update(hero_data);
+    return data;
 }
 
 int Hero::level() const {
@@ -84,6 +104,10 @@ void Hero::gain_mana(int amount) {
     mana_ = std::clamp(mana_ + amount, 0, max_mana());
 }
 
+int Hero::experience() const {
+    return experience_;
+}
+
 void Hero::explore(Point pos, bool forced) {
     // TODO: store matrix of explored tiles?
 }
@@ -116,6 +140,11 @@ void Hero::next_action(std::shared_ptr<Action> action) {
     next_action_ = action;
 }
 
+void Hero::attack(std::shared_ptr<Entity> target) {
+    // TODO
+    target->take_damage(nullptr, damage(), shared_from_this());
+}
+
 bool Hero::on_take_damage(std::shared_ptr<Action>,
                           int damage,
                           std::shared_ptr<Entity>) {
@@ -123,11 +152,16 @@ bool Hero::on_take_damage(std::shared_ptr<Action>,
     return true;
 }
 
+void Hero::react_to_damage(std::shared_ptr<Action>,
+                           int,
+                           std::shared_ptr<Entity>) {}
+
 void Hero::on_death(std::shared_ptr<Action> action, std::shared_ptr<Entity>) {
     action->game()->stage()->remove_entity(shared_from_this());
 }
 
 void Hero::on_change_position(Game*, Point, Point to) {
+    // TODO: ?
     fov().update(to);
 }
 

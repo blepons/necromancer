@@ -1,9 +1,21 @@
 #include "skill_set.hpp"
 #include <memory>
+#include <nlohmann/json.hpp>
 #include <ranges>
 #include <vector>
+#include "skill.hpp"
 
 namespace rln {
+
+json SkillSet::serialize() {
+    json::array_t skills;
+    for (const auto& [skill, level] : level_map_) {
+        json skill_data = skill->serialize();
+        skill_data.update({{"level", level}});
+        skills.emplace_back(skill_data);
+    }
+    return {{"skills", skills}};
+}
 
 int SkillSet::level(std::shared_ptr<Skill> skill) const {
     if (auto it = level_map_.find(skill); it != level_map_.end()) {

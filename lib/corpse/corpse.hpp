@@ -36,6 +36,8 @@ public:
            int max_hp,
            int speed);
 
+    json serialize() override;
+
     std::string identifier() const override;
 
     std::shared_ptr<Action> action(Game* game) override;

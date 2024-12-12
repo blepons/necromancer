@@ -1,5 +1,6 @@
 #include "skill.hpp"
 #include <memory>
+#include <nlohmann/json.hpp>
 #include <string>
 #include <utility>
 #include "hero.hpp"
@@ -9,6 +10,11 @@ namespace rln {
 
 Skill::Skill(std::string identifier, int max_level)
     : identifier_(std::move(identifier)), max_level_(max_level) {}
+
+json Skill::serialize() {
+    json data = {{"identifier", identifier()}, {"max_level", max_level()}};
+    return data;
+}
 
 int Skill::max_level() const {
     return max_level_;

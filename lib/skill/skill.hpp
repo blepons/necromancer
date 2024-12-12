@@ -2,16 +2,19 @@
 
 #include <memory>
 #include <string>
+#include "serializable.hpp"
 
 namespace rln {
 
 class Hero;
 
-class Skill : public std::enable_shared_from_this<Skill> {
+class Skill : public Serializable, public std::enable_shared_from_this<Skill> {
 public:
     Skill(std::string identifier, int max_level);
 
     virtual ~Skill() = default;
+
+    json serialize() override;
 
     int max_level() const;
 

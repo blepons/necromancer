@@ -1,7 +1,9 @@
 #pragma once
 
 #include <memory>
+#include <string>
 #include "point.hpp"
+#include "serializable.hpp"
 
 namespace rln {
 
@@ -9,11 +11,15 @@ class Action;
 class Mob;
 class Game;
 
-class MobState {
+class MobState : public Serializable {
 public:
     MobState(std::shared_ptr<Mob> mob);
 
     virtual ~MobState() = default;
+
+    virtual std::string identifier() const = 0;
+
+    json serialize() override;
 
     std::shared_ptr<Mob> mob();
 

@@ -1,6 +1,7 @@
 #include "mob.hpp"
 #include <algorithm>
 #include <memory>
+#include <nlohmann/json.hpp>
 #include <ranges>
 #include <utility>
 #include <vector>
@@ -43,13 +44,38 @@ std::shared_ptr<Mob> Mob::getptr() {
     return std::static_pointer_cast<Mob>(shared_from_this());
 }
 
-void Mob::init(Point pos) {
-    Entity::init(pos);
-    state_ = std::make_unique<AsleepState>(getptr());
+void Mob::init(const json& data) {
+    Entity::init(data);
+    auto state = data.value("state", "asleep");
+    if (state == "wander") {
+        state_ = std::make_unique<WanderState>(getptr());
+    } else {
+        state_ = std::make_unique<AsleepState>(getptr());
+    }
 }
 
 std::string Mob::identifier() const {
-    return race();
+    return "mob";
+}
+
+json Mob::serialize() {
+    json data = Entity::serialize();
+    json::array_t moves;
+    for (const auto& [move, cooldown] : cooldowns_) {
+        json move_data = move->serialize();
+        move_data.update({{"recharge_time", cooldown}});
+        moves.emplace_back(move_data);
+    }
+    json mob_data = {{"race", race()},
+                     {"attack", attack_.serialize()},
+                     {"moves", moves},
+                     {"vision", vision()},
+                     {"hearing", hearing()},
+                     {"tracking", tracking()},
+                     {"experience_reward", experience_reward()},
+                     {"state", state().serialize()}};
+    data.update(mob_data);
+    return data;
 }
 
 void Mob::use_move(std::shared_ptr<Move> move) {

@@ -1,6 +1,7 @@
 #include "entity.hpp"
 #include <algorithm>
 #include <memory>
+#include <nlohmann/json.hpp>
 #include <utility>
 #include "action.hpp"
 #include "energy.hpp"
@@ -29,8 +30,16 @@ Entity::Entity(Passability passability,
       speed_(speed),
       position_({0, 0}) {}
 
-void Entity::init(Point pos) {
-    position(pos);
+void Entity::init(const json& data) {
+    auto energy_ = data["energy"].template get<int>();
+    auto hp_ = data["hp"].template get<int>();
+    auto pos_ = data["position"];
+    auto id_ = data["id"].template get<int>();
+
+    health(hp_);
+    energy().amount(energy_);
+    position(Point(pos_[0], pos_[1]));
+    id(id_);
 }
 
 int Entity::id() const {
@@ -42,12 +51,10 @@ json Entity::serialize() {
     json data = {{"type", "entity"},
                  {"identifier", identifier()},
                  {"energy", energy_.amount()},
-                 // {"passability", passability} // TODO
                  {"faction", faction_.string()},
                  {"max_hp", max_health()},
                  {"hp", health()},
                  {"damage", damage()},
-                 {"speed", speed()},
                  {"position", std::array<int, 2>{pos.x, pos.y}},
                  {"id", id()}};
     return data;
@@ -69,7 +76,15 @@ Fov& Entity::fov() {
     return fov_;
 }
 
+const Fov& Entity::fov() const {
+    return fov_;
+}
+
 Faction& Entity::faction() {
+    return faction_;
+}
+
+const Faction& Entity::faction() const {
     return faction_;
 }
 

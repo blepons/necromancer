@@ -7,13 +7,15 @@
 #include "fov.hpp"
 #include "passability.hpp"
 #include "point.hpp"
+#include "serializable.hpp"
 
 namespace rln {
 
 class Action;
 class Game;
 
-class Entity : public std::enable_shared_from_this<Entity> {
+class Entity : public Serializable,
+               public std::enable_shared_from_this<Entity> {
 public:
     Entity(Passability passability,
            int view_distance,
@@ -24,9 +26,11 @@ public:
 
     virtual ~Entity() = default;
 
-    virtual void init(Point pos);
+    virtual void init(const json& data);
 
     virtual std::string identifier() const = 0;
+
+    json serialize() override;
 
     int id() const;
 
@@ -38,7 +42,11 @@ public:
 
     Fov& fov();
 
+    const Fov& fov() const;
+
     Faction& faction();
+
+    const Faction& faction() const;
 
     int max_health() const;
 

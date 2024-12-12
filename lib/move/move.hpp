@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 #include "action.hpp"
 
 namespace rln {
@@ -8,9 +9,15 @@ namespace rln {
 class Game;
 class Mob;
 
-class Move {
+class Move : public Serializable {
 public:
     Move(int cooldown);
+
+    virtual ~Move() = default;
+
+    virtual std::string identifier() const = 0;
+
+    json serialize() override;
 
     int cooldown() const;
 

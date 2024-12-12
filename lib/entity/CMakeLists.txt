@@ -17,4 +17,5 @@ target_link_libraries(
     PUBLIC passability
     PUBLIC point
     PUBLIC faction
+    PUBLIC serializable
 )

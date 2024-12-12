@@ -12,4 +12,5 @@ target_link_libraries(
     skill
     PRIVATE hero
     PRIVATE skill_set
+    PRIVATE serializable
 )

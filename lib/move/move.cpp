@@ -1,9 +1,14 @@
 #include "move.hpp"
 #include <memory>
+#include <nlohmann/json.hpp>
 
 namespace rln {
 
 Move::Move(int cooldown) : cooldown_(cooldown) {}
+
+json Move::serialize() {
+    return {{"identifier", identifier()}, {"cooldown", cooldown()}};
+}
 
 int Move::cooldown() const {
     return cooldown_;

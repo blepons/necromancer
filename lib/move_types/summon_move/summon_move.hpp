@@ -6,8 +6,6 @@
 
 namespace rln {
 
-using json = nlohmann::json;
-
 class SummonMove : public Move {
 public:
     SummonMove(int cooldown, const json& data);

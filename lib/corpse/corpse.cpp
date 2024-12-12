@@ -1,7 +1,9 @@
 #include "corpse.hpp"
 #include <memory>
+#include <nlohmann/json.hpp>
 #include <string>
 #include <utility>
+#include "move.hpp"
 #include "null_action.hpp"
 #include "stage.hpp"
 
@@ -34,6 +36,26 @@ Corpse::Corpse(int corpse_hp,
              passability,
              max_hp,
              speed) {}
+
+json Corpse::serialize() {
+    json data = Entity::serialize();
+    json::array_t moves;
+    for (const auto& move : stats_.moves) {
+        moves.emplace_back(move->serialize());
+    }
+    json corpse_data = {
+        {"race", dead_mob_type_},
+        {"attack", stats_.attack.serialize()},
+        {"moves", moves},
+        {"vision", stats_.vision},
+        {"hearing", stats_.hearing},
+        {"tracking", stats_.tracking},
+        {"passability", "door_or_walk"},  // TODO: remove temporary solution
+        {"mob_max_hp", stats_.max_hp},
+        {"speed", stats_.speed}};
+    data.update(corpse_data);
+    return data;
+}
 
 std::string Corpse::identifier() const {
     return "corpse";

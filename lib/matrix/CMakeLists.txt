@@ -18,6 +18,11 @@ add_library(
     INTERFACE matrix.hpp
 )
 
+target_compile_features(
+    matrix
+    INTERFACE cxx_std_20
+)
+
 target_include_directories(
     matrix
     INTERFACE .

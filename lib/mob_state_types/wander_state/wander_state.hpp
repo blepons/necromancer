@@ -9,6 +9,8 @@ class WanderState : public MobState {
 public:
     WanderState(std::shared_ptr<Mob> mob);
 
+    std::string identifier() const override;
+
     std::shared_ptr<Action> action(Game* game) override;
 };
 

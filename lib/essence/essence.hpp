@@ -10,6 +10,8 @@ public:
 
     std::string identifier() const override;
 
+    json serialize() override;
+
     std::shared_ptr<Action> action(Game* game) override;
 
     void attack(std::shared_ptr<Entity> target) override;

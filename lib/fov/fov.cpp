@@ -24,7 +24,7 @@ Fov::Fov(int view_distance)
 
 void Fov::init(Stage* stage) {
     stage_ = stage;
-    visibility_(stage->bound_x(), stage_->bound_y());
+    visibility_ = bpns::matrix<bool>(stage->bound_x(), stage_->bound_y());
 }
 
 bool Fov::visible(Point pos) const {

@@ -1,5 +1,6 @@
 #include "tile.hpp"
 #include <memory>
+#include <nlohmann/json.hpp>
 #include <string>
 #include <utility>
 #include "null_action.hpp"
@@ -10,6 +11,10 @@ Tile::Tile(std::string identifier, Passability passability, bool transparent)
     : identifier_(std::move(identifier)),
       passability_(passability),
       transparent_(transparent) {}
+
+json Tile::serialize() {
+    return {{"identifier", identifier()}};
+}
 
 Passability Tile::passability() const {
     return passability_;

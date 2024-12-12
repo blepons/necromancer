@@ -24,6 +24,10 @@ public:
            int max_hp,
            int speed);
 
+    std::string identifier() const override;
+
+    json serialize() override;
+
     void on_death(std::shared_ptr<Action> action,
                   std::shared_ptr<Entity> source) override;
 

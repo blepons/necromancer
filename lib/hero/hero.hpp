@@ -13,7 +13,11 @@ class Hero : public Entity {
 public:
     Hero(int max_mana, SkillSet skills, int max_hp, int damage);
 
+    void init(const json& data) override;
+
     std::string identifier() const override;
+
+    json serialize() override;
 
     int level() const;
 
@@ -31,6 +35,8 @@ public:
 
     void gain_mana(int amount);
 
+    int experience() const;
+
     void explore(Point pos, bool forced);
 
     void wait_for_input();
@@ -45,9 +51,15 @@ public:
 
     void next_action(std::shared_ptr<Action> action);
 
+    void attack(std::shared_ptr<Entity> target) override;
+
     bool on_take_damage(std::shared_ptr<Action> action,
                         int damage,
                         std::shared_ptr<Entity> source) override;
+
+    void react_to_damage(std::shared_ptr<Action> action,
+                         int damage,
+                         std::shared_ptr<Entity> source) override;
 
     void on_death(std::shared_ptr<Action> action,
                   std::shared_ptr<Entity> source) override;

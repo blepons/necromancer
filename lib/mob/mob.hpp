@@ -29,9 +29,11 @@ public:
 
     std::shared_ptr<Mob> getptr();
 
-    void init(Point pos) override;
+    void init(const json& data) override;
 
     std::string identifier() const override;
+
+    json serialize() override;
 
     void use_move(std::shared_ptr<Move> move);
 

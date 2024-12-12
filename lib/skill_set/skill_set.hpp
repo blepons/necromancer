@@ -3,14 +3,17 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
+#include "serializable.hpp"
 
 namespace rln {
 
 class Skill;
 
-class SkillSet {
+class SkillSet : public Serializable {
 public:
     SkillSet() = default;
+
+    json serialize() override;
 
     int level(std::shared_ptr<Skill> skill) const;
 

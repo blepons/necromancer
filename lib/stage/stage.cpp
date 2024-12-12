@@ -113,8 +113,7 @@ void Stage::add_entity(Game* game,
     if (occupied(position)) {
         // throw?
     }
-    game->assign_id(entity);
-    entity->init(position);
+    game->reserve_id(entity->id());
     entity->fov().init(this);
     entities_.push_back(entity);
     entities_grid_(position.x, position.y) = entity;
@@ -128,8 +127,7 @@ void Stage::replace_entity(Game* game,
         // throw?
     }
     set_entity_no_check(entity, position);
-    game->assign_id(entity);
-    entity->init(position);
+    game->reserve_id(entity->id());
     entity->fov().init(this);
     auto it = std::ranges::find_if(
         entities_,

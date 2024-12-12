@@ -12,5 +12,6 @@ target_link_libraries(
     tile
     PUBLIC passability
     PUBLIC point
+    PUBLIC serializable
     PRIVATE null_action
 )

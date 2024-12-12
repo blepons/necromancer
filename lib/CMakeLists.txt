@@ -82,6 +82,8 @@ add_subdirectory(plugin_manager)
 
 add_subdirectory(point)
 
+add_subdirectory(serializable)
+
 add_subdirectory(skill)
 
 add_subdirectory(skill_set)

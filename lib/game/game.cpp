@@ -20,6 +20,18 @@ std::shared_ptr<Hero> Game::hero() {
     return hero_;
 }
 
+std::shared_ptr<const Hero> Game::hero() const {
+    return hero_;
+}
+
+void Game::hero(std::shared_ptr<Hero> hero) {
+    hero_ = hero;
+}
+
+const Fov& Game::hero_fov() const {
+    return hero_->fov();
+}
+
 Stage* Game::stage() {
     return floor_manager()->stage();
 }
@@ -187,6 +199,10 @@ void Game::assign_id(std::shared_ptr<Entity> entity) {
     entity->id(unique_id());
 }
 
+void Game::reserve_id(int id) {
+    used_ids_.insert(id);
+}
+
 void Game::next_floor() {
     actions_.clear();
     events_.clear();
@@ -196,7 +212,11 @@ void Game::next_floor() {
 }
 
 void Game::transfer_hero() {
-    hero()->position(stage()->start_pos());
+    if (hero()) {
+        hero()->position(stage()->start_pos());
+        hero()->fov().init(stage());
+        hero()->fov().update(hero()->position());
+    }
 }
 
 }  // namespace rln

@@ -1,5 +1,6 @@
 #include "essence.hpp"
 #include <memory>
+#include <nlohmann/json.hpp>
 #include "hero.hpp"
 #include "null_action.hpp"
 #include "stage.hpp"
@@ -12,6 +13,13 @@ Essence::Essence(int amount)
 
 std::string Essence::identifier() const {
     return "essence";
+}
+
+json Essence::serialize() {
+    json data = Entity::serialize();
+    json essence_data = {{"essence_amount", amount()}};
+    data.update(essence_data);
+    return data;
 }
 
 std::shared_ptr<Action> Essence::action(Game*) {

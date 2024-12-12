@@ -7,3 +7,9 @@ target_include_directories(
     skill_set
     INTERFACE .
 )
+
+target_link_libraries(
+    skill_set
+    PUBLIC serializable
+    PRIVATE skill
+)

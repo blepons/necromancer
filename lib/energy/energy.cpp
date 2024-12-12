@@ -3,6 +3,8 @@
 
 namespace rln {
 
+Energy::Energy(int initial_amount) : amount_(initial_amount) {}
+
 bool Energy::can_take_turn() const {
     return action_cost <= amount_;
 }
@@ -22,8 +24,12 @@ void Energy::spend() {
     amount_ -= action_cost;
 }
 
-int Energy::amount() {
+int Energy::amount() const {
     return amount_;
+}
+
+void Energy::amount(int new_amount) {
+    amount_ = new_amount;
 }
 
 }  // namespace rln

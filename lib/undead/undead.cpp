@@ -1,4 +1,5 @@
 #include "undead.hpp"
+#include <nlohmann/json.hpp>
 #include <string>
 #include <utility>
 #include "action.hpp"
@@ -33,6 +34,17 @@ Undead::Undead(std::string undead_type,
           max_hp * stats_multiplier,
           speed),
       undead_type_(std::move(undead_type)) {}
+
+std::string Undead::identifier() const {
+    return "undead";
+}
+
+json Undead::serialize() {
+    json data = Mob::serialize();
+    json undead_data = {{"undead_type", undead_type()}};
+    data.update(undead_data);
+    return data;
+}
 
 void Undead::on_death(std::shared_ptr<Action> action, std::shared_ptr<Entity>) {
     action->game()->stage()->remove_entity(shared_from_this());

@@ -18,6 +18,8 @@ public:
 
     Energy() = default;
 
+    explicit Energy(int initial_amount);
+
     bool can_take_turn() const;
 
     bool will_take_turn(std::size_t speed_index) const;
@@ -26,7 +28,9 @@ public:
 
     void spend();
 
-    int amount();
+    int amount() const;
+
+    void amount(int new_amount);
 
 private:
     int amount_ = 0;

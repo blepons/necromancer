@@ -4,6 +4,7 @@
 #include <string>
 #include "passability.hpp"
 #include "point.hpp"
+#include "serializable.hpp"
 
 namespace rln {
 
@@ -11,11 +12,13 @@ class Action;
 class Entity;
 class Game;
 
-class Tile {
+class Tile : public Serializable {
 public:
     Tile(std::string identifier, Passability passability, bool transparent);
 
     virtual ~Tile() = default;
+
+    json serialize() override;
 
     Passability passability() const;
 

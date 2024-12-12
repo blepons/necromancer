@@ -15,6 +15,7 @@
 namespace rln {
 
 class Hero;
+class Fov;
 class Action;
 class Stage;
 class MobPlugin;
@@ -27,6 +28,12 @@ public:
          UndeadRegistry undead_registry);
 
     std::shared_ptr<Hero> hero();
+
+    std::shared_ptr<const Hero> hero() const;
+
+    void hero(std::shared_ptr<Hero> hero);
+
+    const Fov& hero_fov() const;
 
     Stage* stage();
 
@@ -47,6 +54,8 @@ public:
     int unique_id();
 
     void assign_id(std::shared_ptr<Entity> entity);
+
+    void reserve_id(int id);
 
     void next_floor();
 
