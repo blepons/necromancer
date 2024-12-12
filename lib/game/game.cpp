@@ -142,9 +142,12 @@ TurnResult Game::update() {
         auto& energy = entity->energy();
 
         if (!entity_turn_processed) {
-            add_action(stage()
-                           ->tile_at(entity->position())
-                           .on_turn(this, entity->position()));
+            auto action = stage()
+                              ->tile_at(entity->position())
+                              .on_turn(this, entity->position());
+            if (action) {
+                add_action(action);
+            }
             entity_turn_processed = true;
         }
 
@@ -152,14 +155,14 @@ TurnResult Game::update() {
             if (entity->needs_input()) {
                 return turn_result(game_changed);
             }
-            actions_.push_back(entity->action(this));
+            add_action(entity->action(this));
         } else {
             energy.gain(entity->speed());
             if (entity->needs_input()) {
                 return turn_result(game_changed);
             }
-            if (energy.will_take_turn(entity->speed())) {
-                actions_.push_back(entity->action(this));
+            if (energy.can_take_turn()) {
+                add_action(entity->action(this));
             } else {
                 stage()->increment_entity_index();
             }

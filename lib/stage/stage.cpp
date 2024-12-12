@@ -140,6 +140,7 @@ void Stage::move_entity(Point from, Point to) {
     if (entity == nullptr) {
         // throw?
     }
+    set_entity_no_check(nullptr, from);
     set_entity_no_check(entity, to);
 }
 

@@ -126,6 +126,10 @@ void Hero::walk(Game* game, Direction dir) {
                                              shared_from_this(), dir));
 }
 
+bool Hero::needs_input() const {
+    return next_action_ == nullptr;
+}
+
 std::shared_ptr<Action> Hero::action(Game*) {
     auto action = next_action();
     wait_for_input();

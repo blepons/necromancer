@@ -45,6 +45,8 @@ public:
 
     void walk(Game* game, Direction dir);
 
+    bool needs_input() const override;
+
     std::shared_ptr<Action> action(Game* game) override;
 
     std::shared_ptr<Action> next_action();
