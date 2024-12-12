@@ -15,10 +15,10 @@ public:
 
     void render();
 
+    sf::RenderWindow& window() { return window_; }
+
 protected:
     Game* game() { return game_; }
-
-    sf::RenderWindow& window() { return window_; }
 
     void load_texture(const std::string& identifier);
 

@@ -26,6 +26,7 @@ target_link_libraries(
     PRIVATE wall
     PRIVATE floor
     PRIVATE renderer
+    PRIVATE input_handler
     # PRIVATE sfml-graphics
 )
 

@@ -7,7 +7,7 @@
 namespace rln {
 
 Renderer::Renderer(Game* game)
-    : game_(game), window_(sf::VideoMode(800, 600), "Game Window") {
+    : game_(game), window_(sf::VideoMode(800, 800), "Game Window") {
     load_textures();
 }
 
