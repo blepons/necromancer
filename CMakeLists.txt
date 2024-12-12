@@ -36,7 +36,7 @@ target_compile_features(
 
 add_subdirectory(lib)
 
-add_subdirectory(graphics)
+add_subdirectory(ui)
 
 add_subdirectory(loading)
 
