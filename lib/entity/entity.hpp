@@ -84,7 +84,8 @@ public:
 
     virtual std::shared_ptr<Action> action(Game* game) = 0;
 
-    virtual void attack(std::shared_ptr<Entity> target) = 0;
+    virtual void attack(std::shared_ptr<Action> action,
+                        std::shared_ptr<Entity> target) = 0;
 
     virtual bool on_take_damage(std::shared_ptr<Action> action,
                                 int damage,

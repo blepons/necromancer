@@ -55,7 +55,8 @@ public:
 
     void next_action(std::shared_ptr<Action> action);
 
-    void attack(std::shared_ptr<Entity> target) override;
+    void attack(std::shared_ptr<Action> action,
+                std::shared_ptr<Entity> target) override;
 
     bool on_take_damage(std::shared_ptr<Action> action,
                         int damage,

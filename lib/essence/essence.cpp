@@ -30,7 +30,7 @@ std::shared_ptr<Action> Essence::action(Game*) {
     return std::make_shared<NullAction>();
 }
 
-void Essence::attack(std::shared_ptr<Entity>) {}
+void Essence::attack(std::shared_ptr<Action>, std::shared_ptr<Entity>) {}
 
 bool Essence::on_take_damage(std::shared_ptr<Action>,
                              int,

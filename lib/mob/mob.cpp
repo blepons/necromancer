@@ -107,8 +107,9 @@ std::shared_ptr<Action> Mob::action(Game* game) {
     return state().action(game);
 }
 
-void Mob::attack(std::shared_ptr<Entity> target) {
-    attack_.perform(getptr(), target);
+void Mob::attack(std::shared_ptr<Action> action,
+                 std::shared_ptr<Entity> target) {
+    attack_.perform(action, getptr(), target);
 }
 
 bool Mob::on_take_damage(std::shared_ptr<Action>,
@@ -128,10 +129,13 @@ void Mob::react_to_damage(std::shared_ptr<Action> action,
                    item.second == 0;
         }) |
         std::views::keys;
-    auto moves = std::vector<std::shared_ptr<Move>>(available_moves.begin(),
-                                                    available_moves.end());
-    auto game = action->game();
-    action->add_action(moves[game->random(0, moves.size())]->action(game, mob));
+    if (!std::ranges::empty(available_moves)) {
+        auto moves = std::vector<std::shared_ptr<Move>>(available_moves.begin(),
+                                                        available_moves.end());
+        auto game = action->game();
+        action->add_action(
+            moves[game->random(0, moves.size())]->action(game, mob));
+    }
 }
 
 void Mob::on_death(std::shared_ptr<Action> action,

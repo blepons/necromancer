@@ -148,9 +148,10 @@ void Hero::next_action(std::shared_ptr<Action> action) {
     next_action_ = action;
 }
 
-void Hero::attack(std::shared_ptr<Entity> target) {
+void Hero::attack(std::shared_ptr<Action> action,
+                  std::shared_ptr<Entity> target) {
     // TODO
-    target->take_damage(nullptr, damage(), shared_from_this());
+    target->take_damage(action, damage(), shared_from_this());
 }
 
 bool Hero::on_take_damage(std::shared_ptr<Action>,

@@ -69,7 +69,7 @@ std::shared_ptr<Action> Corpse::action(Game*) {
     return std::make_shared<NullAction>();
 }
 
-void Corpse::attack(std::shared_ptr<Entity>) {}
+void Corpse::attack(std::shared_ptr<Action>, std::shared_ptr<Entity>) {}
 
 bool Corpse::on_take_damage(std::shared_ptr<Action>,
                             int damage,

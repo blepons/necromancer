@@ -12,7 +12,7 @@ AttackAction::AttackAction(std::shared_ptr<Entity> attacker,
     : EntityAction(game, pos, attacker), target_(target) {}
 
 ActionResult AttackAction::perform() {
-    entity()->attack(target_);
+    entity()->attack(shared_from_this(), target_);
     return ActionResult::succeed();
 }
 

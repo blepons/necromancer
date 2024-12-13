@@ -5,6 +5,7 @@
 
 namespace rln {
 
+class Action;
 class Entity;
 
 class Attack : public Serializable {
@@ -13,7 +14,8 @@ public:
 
     json serialize() override;
 
-    void perform(std::shared_ptr<Entity> source,
+    void perform(std::shared_ptr<Action> action,
+                 std::shared_ptr<Entity> source,
                  std::shared_ptr<Entity> target);
 
     bool ranged() const;
