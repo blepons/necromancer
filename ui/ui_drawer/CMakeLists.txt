@@ -1,16 +1,16 @@
 add_library(
-    renderer
-    renderer.hpp renderer.cpp
+    ui_drawer
+    ui_drawer.hpp ui_drawer.cpp
 )
 
 target_include_directories(
-    renderer
+    ui_drawer
     INTERFACE .
 )
 
 target_link_libraries(
-    renderer
-    PUBLIC game
+    ui_drawer
     PUBLIC sfml-graphics
-    PUBLIC ui_drawer
+    PUBLIC game
+    PRIVATE hero
 )

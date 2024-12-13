@@ -25,6 +25,7 @@ target_link_libraries(
     PRIVATE json_floor_manager
     PRIVATE wall
     PRIVATE floor
+    PRIVATE lava
     PRIVATE renderer
     PRIVATE input_handler
     # PRIVATE sfml-graphics

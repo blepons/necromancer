@@ -10,6 +10,9 @@ InputHandler::InputHandler(Game* game, sf::RenderWindow& window)
 
 void InputHandler::handle_input() {
     sf::Event event;
+    if (!game_->hero()->alive()) {
+        window().close();
+    }
     while (window().pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             window().close();
@@ -28,6 +31,9 @@ void InputHandler::handle_input() {
                     break;
                 case sf::Keyboard::D:
                     dir = Direction::east();
+                    break;
+                case sf::Keyboard::Escape:
+                    window().close();
                     break;
                 default:
                     break;
