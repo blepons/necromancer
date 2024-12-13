@@ -11,6 +11,10 @@ Essence::Essence(int amount)
     : Entity(Passability::walk(), 0, Faction::non_entity, 1, 0, 0),
       amount_(amount) {}
 
+std::string Essence::supertype() const {
+    return "essence";
+}
+
 std::string Essence::identifier() const {
     return "essence";
 }

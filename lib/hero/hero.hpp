@@ -15,6 +15,8 @@ public:
 
     void init(const json& data) override;
 
+    std::string supertype() const override;
+
     std::string identifier() const override;
 
     json serialize() override;

@@ -28,6 +28,8 @@ public:
 
     virtual void init(const json& data);
 
+    virtual std::string supertype() const = 0;
+
     virtual std::string identifier() const = 0;
 
     json serialize() override;

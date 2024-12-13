@@ -124,8 +124,7 @@ TurnResult Game::update() {
                     entity_action != nullptr) {
                     if (result.success) {
                         entity_action->entity()->end_turn(entity_action);
-                        stage()->increment_entity_index();
-                        tile_turn_processed_ = false;
+                        increment_entity_index();
                     } else if (std::dynamic_pointer_cast<Hero>(
                                    entity_action->entity()) != nullptr) {
                         return turn_result(game_changed);
@@ -163,7 +162,7 @@ TurnResult Game::update() {
             if (energy.can_take_turn()) {
                 add_action(entity->action(this));
             } else {
-                stage()->increment_entity_index();
+                increment_entity_index();
             }
         }
     }
@@ -220,6 +219,11 @@ void Game::transfer_hero() {
         hero()->fov().init(stage());
         hero()->fov().update(hero()->position());
     }
+}
+
+void Game::increment_entity_index() {
+    stage()->increment_entity_index();
+    tile_turn_processed_ = false;
 }
 
 }  // namespace rln

@@ -66,6 +66,8 @@ protected:
 
     void transfer_hero();
 
+    void increment_entity_index();
+
 private:
     FloorManager* floor_manager_;
     std::shared_ptr<Hero> hero_;

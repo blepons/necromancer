@@ -9,6 +9,7 @@
 #include "desiccation_skill.hpp"
 #include "game.hpp"
 #include "hero.hpp"
+#include "mob_plugin.hpp"
 #include "necromancy_skill.hpp"
 #include "skill_set.hpp"
 
@@ -16,19 +17,19 @@ namespace rln {
 
 std::shared_ptr<Entity> EntityBuilder::build(Game* game,
                                              const json& entity_data) {
-    auto identifier = entity_data["identifier"];
-    if (identifier == "hero") {
+    auto supertype = entity_data["supertype"];
+    if (supertype == "hero") {
         return build_hero(game, entity_data);
-    } else if (identifier == "mob") {
+    } else if (supertype == "mob") {
         return build_mob(game, entity_data);
-    } else if (identifier == "corpse") {
+    } else if (supertype == "corpse") {
         return build_corpse(game, entity_data);
-    } else if (identifier == "undead") {
+    } else if (supertype == "undead") {
         return build_undead(game, entity_data);
-    } else if (identifier == "essence") {
+    } else if (supertype == "essence") {
         return build_essence(game, entity_data);
     }
-    throw std::runtime_error("Unknown entity identifier");
+    throw std::runtime_error("Unknown entity supertype");
 }
 
 // TODO: make SkillBuilder
@@ -76,7 +77,9 @@ std::shared_ptr<Entity> EntityBuilder::build_hero(Game* game,
 
 std::shared_ptr<Entity> EntityBuilder::build_mob(Game* game,
                                                  const json& entity_data) {
-    throw std::runtime_error("build_mob: not implemented yet");
+    auto mob = game->plugin(entity_data["race"]).create_mob(entity_data);
+    mob->init(entity_data);
+    return mob;
 }
 
 std::shared_ptr<Entity> EntityBuilder::build_corpse(Game* game,

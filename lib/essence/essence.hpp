@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "entity.hpp"
 
 namespace rln {
@@ -7,6 +8,8 @@ namespace rln {
 class Essence : public Entity {
 public:
     Essence(int amount);
+
+    std::string supertype() const override;
 
     std::string identifier() const override;
 

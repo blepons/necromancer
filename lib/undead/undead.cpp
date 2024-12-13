@@ -35,8 +35,12 @@ Undead::Undead(std::string undead_type,
           speed),
       undead_type_(std::move(undead_type)) {}
 
-std::string Undead::identifier() const {
+std::string Undead::supertype() const {
     return "undead";
+}
+
+std::string Undead::identifier() const {
+    return undead_type();
 }
 
 json Undead::serialize() {

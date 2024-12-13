@@ -3,6 +3,7 @@
 #include <memory>
 #include <nlohmann/json.hpp>
 #include <ranges>
+#include <string>
 #include <utility>
 #include <vector>
 #include "asleep_state.hpp"
@@ -54,8 +55,12 @@ void Mob::init(const json& data) {
     }
 }
 
-std::string Mob::identifier() const {
+std::string Mob::supertype() const {
     return "mob";
+}
+
+std::string Mob::identifier() const {
+    return race();
 }
 
 json Mob::serialize() {

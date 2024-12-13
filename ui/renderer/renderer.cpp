@@ -25,7 +25,9 @@ void Renderer::load_textures() {
     static constexpr std::string wall = "wall";
     static constexpr std::string floor = "floor";
     static constexpr std::string lava = "lava";
+
     static constexpr std::string hero = "hero";
+    static constexpr std::string orc = "orc";
 
     // load_texture(closed_door);
     // load_texture(open_door);
@@ -34,6 +36,8 @@ void Renderer::load_textures() {
     // load_texture(stone_floor);
 
     load_texture(hero);
+    load_texture(orc);
+
     load_texture(floor);
     load_texture(wall);
     load_texture(lava);
@@ -69,13 +73,13 @@ void Renderer::render() {
                 std::shared_ptr<Entity> entity = stage->entity_at(pos);
 
                 sf::Sprite tile_sprite;
-                tile_sprite.setTexture(textures_[tile.identifier()]);
+                tile_sprite.setTexture(textures_.at(tile.identifier()));
                 tile_sprite.setPosition(pos_with_offsets);
                 window().draw(tile_sprite);
 
                 if (entity) {
                     sf::Sprite entitySprite;
-                    entitySprite.setTexture(textures_[entity->identifier()]);
+                    entitySprite.setTexture(textures_.at(entity->identifier()));
                     entitySprite.setPosition(pos_with_offsets);
                     window().draw(entitySprite);
                 }

@@ -28,6 +28,7 @@ target_link_libraries(
     PRIVATE lava
     PRIVATE renderer
     PRIVATE input_handler
+    PRIVATE library_manager
     # PRIVATE sfml-graphics
 )
 

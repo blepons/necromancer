@@ -57,6 +57,10 @@ json Corpse::serialize() {
     return data;
 }
 
+std::string Corpse::supertype() const {
+    return "corpse";
+}
+
 std::string Corpse::identifier() const {
     return "corpse";
 }

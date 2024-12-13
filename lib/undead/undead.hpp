@@ -24,6 +24,8 @@ public:
            int max_hp,
            int speed);
 
+    std::string supertype() const override;
+
     std::string identifier() const override;
 
     json serialize() override;

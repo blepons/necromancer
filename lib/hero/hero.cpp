@@ -33,6 +33,10 @@ void Hero::init(const json& data) {
     experience_ = experience__;
 }
 
+std::string Hero::supertype() const {
+    return "hero";
+}
+
 std::string Hero::identifier() const {
     return "hero";
 }

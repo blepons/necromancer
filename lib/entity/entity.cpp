@@ -48,7 +48,7 @@ int Entity::id() const {
 
 json Entity::serialize() {
     auto pos = position();
-    json data = {{"type", "entity"},
+    json data = {{"supertype", supertype()},
                  {"identifier", identifier()},
                  {"energy", energy_.amount()},
                  {"faction", faction_.string()},

@@ -38,6 +38,8 @@ public:
 
     json serialize() override;
 
+    std::string supertype() const override;
+
     std::string identifier() const override;
 
     std::shared_ptr<Action> action(Game* game) override;
