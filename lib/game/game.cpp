@@ -13,6 +13,7 @@ Game::Game(FloorManager* floor_manager,
            TileRegistry tile_registry,
            UndeadRegistry undead_registry)
     : floor_manager_(floor_manager),
+      tile_turn_processed_(false),
       tile_registry_(std::move(tile_registry)),
       undead_registry_(std::move(undead_registry)) {}
 
@@ -105,8 +106,6 @@ FloorManager* Game::floor_manager() {
 
 TurnResult Game::update() {
     bool game_changed = false;
-    bool entity_turn_processed = false;
-
     while (true) {
         while (!actions_.empty()) {
             auto action = actions_.front();
@@ -126,7 +125,7 @@ TurnResult Game::update() {
                     if (result.success) {
                         entity_action->entity()->end_turn(entity_action);
                         stage()->increment_entity_index();
-                        entity_turn_processed = false;
+                        tile_turn_processed_ = false;
                     } else if (std::dynamic_pointer_cast<Hero>(
                                    entity_action->entity()) != nullptr) {
                         return turn_result(game_changed);
@@ -141,14 +140,14 @@ TurnResult Game::update() {
         auto entity = stage()->current_entity();
         auto& energy = entity->energy();
 
-        if (!entity_turn_processed) {
+        if (!tile_turn_processed_) {
             auto action = stage()
                               ->tile_at(entity->position())
                               .on_turn(this, entity->position());
             if (action) {
                 add_action(action);
             }
-            entity_turn_processed = true;
+            tile_turn_processed_ = true;
         }
 
         if (energy.can_take_turn()) {
@@ -209,6 +208,7 @@ void Game::reserve_id(int id) {
 void Game::next_floor() {
     actions_.clear();
     events_.clear();
+    tile_turn_processed_ = false;
     floor_manager()->unload_current_floor();
     floor_manager()->load_next_floor(this);
     transfer_hero();
