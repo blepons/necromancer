@@ -53,60 +53,12 @@ FloorManager* Game::floor_manager() {
     return floor_manager_;
 }
 
-// Initial implementation
-// TurnResult Game::update() {
-//     bool game_changed = false;
-//     while (true) {
-//         while (!actions_.empty()) {
-//             auto action = actions_.front();
-//             auto result = action->perform();
-//             while (result.alternative != nullptr) {
-//                 actions_.pop_front();
-//                 action = result.alternative;
-//                 actions_.push_front(action);
-//                 result = action->perform();
-//             }
-//             game_changed = true;
-//             if (result.done) {
-//                 actions_.pop_front();
-//                 if (auto entity_action =
-//                 std::dynamic_pointer_cast<EntityAction>(action);
-//                 entity_action != nullptr) {
-//                     if (result.success) {
-//                         entity_action->entity()->end_turn(entity_action);
-//                         stage()->increment_entity_index();
-//                     } else if (entity_action->entity() == hero()) {
-//                         return turn_result(game_changed);
-//                     }
-//                 }
-//             }
-//             if (!events_.empty()) {
-//                 return turn_result(game_changed);
-//             }
-//         }
-//         while (actions_.empty()) {
-//             auto entity = stage()->current_entity();
-//             auto& energy = entity->energy();
-//             if (energy.can_take_turn() && entity->needs_input()) {
-//                 return turn_result(game_changed);
-//             }
-//             if (energy.will_take_turn(entity->speed())) {
-//                 energy.gain(entity->speed());
-//                 if (entity->needs_input()) {
-//                     return turn_result(game_changed);
-//                 }
-//                 actions_.push_back(entity->action(this));
-//             } else {
-//                 add_action(stage()->tile_at(entity->position()).on_turn(entity));
-//                 stage()->increment_entity_index();
-//             }
-//         }
-//     }
-// }
-
 TurnResult Game::update() {
     bool game_changed = false;
     while (true) {
+        if (stage_transfer_) {
+            return turn_result(game_changed);
+        }
         while (!actions_.empty()) {
             auto action = actions_.front();
             auto result = action->perform();
@@ -171,6 +123,7 @@ TurnResult Game::update() {
 TurnResult Game::turn_result(bool game_changed) {
     TurnResult tr = {std::move(events_), game_changed};
     events_ = {};
+    stage_transfer_ = false;
     return tr;
 }
 
@@ -205,9 +158,8 @@ void Game::reserve_id(int id) {
 }
 
 void Game::next_floor() {
-    actions_.clear();
-    events_.clear();
     tile_turn_processed_ = false;
+    stage_transfer_ = true;
     floor_manager()->unload_current_floor();
     floor_manager()->load_next_floor(this);
     transfer_hero();
@@ -216,7 +168,7 @@ void Game::next_floor() {
 void Game::transfer_hero() {
     if (hero()) {
         hero()->position(stage()->start_pos());
-        hero()->fov().init(stage());
+        stage()->add_entity(this, hero(), stage()->start_pos());
         hero()->fov().update(hero()->position());
     }
 }

@@ -25,6 +25,8 @@ void Renderer::load_textures() {
     static constexpr std::string wall = "wall";
     static constexpr std::string floor = "floor";
     static constexpr std::string lava = "lava";
+    static constexpr std::string upward_stairs = "upward_stairs";
+    static constexpr std::string downward_stairs = "downward_stairs";
 
     static constexpr std::string hero = "hero";
     static constexpr std::string orc = "orc";
@@ -41,6 +43,8 @@ void Renderer::load_textures() {
     load_texture(floor);
     load_texture(wall);
     load_texture(lava);
+    load_texture(upward_stairs);
+    load_texture(downward_stairs);
 }
 
 void Renderer::load_texture(const std::string& identifier) {

@@ -29,6 +29,7 @@ target_link_libraries(
     PRIVATE renderer
     PRIVATE input_handler
     PRIVATE library_manager
+    PRIVATE stairs
     # PRIVATE sfml-graphics
 )
 

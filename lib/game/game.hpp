@@ -73,6 +73,7 @@ private:
     std::shared_ptr<Hero> hero_;
 
     bool tile_turn_processed_;
+    bool stage_transfer_;
 
     std::deque<std::shared_ptr<Action>> actions_;
     std::vector<Event> events_;
