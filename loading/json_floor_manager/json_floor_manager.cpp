@@ -3,6 +3,7 @@
 #include <fstream>
 #include <memory>
 #include <nlohmann/json.hpp>
+#include <stdexcept>
 #include <string>
 #include <vector>
 #include "entity_builder.hpp"
@@ -51,6 +52,10 @@ void JsonFloorManager::load_next_floor(Game* game) {
     }
     fs::path stage_path(stage_paths_[index()]);
     std::ifstream ifs(stage_path);
+    if (!ifs.is_open()) {
+        throw std::runtime_error("File not found: " + stage_path.string());
+    }
+
     json jf = json::parse(ifs);
 
     auto rows = jf["stage"]["rows"].template get<int>();
