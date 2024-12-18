@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <cstddef>
+#include <filesystem>
 #include <string>
 #include <unordered_map>
 #include "game.hpp"
@@ -11,9 +12,9 @@ namespace rln {
 
 class Renderer {
 public:
-    Renderer(Game* game);
+    Renderer(Game* game, const std::string& textures_path);
 
-    void load_textures();
+    void load_textures(const std::string& textures_path);
 
     void render();
 
@@ -24,7 +25,7 @@ protected:
 
     UIDrawer& ui_drawer() { return ui_drawer_; }
 
-    void load_texture(const std::string& identifier);
+    void load_texture(const std::filesystem::path& identifier);
 
     void draw_ui();
 

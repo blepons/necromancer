@@ -1,56 +1,38 @@
 #include "renderer.hpp"
+#include <filesystem>
 #include <memory>
 #include <string>
+#include <string_view>
 #include "game.hpp"
 #include "stage.hpp"
 #include "ui_drawer.hpp"
 
 namespace rln {
 
-Renderer::Renderer(Game* game)
+Renderer::Renderer(Game* game, const std::string& textures_path)
     : game_(game),
       window_(sf::VideoMode(800, 800), "Game Window"),
       ui_drawer_(window_) {
-    load_textures();
+    load_textures(textures_path);
 }
 
-void Renderer::load_textures() {
-    // TODO: load textures by looking at directory contents
-    // static constexpr std::string closed_door = "closed_door";
-    // static constexpr std::string open_door = "open_door";
-    // static constexpr std::string brick_wall = "brick_wall";
-    // static constexpr std::string lava = "lava";
-    // static constexpr std::string stone_floor = "stone_floor";
+void Renderer::load_textures(const std::string& textures_path) {
+    namespace fs = std::filesystem;
+    static constexpr std::string_view extension = ".png";
 
-    static constexpr std::string wall = "wall";
-    static constexpr std::string floor = "floor";
-    static constexpr std::string lava = "lava";
-    static constexpr std::string upward_stairs = "upward_stairs";
-    static constexpr std::string downward_stairs = "downward_stairs";
-
-    static constexpr std::string hero = "hero";
-    static constexpr std::string orc = "orc";
-
-    // load_texture(closed_door);
-    // load_texture(open_door);
-    // load_texture(brick_wall);
-    // load_texture(lava);
-    // load_texture(stone_floor);
-
-    load_texture(hero);
-    load_texture(orc);
-
-    load_texture(floor);
-    load_texture(wall);
-    load_texture(lava);
-    load_texture(upward_stairs);
-    load_texture(downward_stairs);
+    fs::path dir_path(textures_path);
+    for (auto& file : fs::directory_iterator(dir_path)) {
+        if ((file.is_regular_file() || file.is_symlink()) &&
+            file.path().extension() == extension) {
+            load_texture(file);
+        }
+    }
 }
 
-void Renderer::load_texture(const std::string& identifier) {
+void Renderer::load_texture(const std::filesystem::path& file) {
     sf::Texture texture;
-    if (texture.loadFromFile("textures/" + identifier + ".png")) {
-        textures_[identifier] = texture;
+    if (texture.loadFromFile(file)) {
+        textures_[file.stem()] = texture;
     }
 }
 
