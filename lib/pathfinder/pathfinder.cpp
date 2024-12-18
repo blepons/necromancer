@@ -3,7 +3,10 @@
 #include <cstddef>
 #include <cstdlib>
 #include <optional>
+#include <ranges>
 #include <unordered_set>
+#include <utility>
+#include <vector>
 #include "cost_priority_queue.hpp"
 #include "direction.hpp"
 #include "mob.hpp"
@@ -12,19 +15,19 @@
 
 namespace rln {
 
-Pathfinder::Pathfinder(Point start, Point end, Stage* stage)
-    : stage_(stage), start_(start), end_(end) {}
+Pathfinder::Pathfinder(Point start, std::vector<Point> ends, Stage* stage)
+    : stage_(stage), start_(start), ends_(std::move(ends)) {}
 
 std::optional<Direction> Pathfinder::search() {
     auto paths = rln::cost_priority_queue<Path>{};
     auto explored = std::unordered_set<Point>{};
     auto start_path = Path(Direction::none(), start_, 0, 0);
-    paths.push({start_path, priority(start_path, end_)});
+    paths.push({start_path, priority(start_path)});
 
     while (!paths.empty()) {
         auto path = *paths.top();
         paths.pop();
-        if (path.pos == end_) {
+        if (is_goal_reached(path.pos)) {
             return reached_goal(path);
         }
         if (explored.contains(path.pos)) {
@@ -48,14 +51,21 @@ std::optional<Direction> Pathfinder::search() {
                                      ? dir
                                      : path.start_direction,
                                  neighbor, path.length + 1, path.cost + *cst);
-            paths.push({new_path, priority(new_path, end_)});
+            paths.push({new_path, priority(new_path)});
         }
     }
     return unreachable();
 }
 
-std::size_t Pathfinder::priority(const Path& path, Point end) const {
-    return path.cost + heuristic(path.pos, end);
+std::size_t Pathfinder::priority(const Path& path) const {
+    return path.cost + heuristic(path.pos);
+}
+
+int Pathfinder::heuristic(Point start) const {
+    auto heuristics = ends_ | std::views::transform([&start](const auto& end) {
+                          return heuristic(start, end);
+                      });
+    return *std::ranges::min_element(heuristics);
 }
 
 int Pathfinder::heuristic(Point start, Point end) {
@@ -64,6 +74,11 @@ int Pathfinder::heuristic(Point start, Point end) {
     auto diagonal = std::min(x_offset, y_offset);
     auto straight = std::max(x_offset, y_offset);
     return straight * default_cost + diagonal * diagonal_cost;
+}
+
+bool Pathfinder::is_goal_reached(Point pos) const {
+    return std::ranges::any_of(ends_,
+                               [&pos](const auto& end) { return pos == end; });
 }
 
 std::optional<int> Pathfinder::cost(Point pos, const Tile& tile) {
@@ -90,8 +105,7 @@ std::optional<int> Pathfinder::cost(Point pos, const Tile& tile) {
 }
 
 std::optional<Direction> Pathfinder::process(const Path& path) {
-    if (!nearest_ ||
-        heuristic(path.pos, end_) < heuristic(nearest_->pos, end_)) {
+    if (!nearest_ || heuristic(path.pos) < heuristic(nearest_->pos)) {
         nearest_ = path;
     }
     if (path.length > mob_->tracking()) {

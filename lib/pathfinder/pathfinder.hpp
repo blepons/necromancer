@@ -2,6 +2,7 @@
 
 #include <cstddef>
 #include <optional>
+#include <vector>
 #include "direction.hpp"
 #include "tile.hpp"
 
@@ -28,13 +29,17 @@ public:
     static constexpr int door_cost = 1000;
 
 public:
-    Pathfinder(Point start, Point end, Stage* stage);
+    Pathfinder(Point start, std::vector<Point> ends, Stage* stage);
 
     std::optional<Direction> search();
 
-    std::size_t priority(const Path& path, Point end) const;
+    std::size_t priority(const Path& path) const;
 
     static int heuristic(Point start, Point end);
+
+    int heuristic(Point start) const;
+
+    bool is_goal_reached(Point pos) const;
 
     std::optional<int> cost(Point pos, const Tile& tile);
 
@@ -47,7 +52,7 @@ public:
 private:
     Stage* stage_;
     Point start_;
-    Point end_;
+    std::vector<Point> ends_;
     Mob* mob_;
     std::optional<Path> nearest_;
 };
