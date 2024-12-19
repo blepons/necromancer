@@ -75,6 +75,8 @@ public:
 
     MobState& state();
 
+    std::unordered_map<std::shared_ptr<Move>, int>& moves();
+
     void change_state(std::unique_ptr<MobState>&& new_state);
 
     bool asleep() const;

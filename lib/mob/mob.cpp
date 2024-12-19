@@ -179,6 +179,10 @@ MobState& Mob::state() {
     return *state_;
 }
 
+std::unordered_map<std::shared_ptr<Move>, int>& Mob::moves() {
+    return cooldowns_;
+}
+
 void Mob::change_state(std::unique_ptr<MobState>&& new_state) {
     state_ = std::move(new_state);
 }

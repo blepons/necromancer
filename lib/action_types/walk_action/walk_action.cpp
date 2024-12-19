@@ -25,7 +25,7 @@ ActionResult WalkAction::perform() {
 
     auto new_pos = Point(pos_.x + direction_.x, pos_.y + direction_.y);
     auto target = game()->stage()->entity_at(new_pos);
-    if (target != nullptr && target != entity()) {
+    if (target != nullptr && target->id() != entity()->id()) {
         return ActionResult::alternate(
             std::make_shared<AttackAction>(entity(), target, game(), pos()));
     }
@@ -41,7 +41,7 @@ ActionResult WalkAction::perform() {
             hero != nullptr) {
             hero->explore(new_pos, true);
         }
-        return ActionResult::fail();
+        return ActionResult::succeed();
     }
 
     move_entity(entity(), new_pos);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <memory>
 #include <optional>
 #include <vector>
 #include "direction.hpp"
@@ -14,7 +15,11 @@ class Stage;
 class Pathfinder {
 public:
     struct Path {
-        Path(Direction start_direction, Point start, int length, int cost);
+        Path(Direction start_direction, Point start, int length, int cost)
+            : start_direction(start_direction),
+              pos(start),
+              length(length),
+              cost(cost) {}
 
         Direction start_direction;
         Point pos;
@@ -24,12 +29,14 @@ public:
 
     static constexpr int default_cost = 100;
     static constexpr int diagonal_cost = 120;
-    // static constexpr int liquid_cost = 200;
     static constexpr int occupied_cost = 400;
     static constexpr int door_cost = 1000;
 
 public:
-    Pathfinder(Point start, std::vector<Point> ends, Stage* stage);
+    Pathfinder(std::shared_ptr<Mob> mob,
+               Point start,
+               std::vector<Point> ends,
+               Stage* stage);
 
     std::optional<Direction> search();
 
@@ -53,7 +60,7 @@ private:
     Stage* stage_;
     Point start_;
     std::vector<Point> ends_;
-    Mob* mob_;
+    std::shared_ptr<Mob> mob_;
     std::optional<Path> nearest_;
 };
 

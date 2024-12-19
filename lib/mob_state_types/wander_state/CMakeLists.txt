@@ -11,6 +11,7 @@ target_include_directories(
 target_link_libraries(
     wander_state
     PUBLIC mob_state
-    # TODO: remove temporary solution
-    PRIVATE rest_action
+    PUBLIC direction
+    PRIVATE pathfinder
+    PRIVATE walk_action
 )

@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <cstdlib>
+#include <memory>
 #include <optional>
 #include <ranges>
 #include <unordered_set>
@@ -15,8 +16,11 @@
 
 namespace rln {
 
-Pathfinder::Pathfinder(Point start, std::vector<Point> ends, Stage* stage)
-    : stage_(stage), start_(start), ends_(std::move(ends)) {}
+Pathfinder::Pathfinder(std::shared_ptr<Mob> mob,
+                       Point start,
+                       std::vector<Point> ends,
+                       Stage* stage)
+    : stage_(stage), start_(start), ends_(std::move(ends)), mob_(mob) {}
 
 std::optional<Direction> Pathfinder::search() {
     auto paths = rln::cost_priority_queue<Path>{};
@@ -27,16 +31,21 @@ std::optional<Direction> Pathfinder::search() {
     while (!paths.empty()) {
         auto path = *paths.top();
         paths.pop();
+
         if (is_goal_reached(path.pos)) {
             return reached_goal(path);
         }
+
         if (explored.contains(path.pos)) {
             continue;
         }
+        explored.insert(path.pos);
+
         auto result = process(path);
         if (result != std::nullopt) {
             return result;
         }
+
         for (auto dir : Direction::all()) {
             auto neighbor = Point(path.pos.x + dir.x, path.pos.y + dir.y);
             if (explored.contains(neighbor) ||
@@ -72,7 +81,7 @@ int Pathfinder::heuristic(Point start, Point end) {
     auto x_offset = std::abs(end.x - start.x);
     auto y_offset = std::abs(end.y - start.y);
     auto diagonal = std::min(x_offset, y_offset);
-    auto straight = std::max(x_offset, y_offset);
+    auto straight = std::max(x_offset, y_offset) - diagonal;
     return straight * default_cost + diagonal * diagonal_cost;
 }
 
@@ -82,7 +91,7 @@ bool Pathfinder::is_goal_reached(Point pos) const {
 }
 
 std::optional<int> Pathfinder::cost(Point pos, const Tile& tile) {
-    bool is_first_step = Point::chebyshev(start_, pos);
+    bool is_first_step = Point::chebyshev(start_, pos) == 1;
     if (stage_->entity_at(pos) != nullptr) {
         if (is_first_step) {
             return std::nullopt;

@@ -136,7 +136,7 @@ void Game::add_event(Event event) {
 }
 
 int Game::random(int min, int max) {
-    std::uniform_int_distribution<> distrib(min, max);
+    std::uniform_int_distribution<> distrib(min, max - 1);
     return distrib(gen_);
 }
 

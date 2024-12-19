@@ -16,7 +16,7 @@ struct cost_wrapper {
 
 template <class T>
 inline auto operator<(const cost_wrapper<T>& lhs, const cost_wrapper<T>& rhs) {
-    return lhs.cost < rhs.cost;
+    return lhs.cost > rhs.cost;
 }
 
 template <class T>
