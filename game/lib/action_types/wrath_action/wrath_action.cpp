@@ -1,5 +1,6 @@
 #include "wrath_action.hpp"
 #include <algorithm>
+#include <execution>
 #include <memory>
 #include "stage.hpp"
 
@@ -13,7 +14,7 @@ WrathAction::WrathAction(Game* game,
 
 ActionResult WrathAction::perform() {
     auto& entities = game()->stage()->entities();
-    std::for_each(entities.begin(), entities.end(),
+    std::for_each(std::execution::par, entities.begin(), entities.end(),
                   [action = shared_from_this(), damage = damage_,
                    src = entity(), src_id = entity()->id()](auto& ent) {
                       if (src_id != ent->id()) {

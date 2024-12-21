@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include <memory>
+#include <mutex>
 #include "action.hpp"
 #include "entity.hpp"
 #include "entity_action.hpp"
@@ -128,6 +129,7 @@ TurnResult Game::turn_result(bool game_changed) {
 }
 
 void Game::add_action(std::shared_ptr<Action> action) {
+    std::lock_guard lock(actions_mtx_);
     actions_.push_back(action);
 }
 

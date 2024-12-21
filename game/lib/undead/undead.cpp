@@ -51,7 +51,8 @@ json Undead::serialize() {
 }
 
 void Undead::on_death(std::shared_ptr<Action> action, std::shared_ptr<Entity>) {
-    action->add_action(std::make_shared<DisappearAction>(action->game(), position(), shared_from_this()));
+    action->add_action(std::make_shared<DisappearAction>(
+        action->game(), position(), shared_from_this()));
 }
 
 std::string Undead::undead_type() const {

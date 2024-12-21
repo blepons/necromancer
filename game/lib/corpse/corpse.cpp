@@ -3,9 +3,9 @@
 #include <nlohmann/json.hpp>
 #include <string>
 #include <utility>
+#include "disappear_action.hpp"
 #include "do_nothing_action.hpp"
 #include "move.hpp"
-#include "disappear_action.hpp"
 
 namespace rln {
 
@@ -84,7 +84,8 @@ void Corpse::react_to_damage(std::shared_ptr<Action>,
                              std::shared_ptr<Entity>) {}
 
 void Corpse::on_death(std::shared_ptr<Action> action, std::shared_ptr<Entity>) {
-    action->add_action(std::make_shared<DisappearAction>(action->game(), position(), shared_from_this()));
+    action->add_action(std::make_shared<DisappearAction>(
+        action->game(), position(), shared_from_this()));
 }
 
 void Corpse::on_change_position(Game*, Point, Point) {}

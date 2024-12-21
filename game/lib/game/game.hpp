@@ -3,6 +3,7 @@
 #include <deque>
 #include <limits>
 #include <memory>
+#include <mutex>
 #include <random>
 #include <string>
 #include <unordered_set>
@@ -76,6 +77,7 @@ private:
     bool stage_transfer_;
 
     std::deque<std::shared_ptr<Action>> actions_;
+    std::mutex actions_mtx_;
     std::vector<Event> events_;
 
     TileRegistry tile_registry_;
