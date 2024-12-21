@@ -14,4 +14,5 @@ target_link_libraries(
     PRIVATE mob
     PRIVATE mob_plugin
     PRIVATE nlohmann_json::nlohmann_json
+    PRIVATE wander_state
 )

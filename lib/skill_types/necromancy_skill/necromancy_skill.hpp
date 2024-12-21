@@ -27,7 +27,7 @@ private:
     static constexpr int range_increment = 1;
 
     static constexpr std::array<std::string, 5> undead_types_by_level_ = {
-        "ghost", "skeleton", "mummie", "zombie", "ghoul"};
+        "ghost", "skeleton", "mummy", "zombie", "ghoul"};
 };
 
 }  // namespace rln

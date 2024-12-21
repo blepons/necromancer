@@ -9,7 +9,7 @@ namespace rln {
 class Game;
 class Mob;
 
-class Move : public Serializable {
+class Move : public Serializable, public std::enable_shared_from_this<Move> {
 public:
     Move(int cooldown);
 

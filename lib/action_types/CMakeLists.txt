@@ -8,6 +8,8 @@ add_subdirectory(close_door_action)
 
 add_subdirectory(desiccation_action)
 
+add_subdirectory(do_nothing_action)
+
 add_subdirectory(entity_action)
 
 add_subdirectory(heal_action)

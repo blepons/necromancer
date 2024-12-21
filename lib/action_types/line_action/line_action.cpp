@@ -1,4 +1,5 @@
 #include "line_action.hpp"
+#include <memory>
 #include "action.hpp"
 #include "line.hpp"
 #include "point.hpp"
@@ -6,8 +7,12 @@
 
 namespace rln {
 
-LineAction::LineAction(Game* game, Point init, Point target, int range)
-    : Action(game, init), target_(target), range_(range) {}
+LineAction::LineAction(Game* game,
+                       std::shared_ptr<Entity> entity,
+                       Point init,
+                       Point target,
+                       int range)
+    : EntityAction(game, init, entity), target_(target), range_(range) {}
 
 ActionResult LineAction::perform() {
     if (Point::manhattan(target_, pos()) > static_cast<unsigned>(range_)) {

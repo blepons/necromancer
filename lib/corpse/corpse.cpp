@@ -3,8 +3,8 @@
 #include <nlohmann/json.hpp>
 #include <string>
 #include <utility>
+#include "do_nothing_action.hpp"
 #include "move.hpp"
-#include "null_action.hpp"
 #include "stage.hpp"
 
 namespace rln {
@@ -65,8 +65,9 @@ std::string Corpse::identifier() const {
     return "corpse";
 }
 
-std::shared_ptr<Action> Corpse::action(Game*) {
-    return std::make_shared<NullAction>();
+std::shared_ptr<Action> Corpse::action(Game* game) {
+    return std::make_shared<DoNothingAction>(game, position(),
+                                             shared_from_this());
 }
 
 void Corpse::attack(std::shared_ptr<Action>, std::shared_ptr<Entity>) {}

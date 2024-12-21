@@ -14,7 +14,7 @@ bool UsableSkill::usable(Game*) {
     return true;
 }
 
-std::shared_ptr<Action> UsableSkill::wrap_action(
+std::shared_ptr<EntityAction> UsableSkill::wrap_action(
     std::shared_ptr<Hero> hero,
     int level,
     std::shared_ptr<EntityAction> action) {

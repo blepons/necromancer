@@ -41,14 +41,16 @@ Direction WanderState::melee_dir(Game* game) {
                 std::views::filter(
                     [mob = mob(), stage = game->stage()](const auto& entity) {
                         return mob->id() != entity->id() &&
-                               mob->faction().hostile(entity->faction());
+                               mob->faction().hostile(entity->faction()) &&
+                               stage->visible(mob, entity->position());
                     }) |
                 std::views::transform(
                     [](const auto& entity) { return entity->position(); });
     auto targets = std::vector<Point>(fltr.begin(), fltr.end());
-    auto dir =
-        Pathfinder(mob(), mob()->position(), targets, game->stage()).search();
-    if (dir) {
+    std::optional<Direction> dir = std::nullopt;
+    if (!targets.empty()) {
+        dir = Pathfinder(mob(), mob()->position(), targets, game->stage())
+                  .search();
     }
     return dir != std::nullopt ? *dir : Direction::none();
 }
@@ -59,8 +61,8 @@ Direction WanderState::towards_enemy(Game* game) {
                                     pos = mob()->position()](const auto& dir) {
                     auto neighbor = Point(pos.x + dir.x, pos.y + dir.y);
                     return stage->occupied(neighbor) &&
-                           stage->entity_at(neighbor)->faction().hostile(
-                               mob->faction());
+                           mob->faction().hostile(
+                               stage->entity_at(neighbor)->faction());
                 });
     if (!std::ranges::empty(dirs)) {
         auto directions = std::vector<Direction>(dirs.begin(), dirs.end());

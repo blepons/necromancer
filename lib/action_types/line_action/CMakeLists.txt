@@ -10,7 +10,7 @@ target_include_directories(
 
 target_link_libraries(
     line_action
-    PUBLIC action
+    PUBLIC entity_action
     PRIVATE stage
     PRIVATE line
 )

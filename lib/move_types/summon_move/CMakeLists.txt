@@ -14,4 +14,5 @@ target_link_libraries(
     PRIVATE spawn_action
     PRIVATE mob
     PRIVATE nlohmann_json::nlohmann_json
+    PRIVATE do_nothing_action
 )

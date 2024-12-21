@@ -4,6 +4,7 @@
 #include "corpse.hpp"
 #include "hero.hpp"
 #include "stage.hpp"
+#include "wander_state.hpp"
 
 namespace rln {
 
@@ -31,6 +32,7 @@ ActionResult NecromancyAction::perform() {
              dead_mob_stats.hearing, dead_mob_stats.tracking, 0,
              dead_mob_stats.passability, entity()->faction().string(),
              dead_mob_stats.max_hp, dead_mob_stats.speed});
+        undead->change_state(std::make_unique<WanderState>(undead));
         game()->stage()->replace_entity(game(), undead, pos());
         return ActionResult::succeed();
     }

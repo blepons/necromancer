@@ -13,4 +13,5 @@ target_link_libraries(
     PUBLIC entity_action
     PRIVATE corpse
     PRIVATE hero
+    PRIVATE wander_state
 )

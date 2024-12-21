@@ -1,8 +1,8 @@
 #include "essence.hpp"
 #include <memory>
 #include <nlohmann/json.hpp>
+#include "do_nothing_action.hpp"
 #include "hero.hpp"
-#include "null_action.hpp"
 #include "stage.hpp"
 
 namespace rln {
@@ -26,8 +26,9 @@ json Essence::serialize() {
     return data;
 }
 
-std::shared_ptr<Action> Essence::action(Game*) {
-    return std::make_shared<NullAction>();
+std::shared_ptr<Action> Essence::action(Game* game) {
+    return std::make_shared<DoNothingAction>(game, position(),
+                                             shared_from_this());
 }
 
 void Essence::attack(std::shared_ptr<Action>, std::shared_ptr<Entity>) {}

@@ -12,5 +12,5 @@ target_link_libraries(
     corpse
     PUBLIC entity
     PUBLIC attack
-    PRIVATE null_action
+    PRIVATE do_nothing_action
 )

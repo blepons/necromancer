@@ -3,6 +3,7 @@
 #include <memory>
 #include <nlohmann/json.hpp>
 #include <ranges>
+#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
@@ -13,6 +14,7 @@
 #include "mob_state.hpp"
 #include "move.hpp"
 #include "stage.hpp"
+#include "summon_move.hpp"
 #include "wander_state.hpp"
 
 namespace rln {
@@ -52,6 +54,19 @@ void Mob::init(const json& data) {
         state_ = std::make_unique<WanderState>(getptr());
     } else {
         state_ = std::make_unique<AsleepState>(getptr());
+    }
+    auto moves = data.value("moves", json::array_t{});
+    for (const auto& move_data : moves) {
+        auto identifier = move_data["identifier"];
+        auto recharge_time = move_data["recharge_time"].template get<int>();
+        auto cooldown = move_data["cooldown"].template get<int>();
+        if (identifier == "summon") {
+            auto move =
+                std::make_shared<SummonMove>(cooldown, move_data["summons"]);
+            cooldowns_[move] = recharge_time;
+        } else {
+            throw std::runtime_error("Unknown mob move");
+        }
     }
 }
 
@@ -149,6 +164,7 @@ void Mob::on_death(std::shared_ptr<Action> action,
         std::vector(moves.begin(), moves.end()), damage(), vision(), hearing(),
         tracking(), passability(), max_health(), speed());
     action->game()->stage()->replace_entity(action->game(), corpse, position());
+    // action->game()->stage()->remove_entity(shared_from_this());
 }
 
 void Mob::on_change_position(Game*, Point, Point) {}

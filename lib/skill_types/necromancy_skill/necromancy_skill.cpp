@@ -24,9 +24,10 @@ std::string NecromancySkill::undead_type(std::shared_ptr<Hero>,
 std::shared_ptr<Action> NecromancySkill::action(Game* game,
                                                 int level,
                                                 Point pos) {
-    return std::make_shared<NecromancyAction>(game, pos, game->hero(),
-                                              range(game, level),
-                                              undead_type(game->hero(), level));
+    return wrap_action(game->hero(), level,
+                       std::make_shared<NecromancyAction>(
+                           game, pos, game->hero(), range(game, level),
+                           undead_type(game->hero(), level)));
 }
 
 }  // namespace rln

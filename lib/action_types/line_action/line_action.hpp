@@ -1,12 +1,17 @@
 #pragma once
 
-#include "action.hpp"
+#include <memory>
+#include "entity_action.hpp"
 
 namespace rln {
 
-class LineAction : public Action {
+class LineAction : public EntityAction {
 public:
-    LineAction(Game* game, Point init, Point target, int range);
+    LineAction(Game* game,
+               std::shared_ptr<Entity> entity,
+               Point init,
+               Point target,
+               int range);
 
     ActionResult perform() override;
 

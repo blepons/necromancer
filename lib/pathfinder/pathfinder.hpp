@@ -40,21 +40,13 @@ public:
 
     std::optional<Direction> search();
 
-    std::size_t priority(const Path& path) const;
+    std::size_t priority(const Path& path, Point end) const;
 
     static int heuristic(Point start, Point end);
 
-    int heuristic(Point start) const;
-
-    bool is_goal_reached(Point pos) const;
-
     std::optional<int> cost(Point pos, const Tile& tile);
 
-    std::optional<Direction> process(const Path& path);
-
-    std::optional<Direction> reached_goal(const Path& path) const;
-
-    std::optional<Direction> unreachable() const;
+    std::optional<Direction> process(const Path& path, Point end);
 
 private:
     Stage* stage_;

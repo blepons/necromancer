@@ -4,7 +4,6 @@
 #include <cstdlib>
 #include <memory>
 #include <optional>
-#include <ranges>
 #include <unordered_set>
 #include <utility>
 #include <vector>
@@ -23,58 +22,75 @@ Pathfinder::Pathfinder(std::shared_ptr<Mob> mob,
     : stage_(stage), start_(start), ends_(std::move(ends)), mob_(mob) {}
 
 std::optional<Direction> Pathfinder::search() {
-    auto paths = rln::cost_priority_queue<Path>{};
-    auto explored = std::unordered_set<Point>{};
-    auto start_path = Path(Direction::none(), start_, 0, 0);
-    paths.push({start_path, priority(start_path)});
+    auto paths = std::vector<rln::cost_priority_queue<Path>>(ends_.size());
+    auto explored = std::vector<std::unordered_set<Point>>(ends_.size());
 
-    while (!paths.empty()) {
-        auto path = *paths.top();
-        paths.pop();
+    for (std::size_t i = 0; i < ends_.size(); ++i) {
+        auto start_path = Path(Direction::none(), start_, 0, 0);
+        paths[i].push({start_path, priority(start_path, ends_[i])});
+    }
 
-        if (is_goal_reached(path.pos)) {
-            return reached_goal(path);
+    while (true) {
+        std::optional<Direction> result;
+        for (std::size_t i = 0; i < ends_.size(); ++i) {
+            if (paths[i].empty()) {
+                continue;
+            }
+
+            auto path = *paths[i].top();
+            paths[i].pop();
+
+            if (path.pos == ends_[i]) {
+                return path.start_direction;
+            }
+
+            if (explored[i].contains(path.pos)) {
+                continue;
+            }
+            explored[i].insert(path.pos);
+
+            auto result_path = process(path, ends_[i]);
+            if (result_path != std::nullopt) {
+                return result_path;
+            }
+
+            for (auto dir : Direction::all()) {
+                auto neighbor = Point(path.pos.x + dir.x, path.pos.y + dir.y);
+                if (explored[i].contains(neighbor) ||
+                    stage_->out_of_bounds(neighbor)) {
+                    continue;
+                }
+                auto cst = cost(neighbor, stage_->tile_at(neighbor));
+                if (cst == std::nullopt) {
+                    continue;
+                }
+                auto new_path =
+                    Path(path.start_direction == Direction::none()
+                             ? dir
+                             : path.start_direction,
+                         neighbor, path.length + 1, path.cost + *cst);
+                paths[i].push({new_path, priority(new_path, ends_[i])});
+            }
         }
 
-        if (explored.contains(path.pos)) {
-            continue;
-        }
-        explored.insert(path.pos);
-
-        auto result = process(path);
         if (result != std::nullopt) {
             return result;
         }
 
-        for (auto dir : Direction::all()) {
-            auto neighbor = Point(path.pos.x + dir.x, path.pos.y + dir.y);
-            if (explored.contains(neighbor) ||
-                stage_->out_of_bounds(neighbor)) {
-                continue;
+        for (std::size_t i = 0; i < ends_.size(); ++i) {
+            if (!nearest_ || heuristic(paths[i].top().value.pos, ends_[i]) <
+                                 heuristic(nearest_->pos, ends_[i])) {
+                nearest_ = *paths[i].top();
+                paths[i].pop();
             }
-            auto cst = cost(neighbor, stage_->tile_at(neighbor));
-            if (cst == std::nullopt) {
-                continue;
-            }
-            auto new_path = Path(path.start_direction == Direction::none()
-                                     ? dir
-                                     : path.start_direction,
-                                 neighbor, path.length + 1, path.cost + *cst);
-            paths.push({new_path, priority(new_path)});
         }
+        return nearest_ ? std::optional<Direction>(nearest_->start_direction)
+                        : std::nullopt;
     }
-    return unreachable();
 }
 
-std::size_t Pathfinder::priority(const Path& path) const {
-    return path.cost + heuristic(path.pos);
-}
-
-int Pathfinder::heuristic(Point start) const {
-    auto heuristics = ends_ | std::views::transform([&start](const auto& end) {
-                          return heuristic(start, end);
-                      });
-    return *std::ranges::min_element(heuristics);
+std::size_t Pathfinder::priority(const Path& path, Point end) const {
+    return path.cost + heuristic(path.pos, end);
 }
 
 int Pathfinder::heuristic(Point start, Point end) {
@@ -83,11 +99,6 @@ int Pathfinder::heuristic(Point start, Point end) {
     auto diagonal = std::min(x_offset, y_offset);
     auto straight = std::max(x_offset, y_offset) - diagonal;
     return straight * default_cost + diagonal * diagonal_cost;
-}
-
-bool Pathfinder::is_goal_reached(Point pos) const {
-    return std::ranges::any_of(ends_,
-                               [&pos](const auto& end) { return pos == end; });
 }
 
 std::optional<int> Pathfinder::cost(Point pos, const Tile& tile) {
@@ -113,23 +124,14 @@ std::optional<int> Pathfinder::cost(Point pos, const Tile& tile) {
     return std::nullopt;
 }
 
-std::optional<Direction> Pathfinder::process(const Path& path) {
-    if (!nearest_ || heuristic(path.pos) < heuristic(nearest_->pos)) {
+std::optional<Direction> Pathfinder::process(const Path& path, Point end) {
+    if (!nearest_ || heuristic(path.pos, end) < heuristic(nearest_->pos, end)) {
         nearest_ = path;
     }
     if (path.length > mob_->tracking()) {
         return nearest_->start_direction;
     }
     return std::nullopt;
-}
-
-std::optional<Direction> Pathfinder::reached_goal(const Path& path) const {
-    return path.start_direction;
-}
-
-std::optional<Direction> Pathfinder::unreachable() const {
-    return nearest_ ? std::optional<Direction>(nearest_->start_direction)
-                    : std::nullopt;
 }
 
 }  // namespace rln

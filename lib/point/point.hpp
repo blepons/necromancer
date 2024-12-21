@@ -14,12 +14,12 @@ struct Point {
 
     std::vector<Point> neighbors() const {
         auto vec = std::vector<Point>{};
-        for (int i = -1; i <= 1; ++i) {
-            for (int j = -1; j <= 1; ++j) {
-                if (i == 0 && j == 0) {
+        for (const auto& x_offset : {-1, 0, 1}) {
+            for (const auto& y_offset : {-1, 0, 1}) {
+                if (x_offset == 0 && y_offset == 0) {
                     continue;
                 }
-                vec.emplace_back(x + i, x + j);
+                vec.emplace_back(x + x_offset, y + y_offset);
             }
         }
         return vec;

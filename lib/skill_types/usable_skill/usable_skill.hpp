@@ -19,9 +19,10 @@ public:
     virtual bool usable(Game* game);
 
 protected:
-    std::shared_ptr<Action> wrap_action(std::shared_ptr<Hero> hero,
-                                        int level,
-                                        std::shared_ptr<EntityAction> action);
+    std::shared_ptr<EntityAction> wrap_action(
+        std::shared_ptr<Hero> hero,
+        int level,
+        std::shared_ptr<EntityAction> action);
 };
 
 }  // namespace rln

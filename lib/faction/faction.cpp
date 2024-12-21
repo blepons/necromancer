@@ -1,5 +1,6 @@
 #include "faction.hpp"
 #include <string>
+#include <utility>
 
 namespace rln {
 
@@ -13,6 +14,10 @@ bool Faction::hostile(const Faction& other) const {
         return true;
     }
     return faction_ != other.faction_;
+}
+
+void Faction::set(std::string faction) {
+    faction_ = std::move(faction);
 }
 
 std::string Faction::string() const {

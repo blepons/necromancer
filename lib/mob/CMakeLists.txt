@@ -21,4 +21,5 @@ target_link_libraries(
     PRIVATE stage
     PRIVATE corpse
     PRIVATE hero
+    PRIVATE summon_move
 )

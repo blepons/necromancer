@@ -25,7 +25,7 @@ public:
         int speed;
     };
     using UndeadFactory =
-        std::function<std::unique_ptr<Undead>(UndeadParams&&)>;
+        std::function<std::shared_ptr<Undead>(UndeadParams&&)>;
 
     UndeadRegistry() = default;
 
