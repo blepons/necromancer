@@ -9,8 +9,8 @@
 #include <vector>
 #include "asleep_state.hpp"
 #include "change_state_action.hpp"
-#include "corpse.hpp"
 #include "hero.hpp"
+#include "leave_corpse_action.hpp"
 #include "mob_state.hpp"
 #include "move.hpp"
 #include "stage.hpp"
@@ -158,13 +158,8 @@ void Mob::on_death(std::shared_ptr<Action> action,
     if (auto hero = std::dynamic_pointer_cast<Hero>(entity); hero != nullptr) {
         hero->gain_experience(experience_reward());
     }
-    auto moves = std::views::keys(cooldowns_);
-    auto corpse = std::make_shared<Corpse>(
-        std::min(max_health() / 15, 1), race(), attack_,
-        std::vector(moves.begin(), moves.end()), damage(), vision(), hearing(),
-        tracking(), passability(), max_health(), speed());
-    action->game()->stage()->replace_entity(action->game(), corpse, position());
-    // action->game()->stage()->remove_entity(shared_from_this());
+    action->add_action(std::make_shared<LeaveCorpseAction>(
+        action->game(), position(), getptr()));
 }
 
 void Mob::on_change_position(Game*, Point, Point) {}

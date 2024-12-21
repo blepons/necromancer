@@ -16,6 +16,8 @@ add_subdirectory(heal_action)
 
 add_subdirectory(lava_burn_action)
 
+add_subdirectory(leave_corpse_action)
+
 add_subdirectory(line_action)
 
 add_subdirectory(mana_action)
