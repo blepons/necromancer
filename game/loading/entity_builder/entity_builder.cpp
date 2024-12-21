@@ -12,6 +12,7 @@
 #include "mob_plugin.hpp"
 #include "necromancy_skill.hpp"
 #include "skill_set.hpp"
+#include "wrath_skill.hpp"
 
 namespace rln {
 
@@ -45,11 +46,15 @@ static std::shared_ptr<Skill> build_skill(const json& data) {
     auto necromancy_factory = []() -> std::shared_ptr<Skill> {
         return std::make_shared<NecromancySkill>();
     };
+    auto wrath_factory = []() -> std::shared_ptr<Skill> {
+        return std::make_shared<WrathSkill>();
+    };
 
     static std::unordered_map<std::string, skill_factory> factories = {
         {"curse", curse_factory},
         {"desiccation", desiccation_factory},
-        {"necromancy", necromancy_factory}};
+        {"necromancy", necromancy_factory},
+        {"wrath", wrath_factory}};
 
     return factories.at(data["identifier"].template get<std::string>())();
 }

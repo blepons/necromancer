@@ -20,7 +20,7 @@ int CurseSkill::damage(std::shared_ptr<Hero> hero, int level) const {
 }
 
 std::shared_ptr<Action> CurseSkill::action(Game* game, int level, Point pos) {
-    return wrap_action(game->hero(), mana_cost(game->hero(), level),
+    return wrap_action(game->hero(), level,
                        std::make_shared<BoltAttackAction>(
                            game, game->hero(), game->hero()->position(), pos,
                            range(game, level), damage(game->hero(), level)));

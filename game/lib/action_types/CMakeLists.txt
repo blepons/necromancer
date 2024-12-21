@@ -8,6 +8,8 @@ add_subdirectory(close_door_action)
 
 add_subdirectory(desiccation_action)
 
+add_subdirectory(disappear_action)
+
 add_subdirectory(do_nothing_action)
 
 add_subdirectory(entity_action)
@@ -39,3 +41,5 @@ add_subdirectory(rest_action)
 add_subdirectory(spawn_action)
 
 add_subdirectory(walk_action)
+
+add_subdirectory(wrath_action)

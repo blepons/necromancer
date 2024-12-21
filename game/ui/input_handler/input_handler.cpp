@@ -1,6 +1,7 @@
 #include "input_handler.hpp"
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include "action_skill.hpp"
 #include "corpse.hpp"
 #include "direction.hpp"
 #include "hero.hpp"
@@ -79,10 +80,19 @@ void InputHandler::handle_stage_input() {
                 //     skill_id_ = "polymorph";
                 //     validator_ = polymorph_validator;
                 //     break;
-                // case sf::Keyboard::Num5:
-                //     skill_id_ = "wrath";
-                //     validator_ = wrath_validator;
-                //     break;
+                case sf::Keyboard::Num5: {
+                    skill_id_ = "wrath";
+                    auto& [skill, level] =
+                        game()->hero()->skill_set().get(*skill_id());
+                    if (auto action_skill =
+                            std::dynamic_pointer_cast<ActionSkill>(skill);
+                        action_skill != nullptr &&
+                        action_skill->mana_cost(game()->hero(), level) <=
+                            game()->hero()->mana()) {
+                        game()->add_action(action_skill->action(game(), level));
+                    }
+                    break;
+                }
                 case sf::Keyboard::Escape:
                     renderer().window().close();
                     break;

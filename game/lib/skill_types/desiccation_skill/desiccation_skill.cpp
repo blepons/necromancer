@@ -22,9 +22,10 @@ int DesiccationSkill::heal_amount(std::shared_ptr<Hero> hero, int level) const {
 std::shared_ptr<Action> DesiccationSkill::action(Game* game,
                                                  int level,
                                                  Point pos) {
-    return std::make_shared<DesiccationAction>(
-        game, pos, game->hero(), range(game, level),
-        heal_amount(game->hero(), level));
+    return wrap_action(game->hero(), level,
+                       std::make_shared<DesiccationAction>(
+                           game, pos, game->hero(), range(game, level),
+                           heal_amount(game->hero(), level)));
 }
 
 }  // namespace rln

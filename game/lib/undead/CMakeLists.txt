@@ -12,4 +12,5 @@ target_include_directories(
 target_link_libraries(
     undead
     PUBLIC mob
+    PRIVATE disappear_action
 )

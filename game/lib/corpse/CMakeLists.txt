@@ -13,4 +13,5 @@ target_link_libraries(
     PUBLIC entity
     PUBLIC attack
     PRIVATE do_nothing_action
+    PRIVATE disappear_action
 )

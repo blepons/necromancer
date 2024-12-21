@@ -14,6 +14,7 @@ target_link_libraries(
     PUBLIC renderer
     PRIVATE direction
     PRIVATE hero
+    PRIVATE action_skill
     PRIVATE targeted_skill
     PRIVATE corpse
 )
