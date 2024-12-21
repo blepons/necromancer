@@ -13,4 +13,6 @@ target_link_libraries(
     PUBLIC game
     PUBLIC sfml-graphics
     PUBLIC ui_drawer
+    PUBLIC direction
+    PRIVATE hero
 )

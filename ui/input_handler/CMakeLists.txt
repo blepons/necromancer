@@ -11,8 +11,10 @@ target_include_directories(
 target_link_libraries(
     input_handler
     PUBLIC game
-    PUBLIC sfml-graphics
+    PUBLIC renderer
     PRIVATE direction
     PRIVATE hero
+    PRIVATE targeted_skill
+    PRIVATE corpse
 )
 

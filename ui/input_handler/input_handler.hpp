@@ -1,22 +1,38 @@
 #pragma once
 
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <functional>
+#include <optional>
+#include <string>
 #include "game.hpp"
+#include "renderer.hpp"
 
 namespace rln {
 
 class InputHandler {
 public:
-    InputHandler(Game* game, sf::RenderWindow& window);
+    InputHandler(Game* game, Renderer& renderer);
 
     void handle_input();
 
 protected:
-    sf::RenderWindow& window() { return window_; }
+    Renderer& renderer() { return renderer_; }
+
+    Game* game() { return game_; }
+
+    std::optional<std::string> skill_id() const { return skill_id_; }
+
+    void handle_stage_input();
+
+    void handle_cursor_input();
+
+    bool valid_cursor();
 
 private:
     Game* game_;
-    sf::RenderWindow& window_;
+    Renderer& renderer_;
+
+    std::function<bool(Game*, Point)> validator_;
+    std::optional<std::string> skill_id_;
 };
 
 }  // namespace rln

@@ -1,9 +1,11 @@
 #include "renderer.hpp"
 #include <filesystem>
 #include <memory>
+#include <optional>
 #include <string>
 #include <string_view>
 #include "game.hpp"
+#include "hero.hpp"
 #include "stage.hpp"
 #include "ui_drawer.hpp"
 
@@ -73,9 +75,43 @@ void Renderer::render() {
         }
     }
 
+    if (cursor_exists()) {
+        highlight_selected_tile();
+    }
+
     draw_ui();
 
     window().display();
+}
+
+void Renderer::create_cursor() {
+    cursor_ = game()->hero()->position();
+}
+
+void Renderer::move_cursor(Direction dir) {
+    if (cursor_exists()) {
+        auto new_pos = Point(cursor()->x + dir.x, cursor()->y + dir.y);
+        if (!game()->stage()->out_of_bounds(new_pos) &&
+            game()->hero_fov().visible(new_pos)) {
+            cursor_ = new_pos;
+        }
+    }
+}
+
+void Renderer::remove_cursor() {
+    cursor_ = std::nullopt;
+}
+
+void Renderer::highlight_selected_tile() {
+    if (cursor_exists()) {
+        sf::Sprite cursor_sprite;
+        cursor_sprite.setTexture(textures_.at("cursor"));
+        cursor_sprite.setPosition(
+            cursor()->y * tile_size + map_horizontal_offset,
+            cursor()->x * tile_size + UIDrawer::character_size +
+                map_vertical_offset);
+        window().draw(cursor_sprite);
+    }
 }
 
 }  // namespace rln
