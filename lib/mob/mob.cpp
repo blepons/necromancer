@@ -175,6 +175,10 @@ std::string Mob::race() const {
     return race_;
 }
 
+Attack& Mob::attack() {
+    return attack_;
+}
+
 int Mob::vision() const {
     return vision_;
 }
