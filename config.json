@@ -1,0 +1,10 @@
+{
+    "libraries":[
+        "mobs/"
+    ],
+    "stages":[
+        "1.json",
+        "2.json"
+    ],
+    "textures":"textures/"
+}
