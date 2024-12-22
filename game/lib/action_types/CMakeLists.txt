@@ -38,6 +38,8 @@ add_subdirectory(polymorph_action)
 
 add_subdirectory(rest_action)
 
+add_subdirectory(set_block_action)
+
 add_subdirectory(spawn_action)
 
 add_subdirectory(walk_action)

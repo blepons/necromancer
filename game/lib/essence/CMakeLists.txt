@@ -11,6 +11,7 @@ target_include_directories(
 target_link_libraries(
     essence
     PUBLIC entity
+    PRIVATE disappear_action
     PRIVATE do_nothing_action
     PRIVATE hero
 )

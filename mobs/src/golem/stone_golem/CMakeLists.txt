@@ -1,17 +1,20 @@
 add_library(
-    orc
+    stone_golem
     SHARED
-    orc.cpp
+    stone_golem.cpp
 )
 
 target_link_libraries(
-    orc
+    stone_golem
     PRIVATE mob
     PRIVATE mob_plugin
     PRIVATE plugin_keeper
+    PRIVATE hero
+    PRIVATE disappear_action
+    PRIVATE set_block_action
 )
 
 set_target_properties(
-    orc
+    stone_golem
     PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}
 )

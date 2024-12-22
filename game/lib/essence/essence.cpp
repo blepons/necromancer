@@ -1,9 +1,9 @@
 #include "essence.hpp"
 #include <memory>
 #include <nlohmann/json.hpp>
+#include "disappear_action.hpp"
 #include "do_nothing_action.hpp"
 #include "hero.hpp"
-#include "stage.hpp"
 
 namespace rln {
 
@@ -49,7 +49,8 @@ void Essence::on_death(std::shared_ptr<Action> action,
     if (auto hero = std::dynamic_pointer_cast<Hero>(entity); hero != nullptr) {
         hero->gain_experience(amount());
     }
-    action->game()->stage()->remove_entity(shared_from_this());
+    action->add_action(std::make_shared<DisappearAction>(
+        action->game(), position(), shared_from_this()));
 }
 
 void Essence::on_change_position(Game*, Point, Point) {}

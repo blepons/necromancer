@@ -1,17 +1,20 @@
 add_library(
-    orc
+    ethereal_golem
     SHARED
-    orc.cpp
+    ethereal_golem.cpp
 )
 
 target_link_libraries(
-    orc
+    ethereal_golem
     PRIVATE mob
     PRIVATE mob_plugin
     PRIVATE plugin_keeper
+    PRIVATE hero
+    PRIVATE disappear_action
+    PRIVATE essence
 )
 
 set_target_properties(
-    orc
+    ethereal_golem
     PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}
 )
