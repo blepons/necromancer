@@ -1,5 +1,6 @@
 #include <memory>
 #include <string>
+#include <string_view>
 #include "disappear_action.hpp"
 #include "faction.hpp"
 #include "hero.hpp"
@@ -22,7 +23,7 @@ public:
     static constexpr int stone_golem_max_hp = 250;
     static constexpr int stone_golem_speed = Energy::normal_speed - 1;
 
-    StoneGolem(std::string faction)
+    StoneGolem(std::string_view faction)
         : Mob(stone_golem_type,
               Attack::melee(),
               {},
@@ -70,7 +71,7 @@ public:
     }
 
     std::shared_ptr<Mob> create_mob(const json& data) const override {
-        std::string faction = data.value("faction", Faction::none);
+        std::string faction = data.value("faction", std::string(Faction::none));
         return std::make_shared<StoneGolem>(faction);
     }
 };

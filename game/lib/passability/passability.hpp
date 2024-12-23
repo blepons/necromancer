@@ -18,7 +18,7 @@ public:
 
     static Passability all();
 
-    bool overlaps(Passability other) const;
+    bool overlaps(const Passability& other) const;
 
     Passability& operator|=(const Passability& other) {
         bitmask_ |= other.bitmask_;
@@ -60,6 +60,6 @@ inline Passability Passability::all() {
     return walk() | door();
 }
 
-inline bool Passability::overlaps(Passability other) const {
-    return (*this & other) != none();
+inline bool Passability::overlaps(const Passability& other) const {
+    return (bitmask() & other.bitmask()) != none().bitmask();
 }

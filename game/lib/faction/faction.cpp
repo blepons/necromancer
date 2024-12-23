@@ -1,10 +1,9 @@
 #include "faction.hpp"
 #include <string>
-#include <utility>
 
 namespace rln {
 
-Faction::Faction(std::string faction) : faction_(std::move(faction)) {}
+Faction::Faction(std::string_view faction) : faction_(faction) {}
 
 bool Faction::hostile(const Faction& other) const {
     if (other.faction_ == non_entity) {
@@ -16,8 +15,8 @@ bool Faction::hostile(const Faction& other) const {
     return faction_ != other.faction_;
 }
 
-void Faction::set(std::string faction) {
-    faction_ = std::move(faction);
+void Faction::set(std::string_view faction) {
+    faction_ = faction;
 }
 
 std::string Faction::string() const {

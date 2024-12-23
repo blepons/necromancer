@@ -19,7 +19,7 @@ public:
     static constexpr int orc_speed = Energy::normal_speed;
 
     Orc(std::string faction)
-        : Mob("orc",
+        : Mob(orc_type,
               Attack::melee(),
               {},
               orc_damage,
@@ -42,7 +42,7 @@ public:
     std::string mob_identifier() const override { return Orc::orc_type; }
 
     std::shared_ptr<Mob> create_mob(const json& data) const override {
-        std::string faction = data.value("faction", Faction::none);
+        std::string faction = data.value("faction", std::string(Faction::none));
         return std::make_shared<Orc>(faction);
     }
 };

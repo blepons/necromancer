@@ -5,6 +5,7 @@
 #include <ranges>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 #include "asleep_state.hpp"
@@ -28,10 +29,10 @@ Mob::Mob(std::string race,
          int tracking,
          int experience_reward,
          Passability passability,
-         std::string faction,
+         std::string_view faction,
          int max_hp,
          int speed)
-    : Entity(passability, vision, std::move(faction), max_hp, damage, speed),
+    : Entity(passability, vision, faction, max_hp, damage, speed),
       race_(std::move(race)),
       attack_(std::move(attack)),
       vision_(vision),

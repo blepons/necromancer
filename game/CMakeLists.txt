@@ -30,7 +30,6 @@ target_link_libraries(
     PRIVATE input_handler
     PRIVATE library_manager
     PRIVATE stairs
-    # PRIVATE sfml-graphics
 )
 
 target_compile_features(

@@ -1,6 +1,7 @@
 #include "undead.hpp"
 #include <nlohmann/json.hpp>
 #include <string>
+#include <string_view>
 #include <utility>
 #include "action.hpp"
 #include "disappear_action.hpp"
@@ -18,7 +19,7 @@ Undead::Undead(std::string undead_type,
                int tracking,
                int experience_reward,
                Passability passability,
-               std::string faction,
+               std::string_view faction,
                int max_hp,
                int speed)
     : Mob(std::move(race),
@@ -30,7 +31,7 @@ Undead::Undead(std::string undead_type,
           tracking,
           experience_reward,
           passability,
-          std::move(faction),
+          faction,
           max_hp * stats_multiplier,
           speed),
       undead_type_(std::move(undead_type)) {}

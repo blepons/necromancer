@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include <string_view>
 #include "energy.hpp"
 #include "faction.hpp"
 #include "fov.hpp"
@@ -19,7 +20,7 @@ class Entity : public Serializable,
 public:
     Entity(Passability passability,
            int view_distance,
-           std::string faction,
+           std::string_view faction,
            int max_hp,
            int damage,
            int speed);

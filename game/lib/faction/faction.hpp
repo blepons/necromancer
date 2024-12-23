@@ -6,17 +6,17 @@ namespace rln {
 
 class Faction {
 public:
-    static constexpr std::string hero = "hero";
+    static constexpr std::string_view hero = "hero";
 
-    static constexpr std::string none = "none";
+    static constexpr std::string_view none = "none";
 
-    static constexpr std::string non_entity = "static";
+    static constexpr std::string_view non_entity = "static";
 
-    explicit Faction(std::string faction);
+    explicit Faction(std::string_view faction);
 
     bool hostile(const Faction& other) const;
 
-    void set(std::string faction);
+    void set(std::string_view faction);
 
     std::string string() const;
 

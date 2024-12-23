@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include <string_view>
 #include <vector>
 #include "mob.hpp"
 
@@ -20,7 +21,7 @@ public:
            int tracking,
            int experience_reward,
            Passability passability,
-           std::string faction,
+           std::string_view faction,
            int max_hp,
            int speed);
 
