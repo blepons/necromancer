@@ -2,12 +2,12 @@
 #include <string>
 #include <string_view>
 #include "disappear_action.hpp"
+#include "essence.hpp"
 #include "faction.hpp"
 #include "hero.hpp"
 #include "mob.hpp"
 #include "mob_plugin.hpp"
 #include "plugin_keeper.hpp"
-#include "essence.hpp"
 #include "stage.hpp"
 
 namespace rln {
@@ -72,8 +72,7 @@ public:
         action->add_action(std::make_shared<DisappearAction>(
             action->game(), position(), shared_from_this()));
         action->add_action(std::make_shared<SpawnEssenceAction>(
-            action->game(), position(), 50
-        ));
+            action->game(), position(), 50));
     }
 };
 

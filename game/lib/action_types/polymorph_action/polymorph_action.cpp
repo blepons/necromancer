@@ -17,9 +17,8 @@ ActionResult PolymorphAction::perform() {
     if (auto undead = std::dynamic_pointer_cast<Undead>(
             game()->stage()->entity_at(pos()));
         undead != nullptr) {
-        int init_hp =
-            undead->health() /
-            game()->undead_registry().multiplier(undead->undead_type());
+        int init_hp = undead->health() / game()->undead_registry().multiplier(
+                                             undead->undead_type());
         int init_max_hp =
             undead->max_health() /
             game()->undead_registry().multiplier(undead->undead_type());

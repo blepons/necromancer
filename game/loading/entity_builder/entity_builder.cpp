@@ -11,9 +11,9 @@
 #include "hero.hpp"
 #include "mob_plugin.hpp"
 #include "necromancy_skill.hpp"
+#include "polymorph_skill.hpp"
 #include "skill_set.hpp"
 #include "wrath_skill.hpp"
-#include "polymorph_skill.hpp"
 
 namespace rln {
 
