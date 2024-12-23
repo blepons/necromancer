@@ -25,17 +25,22 @@ public:
         int speed;
     };
     using UndeadFactory =
-        std::function<std::shared_ptr<Undead>(UndeadParams&&)>;
+        std::function<std::shared_ptr<Undead>(float, UndeadParams&&)>;
 
     UndeadRegistry() = default;
 
-    void add(const std::string& identifier, UndeadFactory&& factory);
+    void add(const std::string& identifier,
+             float multiplier,
+             UndeadFactory&& factory);
 
     std::shared_ptr<Undead> build(const std::string& identifier,
                                   UndeadParams&& params) const;
 
+    float multiplier(const std::string& identifier) const;
+
 private:
     std::unordered_map<std::string, UndeadFactory> undead_factories_;
+    std::unordered_map<std::string, float> undead_multipliers_;
 };
 
 }  // namespace rln

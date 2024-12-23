@@ -228,50 +228,50 @@
     "entities":[
         {
             "supertype":"mob",
-            "identifier":"orc",
+            "identifier":"magma_golem",
             "energy":0,
-            "faction":"hero",
-            "max_hp":40,
-            "hp":30,
-            "damage":10,
+            "faction":"golem",
+            "max_hp":150,
+            "hp":150,
+            "damage":20,
             "position":[
                 1,
                 7
             ],
             "id":2,
-            "race":"orc",
+            "race":"magma_golem",
             "attack": {
                 "range":0
             },
             "moves": [],
-            "vision": 20,
-            "hearing": 20,
-            "tracking": 20,
-            "experience_reward": 20,
+            "vision": 10,
+            "hearing": 5,
+            "tracking": 5,
+            "experience_reward": 50,
             "state":"asleep"
         },
         {
             "supertype":"mob",
-            "identifier":"orc",
+            "identifier":"ethereal_golem",
             "energy":0,
-            "faction":"hero",
-            "max_hp":40,
-            "hp":30,
-            "damage":10,
+            "faction":"golem",
+            "max_hp":100,
+            "hp":100,
+            "damage":15,
             "position":[
                 2,
                 7
             ],
             "id":3,
-            "race":"orc",
+            "race":"ethereal_golem",
             "attack": {
                 "range":0
             },
             "moves": [],
-            "vision": 20,
-            "hearing": 20,
-            "tracking": 20,
-            "experience_reward": 20,
+            "vision": 10,
+            "hearing": 5,
+            "tracking": 5,
+            "experience_reward": 50,
             "state":"asleep"
         },
         {

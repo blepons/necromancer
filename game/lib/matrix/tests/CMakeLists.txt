@@ -10,3 +10,8 @@ target_link_libraries(
     PRIVATE matrix
     PRIVATE Catch2::Catch2WithMain
 )
+
+add_test(
+    NAME TestMatrix
+    COMMAND matrix_tests
+)

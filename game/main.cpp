@@ -83,40 +83,50 @@ rln::TileRegistry make_tile_registry() {
 
 rln::UndeadRegistry make_undead_registry() {
     rln::UndeadRegistry undeads;
-    undeads.add("ghost", [](rln::UndeadRegistry::UndeadParams&& params) {
-        return std::make_shared<rln::Undead>(
-            "ghost", 0.5, params.race, params.attack, params.moves,
-            params.damage, params.vision, params.hearing, params.tracking,
-            params.experience_reward, params.passability, params.faction,
-            params.max_hp, params.speed);
-    });
-    undeads.add("skeleton", [](rln::UndeadRegistry::UndeadParams&& params) {
-        return std::make_shared<rln::Undead>(
-            "skeleton", 0.7, params.race, params.attack, params.moves,
-            params.damage, params.vision, params.hearing, params.tracking,
-            params.experience_reward, params.passability, params.faction,
-            params.max_hp, params.speed);
-    });
-    undeads.add("mummy", [](rln::UndeadRegistry::UndeadParams&& params) {
-        return std::make_shared<rln::Undead>(
-            "mummy", 0.8, params.race, params.attack, params.moves,
-            params.damage, params.vision, params.hearing, params.tracking,
-            params.experience_reward, params.passability, params.faction,
-            params.max_hp, params.speed);
-    });
-    undeads.add("zombie", [](rln::UndeadRegistry::UndeadParams&& params) {
-        return std::make_shared<rln::Undead>(
-            "zombie", 0.9, params.race, params.attack, params.moves,
-            params.damage, params.vision, params.hearing, params.tracking,
-            params.experience_reward, params.passability, params.faction,
-            params.max_hp, params.speed);
-    });
-    undeads.add("ghoul", [](rln::UndeadRegistry::UndeadParams&& params) {
-        return std::make_shared<rln::Undead>(
-            "ghoul", 1.5, params.race, params.attack, params.moves,
-            params.damage, params.vision, params.hearing, params.tracking,
-            params.experience_reward, params.passability, params.faction,
-            params.max_hp, params.speed);
-    });
+    undeads.add(
+        "ghost", 0.5,
+        [](float multiplier, rln::UndeadRegistry::UndeadParams&& params) {
+            return std::make_shared<rln::Undead>(
+                "ghost", multiplier, params.race, params.attack, params.moves,
+                params.damage, params.vision, params.hearing, params.tracking,
+                params.experience_reward, params.passability, params.faction,
+                params.max_hp, params.speed);
+        });
+    undeads.add(
+        "skeleton", 0.7,
+        [](float multiplier, rln::UndeadRegistry::UndeadParams&& params) {
+            return std::make_shared<rln::Undead>(
+                "skeleton", multiplier, params.race, params.attack,
+                params.moves, params.damage, params.vision, params.hearing,
+                params.tracking, params.experience_reward, params.passability,
+                params.faction, params.max_hp, params.speed);
+        });
+    undeads.add(
+        "mummy", 0.8,
+        [](float multiplier, rln::UndeadRegistry::UndeadParams&& params) {
+            return std::make_shared<rln::Undead>(
+                "mummy", multiplier, params.race, params.attack, params.moves,
+                params.damage, params.vision, params.hearing, params.tracking,
+                params.experience_reward, params.passability, params.faction,
+                params.max_hp, params.speed);
+        });
+    undeads.add(
+        "zombie", 0.9,
+        [](float multiplier, rln::UndeadRegistry::UndeadParams&& params) {
+            return std::make_shared<rln::Undead>(
+                "zombie", multiplier, params.race, params.attack, params.moves,
+                params.damage, params.vision, params.hearing, params.tracking,
+                params.experience_reward, params.passability, params.faction,
+                params.max_hp, params.speed);
+        });
+    undeads.add(
+        "ghoul", 1.5,
+        [](float multiplier, rln::UndeadRegistry::UndeadParams&& params) {
+            return std::make_shared<rln::Undead>(
+                "ghoul", multiplier, params.race, params.attack, params.moves,
+                params.damage, params.vision, params.hearing, params.tracking,
+                params.experience_reward, params.passability, params.faction,
+                params.max_hp, params.speed);
+        });
     return undeads;
 }

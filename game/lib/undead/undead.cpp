@@ -60,4 +60,8 @@ std::string Undead::undead_type() const {
     return undead_type_;
 }
 
+void Undead::undead_type(std::string new_type) {
+    undead_type_ = std::move(new_type);
+}
+
 }  // namespace rln

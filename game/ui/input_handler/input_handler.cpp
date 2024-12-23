@@ -38,8 +38,10 @@ static bool necromancy_validator(Game* game, Point pos) {
            nullptr;
 }
 
-// // TODO
-// static bool polymorph_validator(Game* game, Point pos) {}
+static bool polymorph_validator(Game* game, Point pos) {
+    return std::dynamic_pointer_cast<Undead>(game->stage()->entity_at(pos)) !=
+           nullptr;
+}
 
 void InputHandler::handle_stage_input() {
     sf::Event event;
@@ -76,10 +78,10 @@ void InputHandler::handle_stage_input() {
                     validator_ = necromancy_validator;
                     renderer().create_cursor();
                     break;
-                // case sf::Keyboard::Num4:
-                //     skill_id_ = "polymorph";
-                //     validator_ = polymorph_validator;
-                //     break;
+                case sf::Keyboard::Num4:
+                    skill_id_ = "polymorph";
+                    validator_ = polymorph_validator;
+                    break;
                 case sf::Keyboard::Num5: {
                     skill_id_ = "wrath";
                     auto& [skill, level] =

@@ -66,6 +66,14 @@
                     {
                         "identifier":"necromancy",
                         "level":2
+                    },
+                    {
+                        "identifier":"polymorph",
+                        "level":4
+                    },
+                    {
+                        "identifier":"wrath",
+                        "level":3
                     }
                 ]
             }

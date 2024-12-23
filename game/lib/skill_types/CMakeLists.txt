@@ -11,6 +11,6 @@ add_subdirectory(desiccation_skill)
 
 add_subdirectory(necromancy_skill)
 
-
+add_subdirectory(polymorph_skill)
 
 add_subdirectory(wrath_skill)

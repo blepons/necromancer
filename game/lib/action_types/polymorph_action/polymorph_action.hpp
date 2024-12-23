@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include <nlohmann/json.hpp>
+#include <string>
 #include "entity_action.hpp"
 
 namespace rln {
@@ -13,13 +13,12 @@ public:
     PolymorphAction(Game* game,
                     Point pos,
                     std::shared_ptr<Entity> entity,
-                    const json& data);
+                    std::string new_undead_type);
 
     ActionResult perform() override;
 
 private:
-    std::string kind_;
-    json data_;
+    std::string new_undead_type_;
 };
 
 }  // namespace rln

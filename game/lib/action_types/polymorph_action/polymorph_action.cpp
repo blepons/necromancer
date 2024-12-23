@@ -1,9 +1,7 @@
 #include "polymorph_action.hpp"
-#include <algorithm>
 #include <memory>
+#include <string>
 #include "entity.hpp"
-#include "mob.hpp"
-#include "mob_plugin.hpp"
 #include "stage.hpp"
 
 namespace rln {
@@ -11,22 +9,31 @@ namespace rln {
 PolymorphAction::PolymorphAction(Game* game,
                                  Point pos,
                                  std::shared_ptr<Entity> entity,
-                                 const json& data)
-    : EntityAction(game, pos, entity), data_(data) {}
+                                 std::string new_undead_type)
+    : EntityAction(game, pos, entity),
+      new_undead_type_(std::move(new_undead_type)) {}
 
 ActionResult PolymorphAction::perform() {
-    float hp_fraction =
-        static_cast<float>(entity()->health()) / entity()->max_health();
-    std::string id = data_["id"];
-    auto& plugin = game()->plugin(id);
-    std::shared_ptr<Mob> spawned_mob = plugin.create_mob(data_);
-    spawned_mob->health(
-        std::max(static_cast<int>(hp_fraction * spawned_mob->max_health()), 1));
-    spawned_mob->energy() = entity()->energy();
-    game()->stage()->replace_entity(game(), spawned_mob, entity()->position());
-    add_event(Event(Event::EventType::POLYMORPH, spawned_mob,
-                    spawned_mob->position()));
-    return ActionResult::succeed();
+    if (auto undead = std::dynamic_pointer_cast<Undead>(
+            game()->stage()->entity_at(pos()));
+        undead != nullptr) {
+        int init_hp =
+            undead->health() /
+            game()->undead_registry().multiplier(undead->undead_type());
+        int init_max_hp =
+            undead->max_health() /
+            game()->undead_registry().multiplier(undead->undead_type());
+        int new_hp =
+            init_hp * game()->undead_registry().multiplier(new_undead_type_);
+        int new_max_hp = init_max_hp *
+                         game()->undead_registry().multiplier(new_undead_type_);
+
+        undead->health(new_hp);
+        undead->max_health(new_max_hp);
+        undead->undead_type(new_undead_type_);
+        return ActionResult::succeed();
+    }
+    return ActionResult::fail();
 }
 
 }  // namespace rln

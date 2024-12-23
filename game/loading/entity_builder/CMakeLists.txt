@@ -17,6 +17,7 @@ target_link_libraries(
     PRIVATE curse_skill
     PRIVATE necromancy_skill
     PRIVATE desiccation_skill
+    PRIVATE polymorph_skill
     PRIVATE wrath_skill
     PRIVATE mob_plugin
 )

@@ -36,6 +36,8 @@ public:
 
     std::string undead_type() const;
 
+    void undead_type(std::string new_type);
+
 protected:
     std::string undead_type_;
 };

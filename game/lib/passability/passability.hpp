@@ -48,10 +48,6 @@ inline Passability operator&(const Passability& lhs, const Passability& rhs) {
     return tmp;
 }
 
-inline auto operator==(const Passability& lhs, const Passability& rhs) {
-    return lhs.bitmask() == rhs.bitmask();
-}
-
 inline Passability Passability::door_or_walk() {
     return walk() | door();
 }
